@@ -26,11 +26,35 @@ export type SetInfo = {
   };
 
 export type EquipInfo = {
+    calc_id?: number,
+    name: string | number,
+    promotion?: number, 
+    rank: number, 
+    level?: number,
+    icon: string
+}
+
+export interface AvatarCategory {
+    name: string,
+    score_name: string,
+    element: string,
+    char_name: string,
+    add_date: Date,
+    char_icon: string,
+    desc: string,
+    calculations: LeaderboardCone[],
+    count?: number
+}
+
+
+export interface LeaderboardCone {
+    calc: string,
     calc_id: number,
+
+    // lightcone: WeaponInfo
     name: string,
     promotion: number, 
     rank: number, 
     level: number,
     icon: string
 }
- 

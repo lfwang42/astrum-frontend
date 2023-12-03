@@ -3,7 +3,7 @@ type ConeDisplayProps = {
     imposition: number | null;
   };
   
-  export const WeaponMiniDisplay: React.FC<ConeDisplayProps> = ({
+  export const ConeDisplay: React.FC<ConeDisplayProps> = ({
     icon,
     imposition,
   }) => {

@@ -73,4 +73,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  @font-face {
+    font-family: 'DIN';
+    src: url('./assets/fonts/DIN.ttf') format('truetype');
+  }
+}
+
+@layer components {
+  .table-icon {
+    @apply w-[25px] h-[25px] relative;
+  }
 }
