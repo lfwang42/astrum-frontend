@@ -30,7 +30,7 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
   ]
   return (
     <>
-      <div className="w-full h-20 bg-sky-900 sticky top-0">
+      <div className="w-full h-20 bg-sky-900 top-0">
         <div className="container mx-auto px-4 h-full">
           <div className="flex items-center h-full">
             <div className="px-8">
