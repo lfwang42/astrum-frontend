@@ -4,10 +4,11 @@ import { RelicTable } from './relic-table';
 import axios from 'axios'
 import useSWR from 'swr'
 import { Suspense } from 'react'
+import { getAPIURL } from "@/lib/utils";
 const relicFetcher = (url: string) => axios.get(url).then(res => res.data)
 
 async function fetchRelics() {
-  const res = await axios.get(`http://localhost:3000/api/relics`)
+  const res = await axios.get(getAPIURL(`/api/relics`))
   return res.data
 }
 

@@ -8,14 +8,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ConeDisplay } from "@/components/ConeDisplay";
 import { Span } from "next/dist/trace";
+import { getAPIURL } from "@/lib/utils";
 
 async function getData(calc_id: number): Promise<LeaderboardRow[]> {
-  const res =  await axios.get(`http://localhost:3000/api/leaderboard`, { params: {calc_id: calc_id } })
+  const res =  await axios.get(getAPIURL(`/api/leaderboard`), { params: {calc_id: calc_id } })
   return res.data
 }
 
 async function getCalcs(calc: number): Promise<AvatarCategory[]> {
-  const res = await axios.get("http://localhost:3000/api/categories", { params: {avatar_id: calc.toString().slice(0, 4)}})
+  const res = await axios.get(getAPIURL('/api/categories'), { params: {avatar_id: calc.toString().slice(0, 4)}})
   return res.data
 }
 

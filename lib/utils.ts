@@ -83,8 +83,8 @@ export function getRegion(uid: number | string): string {
     return "?"
 }
 
-function getDmgBonus(buildrow:any) {
-
+export function getAPIURL(route: string): string {
+    return process.env.API_HOST + route
 }
 
 

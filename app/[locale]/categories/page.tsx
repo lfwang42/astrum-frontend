@@ -2,9 +2,10 @@ import Navbar from "../../../components/navbar";
 import { CategoryRow, columns } from './columns';
 import { CategoryTable } from './category-table';
 import axios from 'axios'
+import { getAPIURL } from "@/lib/utils";
 
 async function getCategories(): Promise<CategoryRow[]> {
-  const res =  await axios.get("http://localhost:3000/api/categories")
+  const res =  await axios.get(getAPIURL("/api/categories"))
   return res.data
 }
 

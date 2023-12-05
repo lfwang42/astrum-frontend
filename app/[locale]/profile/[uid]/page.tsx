@@ -4,13 +4,13 @@ import avatars from '../../../../honker_avatars.json'
 import axios from 'axios'
 import { columns } from './columns'
 import { CustomTable } from '../../../../components/CustomTable/index';
-import { getRegion } from '../../../../lib/utils';
+import { getAPIURL, getRegion } from '../../../../lib/utils';
 export default async function Profile({ params }: { params: { uid: number }}) {
     let icon = ""
     var user = ""
     var level = 0;
     let data: any = null;
-    const res = await axios.get(`http://localhost:3000/api/users/${params.uid}`)
+    const res = await axios.get(getAPIURL(`/api/users/${params.uid}`))
     .then(
         res => {
         // console.log(res.data)
@@ -20,7 +20,7 @@ export default async function Profile({ params }: { params: { uid: number }}) {
         level = res.data.level;
         }
     )
-    const r = await axios.get(`http://localhost:3000/api/builds/${params.uid}`)
+    const r = await axios.get(getAPIURL(`/api/builds/${params.uid}`))
     .then(
       res => {
         data = res.data
