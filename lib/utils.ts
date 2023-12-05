@@ -84,7 +84,7 @@ export function getRegion(uid: number | string): string {
 }
 
 export function getAPIURL(route: string): string {
-    return process.env.API_HOST + route
+    return process.env.NEXT_PUBLIC_API_HOST + route
 }
 
 

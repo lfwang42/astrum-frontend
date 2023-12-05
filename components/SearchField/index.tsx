@@ -3,6 +3,7 @@ import React, { FormEvent } from 'react'
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import debounce from 'debounce'
+import { getAPIURL } from '../../lib/utils';
 interface FormData {
     uid: string;
 }
@@ -25,7 +26,7 @@ export default function SearchField() {
             console.log('invalid id')
         }
         else {
-            axios.get(`http://localhost:3000/api/users/${uid}`, { params: {check: "exists" } })
+            axios.get(getAPIURL(`/api/users/${uid}`), { params: {check: "exists" } })
             .then((response: AxiosResponse) => {
                 console.log(response.data.uid)
                 try { 
