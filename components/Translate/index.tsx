@@ -1,5 +1,6 @@
 'use client'
-import { useTranslation } from 'react-i18next';
+import {useTranslations} from 'next-intl';
+
 
 type TProps = {
   str: string
@@ -7,9 +8,9 @@ type TProps = {
 
 
 export const Translate: React.FC<TProps> = ({ str }) => {
-    const { t } = useTranslation('translation')
+    const t = useTranslations()
     return (
-        <span>{t(str)}</span>
-        );
+      <span>{t(str)}</span>
+    );
   
 };

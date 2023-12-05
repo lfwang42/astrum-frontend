@@ -9,6 +9,7 @@ import Image from 'next/image'
 import { getRelativeStats } from '../../../../lib/utils';
 import { StatIcon } from '../../../../components/StatIcon/index';
 import { StatFormat } from '../../../../lib/utils';
+import { Translate } from "@/components/Translate";
 
 export type BuildRow = {
   avatar_id: number
@@ -36,19 +37,18 @@ export const columns: ColumnDef<BuildRow>[] = [
   {
     header: "Name",
     cell: ({ row } ) => { 
-      const t = useTranslations();
       return (<div className="inline-flex gap-2 p-0">
       <div className="table-icon">
-        <Image alt={t(row.original.avatar_id.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`} fill={true} />
+        <Image alt={/*t*/(row.original.avatar_id.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`} fill={true} />
       </div>
-      <span className="mt-1">{t(row.original.avatar_id.toString())}</span>
+      {/* <span className="mt-1">{t(row.original.avatar_id.toString())}</span> */}
+      <Translate str={row.original.avatar_id.toString()} />
       </div>)
     }
   },
   {
     header: () => {
-      const t = useTranslations();
-      return (t(`Eidolon`))
+      return (<Translate str={'Eidolon'} />)
     },
     accessorKey: "eidolon",
   },
