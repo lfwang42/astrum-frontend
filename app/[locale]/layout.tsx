@@ -33,7 +33,7 @@ export default async function RootLayout({
   }
   return (
     <html lang={locale} className={inter.className}>
-      <body className="h-screen bg-slate-700 text-slate-50">
+      <body className="h-screen bg-slate-800 text-slate-50">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar locale={locale}/>
           {children}

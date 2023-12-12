@@ -6,7 +6,8 @@ const elements: {
     // "Ice": '../../assets/icon/Ice.png',
     // "Quantum": '../../assets/icon/Quantum.png'
     "Ice": '/icon/Ice.png',
-    "Quantum": '/icon/Quantum.png'
+    "Quantum": '/icon/Quantum.png',
+    'Wind': '/icon/Wind.png'
   }
 
 type IconProps = {

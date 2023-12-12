@@ -21,8 +21,9 @@ export default function Home() {
   return (
     <main className="">
       {/* <img src={icon} /> */}
-      <div>
-        <SearchField />
+      <div className='mx-auto mt-8 w-1/2 p-1 gap-2 flex flex-col justify-center items-center border-solid border-slate-800 border-2 bg-slate-600'>
+        <p>If your profile is not available, try fetching it on enka.network first, and wait a few minutes.</p>
+        <div><SearchField /></div>
       </div>
     </main>
   )
