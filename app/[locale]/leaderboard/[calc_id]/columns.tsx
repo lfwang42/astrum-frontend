@@ -9,6 +9,7 @@ export type LeaderboardRow = {
   region: string
   rank: number
   bid: number
+  uid: number
   score: number
   crit_value: number
   stats: CoreStats
@@ -31,7 +32,10 @@ export const columns: ColumnDef<LeaderboardRow>[] = [
   },
   {
     header: "Owner",
-    accessorKey: "nickname"
+    accessorKey: "nickname",
+    cell: ({ row } ) => (
+      <a href={`../profile/${row.original.uid}`}>{row.original.nickname}</a>
+    ),
   },
   {
     header: "Sets",
