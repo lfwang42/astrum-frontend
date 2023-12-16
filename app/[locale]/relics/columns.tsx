@@ -1,5 +1,5 @@
 "use client"
-import {useTranslations} from 'next-intl';
+import {NumberFormatOptions, useTranslations} from 'next-intl';
 import { ColumnDef } from "@tanstack/react-table"
 import { StatDisplay } from '../../../components/StatDisplay';
 import { RelicDisplay } from '../../../components/RelicDisplay';
@@ -7,6 +7,7 @@ import { StatIcon } from '../../../components/StatIcon';
 import { StatFormat } from '../../../lib/utils';
 export type RelicRow = {
   region: string//maybe do region serverside lol idk @TODO
+  uid: number
   rank: number
   crit_value: number
   substats: object
@@ -61,7 +62,10 @@ export const columns: ColumnDef<RelicRow>[] = [
   },
   {
     header: "Owner",
-    accessorKey: "nickname"
+    accessorKey: "nickname",
+    cell: ({ row } ) => (
+      <a href={`../profile/${row.original.uid}`}>{row.original.nickname}</a>
+    ),
   },
   {
     header: "Relic",
@@ -81,18 +85,19 @@ export const columns: ColumnDef<RelicRow>[] = [
     //like is this inefficient? yeah.  should i do it on server side? probably.  
     //if this ever lags too much just switch it to server side (but its probably fine tbh)
     header: "-",
+    id: `${i}`,
     cell: ({row}: any) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
       const ordered = orderSubstats(row?.original?.substats)
       const key = ordered?.[i]
       if (key) return  (
-      <div className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
+      <div key={`${row.index}` + `${i}`} className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
           <StatIcon stat={key}/>
           <span className="mt-2">{StatFormat[key](row.original.substats[key])}</span>
       </div>
       )
       else {
-        return (<>-</>) 
+        return (<div key={`${row.index}` + `${i}`} >-</div>) 
       }
     }
   })),

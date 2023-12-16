@@ -17,10 +17,20 @@ import {
 } from "@/components/ui/table"
 
 import {useTranslations} from 'next-intl';
+import { useState } from "react";
+import Pagination from "../Pagination";
 
 interface CustomTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+}
+
+export type Params = {
+  sort: string;
+  order: number;
+  size: number;
+  filter?: string;
+  uids?: string;
 }
 
 export function CustomTable<TData, TValue>({
@@ -32,6 +42,13 @@ export function CustomTable<TData, TValue>({
     columns,
     getCoreRowModel: getCoreRowModel(),
   })
+  const pageSize = 10;
+  const defaultParams: Params =  {
+    sort: "",
+    order: -1,
+    size: pageSize,
+  };
+  const [searchParams, setParams] = useState<Params>(defaultParams)
   const t = useTranslations();
   return (
     <div className="rounded-md border">
@@ -77,6 +94,7 @@ export function CustomTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
+      <Pagination />
     </div>
   )
 }
