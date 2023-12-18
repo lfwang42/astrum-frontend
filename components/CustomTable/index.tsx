@@ -89,15 +89,13 @@ export function CustomTable<TData, TValue>({
   // }, [JSON.stringify(searchParams)])
   return (
     <div className="flex flex-col justify-center items-center">
+      {(sortOptions && sortOptions!.length > 0) ? 
       <select className="text-black" onChange={e => navigateNext({...searchParams, ...{sortStat: e.target.value}})}>
         {sortOptions?.map(option => {
           return (<option key={option.value} value={option.value}>{option.label}</option>)
         })}
-        {/* <option value="Speed">Speed</option>
-        <option value="FlatHP">Flat HP</option>
-        <option value="FlatAttack">Flat Atk</option>
-        <option value="FlatDefence">Flat Def</option> */}
-      </select>
+      </select> : 
+      <></>}
       {/* <Select className="text-black" value={sortOptions!.filter(function(option) {
           return option.value === selectedOption;
         })} options={sortOptions} onChange={(newValue: any) => navigateNext({...searchParams, ...{sortStat: newValue}})}/> */}
@@ -147,7 +145,7 @@ export function CustomTable<TData, TValue>({
         <Pagination 
           totalRows={totalRows} 
           pageSize = {10}
-          pageNumber = {params!.page} 
+          pageNumber = {params?.page ? params.page : 1} 
           setParams = {setParams}
           nextFunction = {navigateNext}
           loading = {isLoading}
