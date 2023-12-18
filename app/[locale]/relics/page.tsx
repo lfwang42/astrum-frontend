@@ -12,12 +12,7 @@ function relicFetcher(params: any) {
   return r
 }
 
-async function fetchRelics() {
-  const { data, error, isLoading } = useSWR([getAPIURL('/api/relics'), {params: {stat: 'Speed', sort: -1, amount: 20}}] , relicFetcher) 
-  // const res = await axios.get(getAPIURL(`/api/relics`), {params: {stat: 'Speed', sort: -1, amount: 20}})
-  return data
-  //return res.data
-}
+
 
 function fetcher(params: any) {
   const [url, query] = params;
@@ -27,19 +22,10 @@ function fetcher(params: any) {
   return res
 }
 
-function countFetcher(params: any) {
-  const [url, query] = params;
-  const r = axios.get(url, query).then(res => res.data)
-  return r
-}
-async function fetchRowCount() {
-  // const res = await axios.get(getAPIURL(`/api/rowcount`), {params: {table: 'relics'}})
-  // return res.data
-  const { data, error, isLoading } = useSWR([getAPIURL('/api/relics'), {params: {stat: 'Speed', sort: -1, amount: 20}}] , fetcher) 
-}
 
-function getParamsFromUrl(): Params {
-  const searchParams = useSearchParams()
+
+function getParamsFromUrl(searchParams: ReadonlyURLSearchParams ): Params {
+
   const defaultParams: Params = {sortStat: 'Speed', comp: 'gt', page: 1, order: -1, size: 20, value: -1}
   if (searchParams.size === 0) {
     return defaultParams
@@ -66,9 +52,9 @@ export default function Relics() {
   //THE PROBLEM WITH THE FETCHING/UNDEFINED IS BASICALLY CLIENT SIDE FETCHING/THE DATA HASN"T LOADED IN YET..  JUST WAIT FOR IT TO FETCH.  
   //or find a way to get search params on server side (maybe not possible)
 
-
+  const searchParams = useSearchParams()
   // const data = await fetchRelics();
-  const p = getParamsFromUrl()
+  const p = getParamsFromUrl(searchParams)
   // console.log(p)
   const relicData = useSWR([getAPIURL('/api/relics'), {params: p}] , fetcher) 
 //   const sortOptions: Record<string, string> = {
