@@ -90,11 +90,14 @@ export function CustomTable<TData, TValue>({
   return (
     <div className="flex flex-col justify-center items-center">
       {(sortOptions && sortOptions!.length > 0) ? 
+      <div>
+      <span>Sort By:</span>
       <select className="text-black" onChange={e => navigateNext({...searchParams, ...{sortStat: e.target.value}})}>
         {sortOptions?.map(option => {
           return (<option key={option.value} value={option.value}>{option.label}</option>)
         })}
-      </select> : 
+      </select>
+      </div> : 
       <></>}
       {/* <Select className="text-black" value={sortOptions!.filter(function(option) {
           return option.value === selectedOption;

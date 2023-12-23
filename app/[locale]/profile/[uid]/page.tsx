@@ -18,12 +18,14 @@ export default async function Profile({ params }: { params: { uid: number }}) {
         icon = `https://enka.network/ui/hsr/${avatars[(h as keyof typeof avatars)].Icon}`
         user = res.data.nickname
         level = res.data.level;
+
         }
     )
     const r = await axios.get(getAPIURL(`/api/builds/${params.uid}`))
     .then(
       res => {
         data = res.data
+        // console.log(data)
       }
   )
   return (

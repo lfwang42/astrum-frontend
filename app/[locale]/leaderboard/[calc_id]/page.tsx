@@ -21,7 +21,7 @@ async function getCalcs(calc: number): Promise<AvatarCategory[]> {
 }
 
 function getName(cats: AvatarCategory[], calc_id: number): string {
-  console.log(cats)
+  // console.log(cats)
   for (let category of cats) {
     for (let calc of category.calculations) {
       if (calc.calc_id === calc_id) {

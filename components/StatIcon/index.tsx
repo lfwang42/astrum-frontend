@@ -43,6 +43,7 @@ const statIcons: {
     'physicalDamageBonus': PhysicalBoost,
     'lightningDamageBonus': LightningBoost,
     'healingBonus': HealBoost,
+    'effectHitRate': HitRate,
     'maxHP': HP,
     "spd": Speed,
     "atk": Attack,

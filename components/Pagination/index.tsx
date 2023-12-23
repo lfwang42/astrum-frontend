@@ -58,8 +58,8 @@ export const Pagination: React.FC<PaginationProps> = ({
     else {
         togglePrev(true)
     }
-    console.log(disableNext)
-    console.log(rows?.length)
+    // console.log(disableNext)
+    // console.log(rows?.length)
   }, [rows])
   const [currentPage, setCurrentPage] = useState(1);
   const firstItem = rows.length > 0 ? rows[0] : null;
