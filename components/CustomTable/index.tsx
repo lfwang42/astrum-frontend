@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
+import axios from "axios";
 
 interface CustomTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -52,8 +53,23 @@ export function CustomTable<TData, TValue>({
   params,
   sortOptions
 }: CustomTableProps<TData, TValue>) {
+  const [rows, setRows] = useState<any[]>([])
   const router = useRouter()
   const temp: any[] = [{"nickname":"AkoDako","uid":600549550,"tid":51081,"set_id":108,"main_affix_id":1,"hash":"8a0d01a7d26704bfeaa36fa51348dcf6924578c8","main_stat_value":469.64736,"main_stat_name":"HPDelta","substats":{"DefenceDelta":15.241518000000001,"CriticalDamage":0.150336,"AttackAddedRatio":0.065664,"DefenceAddedRatio":0.03888},"mainStat":"HPDelta","icon":"https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_108_1.png","region":"NA"}]
+  
+
+  // const fetchData = async () => {
+  //   const opts = { params: params };
+  //   const response = await axios.get(getAPIURL('/api/leaderboard'), opts);
+  //   const { data } = response.data;
+
+  //   setData(data);
+  // };
+
+  useEffect(() => {
+
+  }, [])
+  
   const table = useReactTable({
     columns,
     data,    
@@ -123,7 +139,7 @@ export function CustomTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {(!isLoading && table.getRowModel().rows?.length) ? (
+            {(!isLoading && data && table.getRowModel().rows?.length) ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}

@@ -47,7 +47,8 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
   // console.log(cats)
   for (let category of cats) {
     for (let calc of category.calculations) {
-      if (calc.calc_id === calc_id) {
+      console.log(calc.calc_id + ' ' + calc_id)
+      if (calc.calc_id === +calc_id) {
         return category.score_name
       }
     }
@@ -74,12 +75,55 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
     //   }
     //   getData();
     // }, [])
-    const leaderboardData = useSWR([getAPIURL('/api/leaderboard'), {params: {calc_id: params.calc_id}}] , fetcher) 
-    const calcs = useSWR([getAPIURL('/api/categories'), {params: {avatar_id: params.calc_id.toString().slice(0, 4)}}] , fetcher) 
+    const [data, setData] = useState<LeaderboardRow[]>([])
+    const [calc, setCalc] = useState<AvatarCategory[]>([])
+    const avatar_id = params?.calc_id.toString().slice(0, 4)
+    useEffect(() => {
+      fetchData()
+    }, [avatar_id])
+
+    useEffect(() => {
+      fetchData()
+    }, [avatar_id])
+    const fetchData = async () => {
+      if (!avatar_id) return;
+  
+      const opts = { params: {calc_id: params.calc_id} };
+      const response = await axios.get(getAPIURL('/api/leaderboard'), opts);
+      const { data } = response.data;
+
+      setData(data);
+    };
+
+    const fetchCalc = async () => {
+      if (!avatar_id) return;
+  
+      const opts = { params: { avatar_id: avatar_id } };
+      const response = await axios.get(getAPIURL('/api/categories'), opts);
+      const { data } = response.data;
+  
+      setData(data);
+    };
+    const leaderboardData = useSWR([getAPIURL('/api/leaderboard'), {params: {calc_id: params.calc_id}}] , fetcher)
+    
+    const calcs = useSWR([getAPIURL('/api/categories'), {params: {avatar_id: avatar_id}}] , fetcher) 
     // const data = await getData(params.calc_id)
     // const calcs = await getCalcs(params.calc_id)
-    // const name = getName(calcs, +params.calc_id)
-    // const columns:  ColumnDef<LeaderboardRow>[] = ['
+    const sortOptions = [
+      { value: 'Speed', label: 'Speed' },
+      { value: 'FlatAttack', label: 'Flat ATK' },
+      { value: 'FlatDefence', label: 'Flat DEF' },
+      { value: 'FlatHP', label: 'Flat HP' },
+      { value: 'Attack', label: 'ATK%' },
+      { value: 'Defence', label: 'DEF%' },
+      { value: 'HP', label: 'HP%' },
+      { value: 'BreakEffect', label: 'Break Effect' },
+      { value: 'StatusRes', label: 'Status Res' },
+      { value: 'EffectHitRate', label: 'Effect Hit Rate' },
+      { value: 'EnergyRegen', label: 'Energy Regen' },
+      { value: 'CriticalChance', label: 'Crit Chance' },
+      { value: 'CriticalDamage', label: 'Crit DMG' }
+    ]
     const columns = useMemo<ColumnDef<LeaderboardRow>[]>(() => [
 
       {
@@ -126,13 +170,18 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
       },
       {
         accessorKey: "score",
-        header: calcs.isLoading ? '??' : getName(calcs.data, params.calc_id),
+        header: calcs.isLoading ? '??' : getName(calcs.data!, params.calc_id),
         cell: ({row}) => {
           return <span>{row.original.score.toFixed(0)}</span>
         }
       },
     
-    ], [])
+    ], 
+      [
+        calcs,
+        calcs.isLoading
+      ]
+    )
     return (
       <>
         <div className="container mx-auto py-10">
