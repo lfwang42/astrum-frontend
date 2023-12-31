@@ -57,21 +57,6 @@ export default function Relics() {
   const p = getParamsFromUrl(searchParams, 'SpeedDelta')
   // console.log(p)
   const relicData = useSWR([getAPIURL('/api/relics'), {params: p}] , fetcher) 
-// const sortOptions = [
-//   { value: 'Speed', label: 'Speed' },
-//   { value: 'FlatAttack', label: 'Flat ATK' },
-//   { value: 'FlatDefence', label: 'Flat DEF' },
-//   { value: 'FlatHP', label: 'Flat HP' },
-//   { value: 'Attack', label: 'ATK%' },
-//   { value: 'Defence', label: 'DEF%' },
-//   { value: 'HP', label: 'HP%' },
-//   { value: 'BreakEffect', label: 'Break Effect' },
-//   { value: 'StatusRes', label: 'Status Res' },
-//   { value: 'EffectHitRate', label: 'Effect Hit Rate' },
-//   { value: 'EnergyRegen', label: 'Energy Regen' },
-//   { value: 'CriticalChance', label: 'Crit Chance' },
-//   { value: 'CriticalDamage', label: 'Crit DMG' }
-// ]
 const sortOptions =
 [
   { value: 'SpeedDelta', label: 'Speed' },
@@ -94,9 +79,6 @@ const sortOptions =
     return (
       <>
         <div className="container mx-auto py-10">
-          {/* {(error) && <p>Failed to load.</p>}
-          {(isLoading) && <p>Loading...</p>}
-          {(!isLoading && !error) && <RelicTable columns={columns} data={data} />} */}
            <CustomTable 
            columns={columns} 
            data={relicData.data} 
