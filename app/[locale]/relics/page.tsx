@@ -4,7 +4,7 @@ import { RelicTable } from './relic-table';
 import axios from 'axios'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import useSWR from 'swr'
-import { getAPIURL } from "@/lib/utils";
+import { getAPIURL, getParamsFromUrl } from "@/lib/utils";
 import { CustomTable, Params } from '@/components/CustomTable';
 function relicFetcher(params: any) {
   const [url, query] = params;
@@ -24,27 +24,27 @@ function fetcher(params: any) {
 
 
 
-function getParamsFromUrl(searchParams: ReadonlyURLSearchParams ): Params {
+// function getParamsFromUrl(searchParams: ReadonlyURLSearchParams ): Params {
 
-  const defaultParams: Params = {sortStat: 'Speed', comp: 'gt', page: 1, order: -1, size: 20, value: -1}
-  if (searchParams.size === 0) {
-    return defaultParams
-  }
-  else {
-    const newParams: any = {}
-    const it = searchParams.entries()
-    searchParams.forEach((value, key) => {
-      const actualValue = isNaN(+value) ? value : +value;
-      if ((defaultParams as any)?.[key]?.toString() !== actualValue) {
-        newParams[key] = actualValue;
-      }
-    })
-    return {
-      ...defaultParams,
-      ...newParams
-    }
-  }
-}
+//   const defaultParams: Params = {sortStat: 'Speed', comp: 'gt', page: 1, order: -1, size: 20, value: -1}
+//   if (searchParams.size === 0) {
+//     return defaultParams
+//   }
+//   else {
+//     const newParams: any = {}
+//     const it = searchParams.entries()
+//     searchParams.forEach((value, key) => {
+//       const actualValue = isNaN(+value) ? value : +value;
+//       if ((defaultParams as any)?.[key]?.toString() !== actualValue) {
+//         newParams[key] = actualValue;
+//       }
+//     })
+//     return {
+//       ...defaultParams,
+//       ...newParams
+//     }
+//   }
+// }
 
 
 
@@ -54,36 +54,37 @@ export default function Relics() {
 
   const searchParams = useSearchParams()
   // const data = await fetchRelics();
-  const p = getParamsFromUrl(searchParams)
+  const p = getParamsFromUrl(searchParams, 'SpeedDelta')
   // console.log(p)
   const relicData = useSWR([getAPIURL('/api/relics'), {params: p}] , fetcher) 
-//   const sortOptions: Record<string, string> = {
-//     "Speed": "Speed",
-//     "Flat ATK": "FlatAttack",
-//     "Flat DEF": 'FlatDefence',
-//     'Flat HP': 'FlatHP',
-//     'ATK%': 'Attack',
-//     'DEF%': 'Defence',
-//     'HP%': 'HP',
-//     'Break Effect': 'BreakEffect',
-//     'Status Res': 'StatusRes',
-//     'Effect Hit Rate': 'EffectHitRate',
-//     'Energy Regen': 'EnergyRegen',
-//     'Crit Chance': 'CriticalChance',
-//     'Crit DMG': 'CriticalDamage'
-// }
-const sortOptions = [
-  { value: 'Speed', label: 'Speed' },
-  { value: 'FlatAttack', label: 'Flat ATK' },
-  { value: 'FlatDefence', label: 'Flat DEF' },
-  { value: 'FlatHP', label: 'Flat HP' },
-  { value: 'Attack', label: 'ATK%' },
-  { value: 'Defence', label: 'DEF%' },
-  { value: 'HP', label: 'HP%' },
-  { value: 'BreakEffect', label: 'Break Effect' },
-  { value: 'StatusRes', label: 'Status Res' },
-  { value: 'EffectHitRate', label: 'Effect Hit Rate' },
-  { value: 'EnergyRegen', label: 'Energy Regen' },
+// const sortOptions = [
+//   { value: 'Speed', label: 'Speed' },
+//   { value: 'FlatAttack', label: 'Flat ATK' },
+//   { value: 'FlatDefence', label: 'Flat DEF' },
+//   { value: 'FlatHP', label: 'Flat HP' },
+//   { value: 'Attack', label: 'ATK%' },
+//   { value: 'Defence', label: 'DEF%' },
+//   { value: 'HP', label: 'HP%' },
+//   { value: 'BreakEffect', label: 'Break Effect' },
+//   { value: 'StatusRes', label: 'Status Res' },
+//   { value: 'EffectHitRate', label: 'Effect Hit Rate' },
+//   { value: 'EnergyRegen', label: 'Energy Regen' },
+//   { value: 'CriticalChance', label: 'Crit Chance' },
+//   { value: 'CriticalDamage', label: 'Crit DMG' }
+// ]
+const sortOptions =
+[
+  { value: 'SpeedDelta', label: 'Speed' },
+  { value: 'AttackDelta', label: 'Flat Attack' },
+  { value: 'DefenceDelta', label: 'Flat Defence' },
+  { value: 'HPDelta', label: 'Flat HP' },
+  { value: 'AttackAddedRatio', label: 'Attack%' },
+  { value: 'DefenceAddedRatio', label: 'Defence%' },
+  { value: 'HPAddedRatio', label: 'HP%' },
+  { value: 'BreakDamageAddedRatio', label: 'Break Effect' },
+  { value: 'StatusResistance', label: 'Effect Res' },
+  { value: 'StatusProbability', label: 'Effect Hit Rate' },
+  { value: 'SPRatio', label: 'Energy Regen' },
   { value: 'CriticalChance', label: 'Crit Chance' },
   { value: 'CriticalDamage', label: 'Crit DMG' }
 ]
@@ -96,7 +97,13 @@ const sortOptions = [
           {/* {(error) && <p>Failed to load.</p>}
           {(isLoading) && <p>Loading...</p>}
           {(!isLoading && !error) && <RelicTable columns={columns} data={data} />} */}
-           <CustomTable columns={columns} data={relicData.data} isLoading={relicData.isLoading} params={p} sortOptions={sortOptions}/>
+           <CustomTable 
+           columns={columns} 
+           data={relicData.data} 
+           isLoading={relicData.isLoading} 
+           params={p} 
+           sortOptions={sortOptions}
+           defaultSort='SpeedDelta'/>
         </div>
       </>
     );

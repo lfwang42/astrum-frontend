@@ -1,10 +1,34 @@
+import { Params } from "@/components/CustomTable"
 import { type ClassValue, clsx } from "clsx"
+import { ReadonlyURLSearchParams } from "next/navigation"
 import { twMerge } from "tailwind-merge"
  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function getParamsFromUrl(searchParams: ReadonlyURLSearchParams, defaultSort?: string ): Params {
+
+    const defaultParams: Params = {page: 1, order: -1, size: 20}
+    if (defaultSort) defaultParams.sortStat = defaultSort
+    if (searchParams.size === 0) {
+      return defaultParams
+    }
+    else {
+      const newParams: any = {}
+      const it = searchParams.entries()
+      searchParams.forEach((value, key) => {
+        const actualValue = isNaN(+value) ? value : +value;
+        if ((defaultParams as any)?.[key]?.toString() !== actualValue) {
+          newParams[key] = actualValue;
+        }
+      })
+      return {
+        ...defaultParams,
+        ...newParams
+      }
+    }
+  }
 
 export const StatFormat: Record<string, Function> = {
     "maxHP": formatFlat,

@@ -31,6 +31,7 @@ interface CustomTableProps<TData, TValue> {
   params?: Params,
   // sortOptions?: Record<string, string>
   sortOptions?: any[]
+  defaultSort: string
 }
 
 export type Params = {
@@ -43,6 +44,7 @@ export type Params = {
   uids?: string;
   comp?: string;
   page: number;
+  from?: string;
 }
 
 export function CustomTable<TData, TValue>({
@@ -51,7 +53,8 @@ export function CustomTable<TData, TValue>({
   totalRows,
   isLoading,
   params,
-  sortOptions
+  sortOptions,
+  defaultSort
 }: CustomTableProps<TData, TValue>) {
   const [rows, setRows] = useState<any[]>([])
   const router = useRouter()
@@ -78,7 +81,6 @@ export function CustomTable<TData, TValue>({
   })
   const pageSize = 10;
   const defaultParams: Params =  {
-    sortStat: "Speed",
     order: -1,
     size: pageSize,
     page: 1,
@@ -92,7 +94,7 @@ export function CustomTable<TData, TValue>({
     }
     const paramString = new URLSearchParams(stringParams).toString()
     // console.log(paramString)
-    router.push(`/relics?${paramString}`)
+    router.push(`?${paramString}`)
   }
   // useEffect(() => {
   //   const stringParams: any = {}
@@ -168,10 +170,10 @@ export function CustomTable<TData, TValue>({
           setParams = {setParams}
           nextFunction = {navigateNext}
           loading = {isLoading}
-          // sortStat = {searchParams.sortStat}
+          defaultSort = {defaultSort}
           // order = {searchParams.order}
           rows = {data}
-          params={params!}
+          params={searchParams!}
           />
       </div>
     </div>

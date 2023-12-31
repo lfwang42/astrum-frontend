@@ -10,11 +10,12 @@ export type RelicRow = {
   uid: number
   rank: number
   crit_value: number
-  substats: object
+  stats: object
   nickname: string
   mainStat: string
   main_stat_value: number
   main_stat_name: string
+  hash: string
   icon: string
   type: number
   tid: number //can localize locally later
@@ -88,12 +89,12 @@ export const columns: ColumnDef<RelicRow>[] = [
     id: `${i}`,
     cell: ({row}: any) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      const ordered = orderSubstats(row?.original?.substats)
+      const ordered = orderSubstats(row?.original?.stats)
       const key = ordered?.[i]
       if (key) return  (
       <div key={`${row.index}` + `${i}`} className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
           <StatIcon stat={key}/>
-          <span className="mt-2">{StatFormat[key](row.original.substats[key])}</span>
+          <span className="mt-2">{StatFormat[key](row.original.stats[key])}</span>
       </div>
       )
       else {
