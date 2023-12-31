@@ -14,7 +14,7 @@ const nextConfig = {
             pathname: '/ui/hsr/**',
           },
         ],
-      },
+    },
 }
 
 module.exports = withBundleAnalyzer(nextConfig)

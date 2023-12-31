@@ -94,7 +94,7 @@ export function CustomTable<TData, TValue>({
     }
     const paramString = new URLSearchParams(stringParams).toString()
     // console.log(paramString)
-    router.push(`?${paramString}`)
+    router.push(`?${paramString}`, {scroll: false})
   }
   // useEffect(() => {
   //   const stringParams: any = {}

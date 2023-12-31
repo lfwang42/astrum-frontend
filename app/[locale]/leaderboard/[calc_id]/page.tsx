@@ -184,8 +184,8 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
 
     return (
       <>
-        <div className="container mx-auto py-10">
-          <div className="flex py-10">
+        <div className="container mx-auto py-1">
+          <div className="flex py-1">
             {
               calcs.isLoading ? <></> : 
               calcs.data.map((category: any) => {

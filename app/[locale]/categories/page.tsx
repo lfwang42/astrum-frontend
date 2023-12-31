@@ -5,7 +5,7 @@ import axios from 'axios'
 import { getAPIURL } from "@/lib/utils";
 
 async function getCategories(): Promise<CategoryRow[]> {
-  console.log(getAPIURL("/api/categories"))
+  // console.log(getAPIURL("/api/categories"))
   const res =  await axios.get(getAPIURL("/api/categories"), {headers: {'Cache-Control': 'no-cache',
   'Pragma': 'no-cache',
   'Expires': '1000',}})
