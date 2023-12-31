@@ -43,7 +43,7 @@ export default async function Profile({ params }: { params: { uid: number }}) {
           
         </div>
         
-        <CustomTable columns={columns} data={data}/>
+        <CustomTable columns={columns} defaultSort={'Speed'} data={data}/>
       </div>
   )
 }

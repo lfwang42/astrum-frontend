@@ -10,7 +10,7 @@ interface PaginationProps {
     nextFunction: Function;
     // isFetchingPagination?: boolean;
     loading?: boolean;
-    sortStat?: string;
+    defaultSort: string;
     // order?: number;
     params: Params;
     rows?: any[];
@@ -38,6 +38,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     pageNumber = 0, 
     setParams = null, 
     loading = false, 
+    defaultSort,
     rows = [],
     params,
     nextFunction,}) => {
@@ -66,13 +67,13 @@ export const Pagination: React.FC<PaginationProps> = ({
   const lastItem = rows.length > 0 ? rows[rows.length - 1] : null;
   const getSortFieldValue = (row: any, sort: string | undefined) => {
     //check row then substats
-    if (!sort) sort = 'Speed'
+    const sortstat = sort ? sort : defaultSort
     if (!row) return -1000
-    if (row[sort] !== undefined) {
-        return row[sort]
+    if (row[sortstat] !== undefined) {
+        return row[sortstat]
     }
     else {
-        return row.substats[stats[sort]]
+        return row.stats[sortstat]
     }
   }
   const onNextPage = () => {
@@ -81,10 +82,10 @@ export const Pagination: React.FC<PaginationProps> = ({
     const nextValue = getSortFieldValue(lastItem, params.sortStat);
     const query = {
         page: pageNumber + 1,
-        sortStat: params.sortStat,
         value: nextValue,
         order: params.order,
-        comp: 'lt'
+        comp: 'lt',
+        from: lastItem['hash']
     }
     setCurrentPage(currentPage + 1)
     nextFunction({...params, ...query})
@@ -99,10 +100,11 @@ export const Pagination: React.FC<PaginationProps> = ({
     const nextValue = getSortFieldValue(firstItem, params.sortStat);
     const query = {
         page: pageNumber - 1,
-        sortStat: params.sortStat,
+        // sortStat: params.sortStat,
         value: nextValue,
         order: params.order,
-        comp: 'gt'
+        comp: 'gt',
+        from: firstItem['hash']
     }
     setCurrentPage(currentPage - 1)
     nextFunction({...params, ...query})

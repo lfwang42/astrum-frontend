@@ -8,7 +8,7 @@ async function getCategories(): Promise<CategoryRow[]> {
  const instance = axios.create();
   const res =  await axios.get(getAPIURL("/api/categories"), {headers: {'Cache-Control': 'no-cache',
   'Pragma': 'no-cache',
-  'Expires': '0',}})
+  'Expires': '1000',}})
   return res.data
 }
 
