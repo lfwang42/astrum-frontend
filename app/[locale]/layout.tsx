@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export function generateStaticParams() {
-  return [{locale: 'en'}, {locale: 'de'}];
+  return [{locale: 'en'}, {locale: 'jp'}];
 }
  
 
@@ -27,8 +27,7 @@ export default async function RootLayout({
   try {
     messages = (await import(`../../messages/${locale}.json`)).default;
   } catch (error) {
-    console.log(error)
-    console.log('yp')
+    console.log('error')
     notFound();
   }
   return (
