@@ -127,6 +127,7 @@ const bonuses: {
     'Lightning': 'lightningDamageBonus'
   }
 
+
 const rv: {
     [key: string]: number;
   } = {
@@ -176,15 +177,16 @@ function padStats(stats: string[], buildRow: any) {
 }
 
 //just need 4 stats.  can ignore work for the rest.
-export function getRelativeStats(buildRow: any) {
+export function getRelativeStats(buildRow: any, type: string) {
 
     const stats = buildRow.stats;
-    // console.log(stats)
-    // console.log(stats[bonuses[buildRow.type]])
     const res = []
-    if (stats[bonuses[buildRow.type]] > 0) {
-        res.push(bonuses[buildRow.type])
+    if (type) {
+        if (stats[bonuses[type]] > 0) {
+            res.push(bonuses[type])
+        }
     }
+
     for (let stat in threshold) {
         if (stats[stat] > threshold[stat] && res.length <= 5) res.push(stat) 
     }

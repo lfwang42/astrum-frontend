@@ -65,7 +65,7 @@ export const columns: ColumnDef<BuildRow>[] = [
   ...[0, 1, 2, 3, 4].map((i) => ({
     header: "-",
     cell: ({ row}: any ) => {
-      const ordered = getRelativeStats(row?.original)
+      const ordered = getRelativeStats(row?.original, row?.original.type)
       // console.log(ordered)
       const key = ordered?.[i]
       if (key) return  (

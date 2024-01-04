@@ -5,7 +5,7 @@ import axios from 'axios'
 import react, { useEffect, useMemo, useState } from 'react'
 import { AvatarCategory } from '../../../types';
 import { ConeDisplay } from "@/components/ConeDisplay";
-import { getAPIURL, getParamsFromUrl } from "@/lib/utils";
+import { StatFormat, getAPIURL, getParamsFromUrl, getRelativeStats } from "@/lib/utils";
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 import { CoreStats, SetInfo } from '../../../types';
 import { SetDisplay } from '../../../../components/SetDisplay/index';
@@ -14,6 +14,7 @@ import { CustomTable } from "@/components/CustomTable";
 import React from "react";
 import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
+import { StatIcon } from "@/components/StatIcon";
 
 
 export type LeaderboardRow = {
@@ -124,6 +125,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
     { value: 'CriticalChance', label: 'CriticalChance' },
     { value: 'CriticalDamage', label: 'CriticalDamage' }
   ]
+  
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(() => [
         {
           accessorKey: "rank",
@@ -151,22 +153,40 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           header: "Crit Value",
           accessorFn: row => (row.crit_value * 100).toFixed(1)
         },
-        {
-          header: "HP",
-          accessorFn: row => (row.stats.maxHP).toFixed(0)
-        },
-        {
-          header: "ATK",
-          accessorFn: row => (row.stats.atk).toFixed(0)
-        },
-        {
-          header: "DEF",
-          accessorFn: row => (row.stats.def).toFixed(0)
-        },
-        {
-          header: "SPD",
-          accessorFn: row => (row.stats.spd).toFixed(0)
-        },
+        // {
+        //   header: "HP",
+        //   accessorFn: row => (row.stats.maxHP).toFixed(0)
+        // },
+        // {
+        //   header: "ATK",
+        //   accessorFn: row => (row.stats.atk).toFixed(0)
+        // },
+        // {
+        //   header: "DEF",
+        //   accessorFn: row => (row.stats.def).toFixed(0)
+        // },
+        // {
+        //   header: "SPD",
+        //   accessorFn: row => (row.stats.spd).toFixed(0)
+        // },
+        ...[0, 1, 2, 3, 4].map((i) => ({
+          header: "-",
+          id: `${i}`,
+          cell: ({ row}: any ) => {
+            const ordered = getRelativeStats(row?.original, !calcs.isLoading? calcs.data[0].element : "")
+            // console.log(ordered)
+            const key = ordered?.[i]
+            if (key) return  (
+            <div className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
+                <StatIcon stat={key}/>
+                <span className="mt-2">{StatFormat[key](row.original.stats[key])}</span>
+            </div>
+            )
+            else {
+              return (<>-</>) 
+            }
+          }
+        })),
         {
           accessorKey: "score",
           header: calcs.isLoading ? '??' : getName(calcs.data!, params.calc_id),
