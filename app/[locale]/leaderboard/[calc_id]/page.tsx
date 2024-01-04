@@ -120,10 +120,10 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
     { value: 'maxHP', label: 'HP' },
     { value: 'breakEffect', label: 'Break Effect' },
     { value: 'StatusResistance', label: 'Effect Res' },
-    { value: 'StatusProbability', label: 'EffectHitRate' },
-    { value: 'SPRatio', label: 'EnergyRegen' },
-    { value: 'CriticalChance', label: 'CriticalChance' },
-    { value: 'CriticalDamage', label: 'CriticalDamage' }
+    { value: 'effectHitRate', label: 'Effect Hit Rate' },
+    { value: 'energyRecharge', label: 'Energy Regen Rate' },
+    { value: 'critRate', label: 'Crit Chance' },
+    { value: 'critDmg', label: 'Crit DMG' }
   ]
   
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(() => [

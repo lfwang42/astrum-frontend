@@ -147,7 +147,7 @@ const threshold: {
     atk: 1600,
     def: 1500,
     spd: 0,
-    maxHP: 3000,
+    maxHP: 3500,
     critDmg: 1,
     critRate: 0.2,
     breakEffect: 0.2,
