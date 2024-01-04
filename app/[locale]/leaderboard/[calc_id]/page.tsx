@@ -49,7 +49,6 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
   // console.log(cats)
   for (let category of cats) {
     for (let calc of category.calculations) {
-      console.log(calc.calc_id + ' ' + calc_id)
       if (calc.calc_id === +calc_id) {
         return category.score_name
       }
@@ -63,6 +62,10 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
 function fetcher(params: any) {
   const [url, query] = params;
   const res = axios.get(url, query).then(res => res.data)
+  res.catch((error) => {
+    console.log(error)
+    throw(error)
+  })
   // axios.get(url, query).
   //   then(res => { return res.data })
   return res
@@ -107,9 +110,18 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
 
     setData(data);
   };
-  const leaderboardData = useSWR([getAPIURL('/api/leaderboard'), {params: {...p, calc_id: params.calc_id}}] , fetcher)
+  const leaderboardData = useSWR([getAPIURL('/api/leaderboard'), {params: {...p, calc_id: params.calc_id}}] , fetcher, {
+    onErrorRetry: (error) => {
+      return
+    }
+  })
   
-  const calcs = useSWR([getAPIURL('/api/categories'), {params: {avatar_id: avatar_id}}] , fetcher) 
+  const calcs = useSWR([getAPIURL('/api/categories'), {params: {avatar_id: avatar_id}}] , fetcher, {
+    onErrorRetry: (error) => {
+      console.log('yp1')
+      return
+    }
+  }) 
   // const data = await getData(params.calc_id)
   // const calcs = await getCalcs(params.calc_id)
   const sortOptions = [

@@ -149,7 +149,7 @@ const threshold: {
     spd: 0,
     maxHP: 3500,
     critDmg: 1,
-    critRate: 0.2,
+    critRate: 0.3,
     breakEffect: 0.2,
     effectHitRate: 0.3,
     healingBonus: 0.2,

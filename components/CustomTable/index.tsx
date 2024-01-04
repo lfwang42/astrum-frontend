@@ -110,7 +110,7 @@ export function CustomTable<TData, TValue>({
       {(sortOptions && sortOptions!.length > 0) ? 
       <div>
       <span>Sort By:</span>
-      <select className="text-black" onChange={e => navigateNext({...searchParams, ...{sortStat: e.target.value}})}>
+      <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...searchParams, ...{sortStat: e.target.value}})}>
         {sortOptions?.map(option => {
           return (<option key={option.value} value={option.value}>{option.label}</option>)
         })}
