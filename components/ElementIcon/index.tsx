@@ -7,7 +7,9 @@ const elements: {
     // "Quantum": '../../assets/icon/Quantum.png'
     "Ice": '/icon/Ice.png',
     "Quantum": '/icon/Quantum.png',
-    'Wind': '/icon/Wind.png'
+    'Wind': '/icon/Wind.png',
+    'Fire': '/icon/Fire.png',
+    'Thunder': '/icon/Thunder.png'
   }
 
 type IconProps = {

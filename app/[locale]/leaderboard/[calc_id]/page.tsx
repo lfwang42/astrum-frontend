@@ -33,8 +33,6 @@ export type LeaderboardRow = {
 
 const columnHelper = createColumnHelper<LeaderboardRow>()
 
-
-
 async function getData(calc_id: number): Promise<LeaderboardRow[]> {
   const res =  await axios.get(getAPIURL(`/api/leaderboard`), { params: {calc_id: calc_id } })
   return res.data
@@ -57,8 +55,6 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
   return ""
 }
 
-
-
 function fetcher(params: any) {
   const [url, query] = params;
   const res = axios.get(url, query).then(res => res.data)
@@ -71,8 +67,6 @@ function fetcher(params: any) {
   return res
 }
 
-
-//params: {avatar_id: 1104}
 export default function Leaderboard({ params }: { params: { calc_id: number }}) {
   // const [data, setData] = useState<LeaderboardRow[]>();
   // useEffect(() => {
@@ -118,7 +112,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
   
   const calcs = useSWR([getAPIURL('/api/categories'), {params: {avatar_id: avatar_id}}] , fetcher, {
     onErrorRetry: (error) => {
-      console.log('yp1')
       return
     }
   }) 
