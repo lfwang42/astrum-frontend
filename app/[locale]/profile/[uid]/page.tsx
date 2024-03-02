@@ -15,7 +15,7 @@ export default async function Profile({ params }: { params: { uid: number }}) {
         res => {
         // console.log(res.data)
         const h = res.data.headicon;
-        icon = `https://enka.network/ui/hsr/${avatars[(h as keyof typeof avatars)].Icon}`
+        icon = avatars[(h as keyof typeof avatars)] ? `https://enka.network/ui/hsr/${avatars[(h as keyof typeof avatars)].Icon}` : "";
         user = res.data.nickname
         level = res.data.level;
 

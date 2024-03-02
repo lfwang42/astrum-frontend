@@ -220,7 +220,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
                       <div className="flex justify-start whitespace-nowrap gap-5">
                       {category.calculations.map((calc: any) => {
                         // if (calc.calc_id === +params.calc_id) console.log('same')
-                        return <div key={calc.calc_id} className={calc.calc_id === +params.calc_id ? "p-2 bg-slate-600" : "p-2"}><a href={`${calc.calc_id}`}><ConeDisplay icon={calc.icon} imposition={calc.rank}/></a></div>
+                        return <div key={calc.calc_id} className={calc.calc_id === +params.calc_id ? "p-2 bg-slate-600" : "p-2"}><a href={`${calc.calc_id}`}><ConeDisplay name={calc.name} icon={calc.icon} imposition={calc.rank}/></a></div>
                       })}
                       </div>
                   </div>
