@@ -9,7 +9,8 @@ const elements: {
     "Quantum": '/icon/Quantum.png',
     'Wind': '/icon/Wind.png',
     'Fire': '/icon/Fire.png',
-    'Thunder': '/icon/Thunder.png'
+    'Thunder': '/icon/Thunder.png',
+    'Imaginary': 'icon/Imaginary.png'
   }
 
 type IconProps = {
