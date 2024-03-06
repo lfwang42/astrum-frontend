@@ -2,8 +2,6 @@
 
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
 import { CoreStats, SetInfo, Element } from '../../types';
-import { SetDisplay } from '../../../components/SetDisplay/index';
-import { getRegion } from '../../../lib/utils';
 import { ElementIcon } from '../../../components/ElementIcon/index';
 import Image from 'next/image';
 import { EquipmentDisplay } from '../../../components/EquipmentDisplay/index';
@@ -15,6 +13,7 @@ export type CategoryRow = {
   char_name: string
   add_date: string
   char_icon: string
+  team: any[]
   calculations: any[]
 }
 
@@ -45,6 +44,31 @@ export const columns: ColumnDef<CategoryRow>[] = [
     cell: ({ row } ) => (
       <EquipmentDisplay cones={row.original.calculations} />
     )
+  },
+  {
+    header: 'Team',
+    cell: ({ row }) => {
+      return (
+        <div className="flex justify-start whitespace-nowrap gap-2">
+          {row.original.team.map((teammate, index) => {
+            if (teammate.avatar === 'any' || teammate.avatar == 'none') {
+              return (<Image width="25" height="25" className="w-8 h-auto m-1" 
+              src={'/avatar/anon.png'} alt={teammate.desc} 
+              key={row.original.char_name + index}
+              title={teammate.desc}/>)
+            }
+            else {
+              return (<Image width="25" height="25" className="w-8 h-auto m-1" 
+              src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`} 
+              alt={teammate.desc} 
+              key={row.original.char_name + index}
+              title={teammate.desc}/>)
+            }
+            })
+          }
+        </div>
+      )
+    }
   },
   {
     accessorKey: "add_date",
