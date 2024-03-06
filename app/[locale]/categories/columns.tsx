@@ -50,7 +50,7 @@ export const columns: ColumnDef<CategoryRow>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex justify-start whitespace-nowrap gap-2">
-          {row.original.team.map((teammate, index) => {
+          {row.original.team ? row.original.team.map((teammate, index) => {
             if (teammate.avatar === 'any' || teammate.avatar == 'none') {
               return (<Image width="25" height="25" className="w-8 h-auto m-1" 
               src={'/avatar/anon.png'} alt={teammate.desc} 
@@ -65,6 +65,8 @@ export const columns: ColumnDef<CategoryRow>[] = [
               title={teammate.desc}/>)
             }
             })
+            :
+            <></>
           }
         </div>
       )
