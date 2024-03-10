@@ -5,6 +5,7 @@ import {notFound} from 'next/navigation';
 
 import '../globals.css'
 import Navbar from '../../components/navbar/index';
+import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Astrum',
@@ -36,6 +37,7 @@ export default async function RootLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar locale={locale}/>
           {children}
+          <Footer locale={locale}/>
         </NextIntlClientProvider>
       </body>
     </html>

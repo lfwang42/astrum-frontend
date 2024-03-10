@@ -9,7 +9,9 @@ async function getCategories(): Promise<CategoryRow[]> {
   const res =  await axios.get(getAPIURL("/api/categories"), {headers: {'Cache-Control': 'no-cache',
   'Pragma': 'no-cache',
   'Expires': '1000',}})
-  return res.data
+  const arr: any[] = res.data
+  arr.sort((a: any, b: any) => b.count - a.count)
+  return arr
 }
 
 export default async function Leaderboard() {
