@@ -142,18 +142,23 @@ export function CustomTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {(!isLoading && data && table.getRowModel().rows?.length) ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-3 py-1">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => { 
+                return (
+                  // <>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    onClick={() => row.toggleExpanded()} 
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id} className="px-3 py-1">
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                  // </>
+                  // {/* {row.getIsExpanded() ? <div>YOYOYO</div> : <></>} */}
+              )})
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">

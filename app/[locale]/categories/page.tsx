@@ -26,10 +26,8 @@ export default async function Leaderboard() {
     const categories = await getCategories()
     // console.log(categories)
     return (
-      <>
-        <div className="container mx-auto py-10">
+        <div className="h-screen container mx-auto py-10">
           <CategoryTable columns={columns} data={categories} />
         </div>
-      </>
     );
   }

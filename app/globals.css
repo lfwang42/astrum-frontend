@@ -77,6 +77,9 @@
     font-family: 'DIN';
     src: url('./assets/fonts/DIN.ttf') format('truetype');
   }
+  html {
+    @apply h-full
+  }
 }
 
 @layer components {

@@ -29,7 +29,7 @@ export const Footer: React.FC<FooterProps> = ( {locale} ) => {
   ]
   return (
     <>
-      <div className="w-full h-20 bg-sky-950 absolute bottom-0">
+      <div className="w-full h-20 bg-sky-950">
         <div className="container mx-auto px-4 h-full">
           <div className="flex items-center h-full">
             <ul className="hidden md:flex gap-x-6 text-white">

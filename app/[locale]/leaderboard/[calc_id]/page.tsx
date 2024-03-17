@@ -209,7 +209,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
 
     return (
       <>
-        <div className="container mx-auto py-1">
+        <div className="min-h-screen container mx-auto py-1">
           <div className="flex py-1">
             {
               calcs.isLoading ? <></> : 

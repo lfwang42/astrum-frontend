@@ -29,7 +29,7 @@ export default async function Profile({ params }: { params: { uid: number }}) {
       }
   )
   return (
-      <div className="container mx-auto py-10">
+      <div className="min-h-screen container mx-auto py-10">
         <div style={{backgroundImage: `url('/Palace.png')`}} className="w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
           <div className='flex justify-left gap-2 border-solid border-2 border-black w-1/4'>
             <Image src={icon} height={60} width={60} alt="yo"/>
