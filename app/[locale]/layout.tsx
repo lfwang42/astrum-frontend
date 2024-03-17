@@ -33,6 +33,10 @@ export default async function RootLayout({
   }
   return (
     <html lang={locale} className={inter.className}>
+      <head>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
+        crossOrigin="anonymous"></script>
+      </head>
       <body className="min-h-screen bg-slate-800 text-slate-50">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar locale={locale}/>
