@@ -157,11 +157,13 @@ export function CustomTable<TData, TValue>({
                 return (
                 <>
                   <TableRow
-                    key={row.id.toString() + 'expanded'}
+                    key={row.id.toString()}
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
-                      row.toggleExpanded()
-                      }
+                      const r: any = row.original
+                        if (r.score)                        row.toggleExpanded()
+
+                    }
                     } 
                   >
                     {row.getVisibleCells().map((cell) => (

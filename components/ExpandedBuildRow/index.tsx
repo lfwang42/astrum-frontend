@@ -54,16 +54,16 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols })
                     relics.data.map((relic: Relic) => {
                         console.log(relic)
                         return(
-                        <div className="flex justify-center items-center border-slate-400 border-2 p-2">
+                        <div key={row.id + relic.tid} className="flex justify-center items-center border-slate-400 border-2 p-2">
                             <div className="justify-center">
                                 <Image src={relic.icon} alt="" height={50} width={50}  />
                                 <div className="bg-slate-800 flex justify-start w-300 items-center whitespace-nowrap text-sm">
                                     <StatIcon stat={relic.main_stat_name} /><span> {StatFormat[relic.main_stat_name](relic.main_stat_value)}</span>
                                 </div>
                             </div>
-                            <div key={relic.tid} className="justify-start">
+                            <div className="justify-start">
                                 {Object.keys(relic.stats).map((stat) => {
-                                    return (<div className="bg-slate-800 flex justify-start w-300 items-center whitespace-nowrap text-sm"><StatIcon stat={stat} /><span> {StatFormat[stat](relic.stats[stat])}</span></div>)
+                                    return (<div key={row.id + relic.tid + stat} className="bg-slate-800 flex justify-start w-300 items-center whitespace-nowrap text-sm"><StatIcon stat={stat} /><span> {StatFormat[stat](relic.stats[stat])}</span></div>)
                                 })}
                             </div>
                         </div>)
