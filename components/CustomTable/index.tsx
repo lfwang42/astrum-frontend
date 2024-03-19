@@ -22,6 +22,9 @@ import Pagination from "../Pagination";
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
 import axios from "axios";
+import { getAPIURL } from "@/lib/utils";
+import { ExpandedBuildRow } from "../ExpandedBuildRow";
+import { columns } from '../../app/[locale]/relics/columns';
 
 interface CustomTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -142,13 +145,24 @@ export function CustomTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {(!isLoading && data && table.getRowModel().rows?.length) ? (
-              table.getRowModel().rows.map((row) => { 
+              table.getRowModel().rows.map((row) => {
+                const buildrow: any = row.original
+                // console.log(buildrow.bid)
+                // console.log(row)
+                // const fetchRelics = async () => {
+                //   const relics = await axios.get(getAPIURL(`/api/relics`),  { params: {bid: buildrow.bid}})
+                //   console.log(relics)
+                // }
+                // fetchRelics()
                 return (
-                  // <>
+                <>
                   <TableRow
-                    key={row.id}
+                    key={row.id.toString() + 'expanded'}
                     data-state={row.getIsSelected() && "selected"}
-                    onClick={() => row.toggleExpanded()} 
+                    onClick={() => {
+                      row.toggleExpanded()
+                      }
+                    } 
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="px-3 py-1">
@@ -156,8 +170,12 @@ export function CustomTable<TData, TValue>({
                       </TableCell>
                     ))}
                   </TableRow>
-                  // </>
-                  // {/* {row.getIsExpanded() ? <div>YOYOYO</div> : <></>} */}
+                   {row.getIsExpanded() ? 
+                    <ExpandedBuildRow row={buildrow} cols={columns.length}/>
+                    : 
+                   <></>
+                   }
+                </>
               )})
             ) : (
               <TableRow>
