@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table"
 
 import {useTranslations} from 'next-intl';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
@@ -120,9 +120,6 @@ export function CustomTable<TData, TValue>({
       </select>
       </div> : 
       <></>}
-      {/* <Select className="text-black" value={sortOptions!.filter(function(option) {
-          return option.value === selectedOption;
-        })} options={sortOptions} onChange={(newValue: any) => navigateNext({...searchParams, ...{sortStat: newValue}})}/> */}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -154,17 +151,18 @@ export function CustomTable<TData, TValue>({
                 //   console.log(relics)
                 // }
                 // fetchRelics()
+                // console.log(row.id)
                 return (
-                <>
+                <React.Fragment key={row.id}>
                   <TableRow
-                    key={row.id.toString()}
+                    
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
                       const r: any = row.original
                         if (r.score)                        row.toggleExpanded()
 
                     }
-                    } 
+                  } 
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id} className="px-3 py-1">
@@ -172,12 +170,10 @@ export function CustomTable<TData, TValue>({
                       </TableCell>
                     ))}
                   </TableRow>
-                   {row.getIsExpanded() ? 
+                   {row.getIsExpanded() && 
                     <ExpandedBuildRow row={buildrow} cols={columns.length}/>
-                    : 
-                   <></>
                    }
-                </>
+                </React.Fragment>
               )})
             ) : (
               <TableRow>
