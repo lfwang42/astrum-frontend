@@ -55,7 +55,7 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
   return ""
 }
 
-export function fetcher(params: any) {
+function fetcher(params: any) {
   const [url, query] = params;
   const res = axios.get(url, query).then(res => res.data)
   res.catch((error) => {
