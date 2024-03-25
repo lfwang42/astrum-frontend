@@ -44,6 +44,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     nextFunction,}) => {
   // State variable to hold the current page. This value is
   // passed to the callback provided by the parent
+  const [currentPage, setCurrentPage] = useState(1);
   const [disableNext, toggleNext] = useState<boolean>(rows?.length >= pageSize ? false : true)
   const [disablePrev, togglePrev] = useState<boolean>(pageNumber === 1)
   useEffect(() => {
@@ -53,7 +54,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     else {
         toggleNext(true)
     }
-    if (!rows || pageNumber > 1) {
+    if (rows || currentPage > 1) {
         togglePrev(false)
     }
     else {
@@ -62,12 +63,19 @@ export const Pagination: React.FC<PaginationProps> = ({
     // console.log(disableNext)
     // console.log(rows?.length)
   }, [rows])
-  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    setCurrentPage(params.page ? params.page : 1)
+    // console.log(disableNext)
+    // console.log(rows?.length)
+  }, [params])
   const firstItem = rows.length > 0 ? rows[0] : null;
   const lastItem = rows.length > 0 ? rows[rows.length - 1] : null;
   const getSortFieldValue = (row: any, sort: string | undefined) => {
     //check row then substats
     const sortstat = sort ? sort : defaultSort
+    // console.log(row)
+    // console.log(defaultSort)
     if (!row) return -1000
     if (row[sortstat] !== undefined) {
         return row[sortstat]
@@ -120,7 +128,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     >
         {'<<'}
     </button>
-    <span>{pageNumber}</span>
+    <span>{currentPage}</span>
     <button
         className=""
         onClick={onNextPage}

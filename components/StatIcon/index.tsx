@@ -67,6 +67,6 @@ type StatProps = {
 
 export const StatIcon: React.FC<StatProps> = ({ stat }) => {
     return (
-        <Image className="h-auto w-8 m-1" width={20} height={20} src={statIcons[stat]} alt={stat} />
+        <Image className="h-auto w-8" width={18} height={18} src={statIcons[stat]} alt={stat} />
         );
 };

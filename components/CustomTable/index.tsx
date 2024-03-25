@@ -20,13 +20,12 @@ import {useTranslations} from 'next-intl';
 import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import { useRouter } from 'next/navigation'
-import Select from 'react-select'
-import axios from "axios";
-import { getAPIURL } from "@/lib/utils";
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import { columns } from '../../app/[locale]/relics/columns';
+import axios from "axios";
 
 interface CustomTableProps<TData, TValue> {
+  fetchUrl: string,
   columns: ColumnDef<TData, TValue>[]
   data: TData[], 
   totalRows?: number,
@@ -46,11 +45,12 @@ export type Params = {
   filter?: string;
   uids?: string;
   comp?: string;
-  page: number;
+  page?: number;
   from?: string;
 }
 
 export function CustomTable<TData, TValue>({
+  fetchUrl,
   columns,
   data,
   totalRows,
@@ -59,7 +59,7 @@ export function CustomTable<TData, TValue>({
   sortOptions,
   defaultSort
 }: CustomTableProps<TData, TValue>) {
-  const [rows, setRows] = useState<any[]>([])
+  const [rows, setRows] = useState<TData[]>(data)
   const router = useRouter()
   const temp: any[] = [{"nickname":"AkoDako","uid":600549550,"tid":51081,"set_id":108,"main_affix_id":1,"hash":"8a0d01a7d26704bfeaa36fa51348dcf6924578c8","main_stat_value":469.64736,"main_stat_name":"HPDelta","substats":{"DefenceDelta":15.241518000000001,"CriticalDamage":0.150336,"AttackAddedRatio":0.065664,"DefenceAddedRatio":0.03888},"mainStat":"HPDelta","icon":"https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_108_1.png","region":"NA"}]
   
@@ -78,26 +78,41 @@ export function CustomTable<TData, TValue>({
   
   const table = useReactTable({
     columns,
-    data,    
+    data: rows,    
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true
   })
   const pageSize = 10;
   const defaultParams: Params =  {
+    sortStat: defaultSort,
     order: -1,
     size: pageSize,
     page: 1,
   };
-  const [searchParams, setParams] = useState<Params>(params ? params : defaultParams)
+  if (params && params.calc_id) {
+    defaultParams.calc_id = params.calc_id
+  }
+  const [searchParams, setParams] = useState<Params>(defaultParams)
+  useEffect(() => {
+
+    const res = axios.get(fetchUrl, {params: searchParams}) // Use the correct URL, it can be an API Route URL, an external URL...
+    .then((res) => res.data)
+    .then((data) => setRows(data))
+    .catch((error) => {
+        console.log(error);
+      });
+  }, [searchParams])
   const t = useTranslations();
   function navigateNext(newParams: Params) {
     const stringParams: any = {}
     for (const key in newParams) {
-      stringParams[key] = newParams[key]?.toString()
+      if (newParams[key]) stringParams[key] = newParams[key]?.toString()
+
     }
     const paramString = new URLSearchParams(stringParams).toString()
     // console.log(paramString)
     router.push(`?${paramString}`, {scroll: false})
+    setParams(stringParams)
   }
   // useEffect(() => {
   //   const stringParams: any = {}
@@ -113,7 +128,7 @@ export function CustomTable<TData, TValue>({
       {(sortOptions && sortOptions!.length > 0) ? 
       <div>
       <span>Sort By:</span>
-      <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...searchParams, ...{sortStat: e.target.value}})}>
+      <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...defaultParams, ...{sortStat: e.target.value, page: 1}})}>
         {sortOptions?.map(option => {
           return (<option key={option.value} value={option.value}>{option.label}</option>)
         })}
@@ -141,7 +156,7 @@ export function CustomTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {(!isLoading && data && table.getRowModel().rows?.length) ? (
+            {(!isLoading && rows && table.getRowModel().rows?.length) ? (
               table.getRowModel().rows.map((row) => {
                 const buildrow: any = row.original
                 // console.log(buildrow.bid)
@@ -193,7 +208,7 @@ export function CustomTable<TData, TValue>({
           loading = {isLoading}
           defaultSort = {defaultSort}
           // order = {searchParams.order}
-          rows = {data}
+          rows = {rows}
           params={searchParams!}
           />
       </div>

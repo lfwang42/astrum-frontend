@@ -55,7 +55,7 @@ function getName(cats: AvatarCategory[], calc_id: number): string {
   return ""
 }
 
-function fetcher(params: any) {
+export function fetcher(params: any) {
   const [url, query] = params;
   const res = axios.get(url, query).then(res => res.data)
   res.catch((error) => {
@@ -80,6 +80,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
   const [calc, setCalc] = useState<AvatarCategory[]>([])
   const searchParams = useSearchParams()
   const p = getParamsFromUrl(searchParams)
+  p.calc_id = params.calc_id
   const avatar_id = params?.calc_id.toString().slice(0, 4)
   // useEffect(() => {
   //   fetchData()
@@ -228,7 +229,8 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
               })
             }
           </div>
-          <CustomTable 
+          <CustomTable
+          fetchUrl={getAPIURL('/api/leaderboard')}
           columns={columns} 
           data={leaderboardData.data} 
           isLoading={leaderboardData.isLoading}
