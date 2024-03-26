@@ -61,7 +61,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
               <div className="flex justify-end p-1 gap-4 w-full font-sans font-bold text-lg" >
 
                 <span>{getRegion(params.uid)}</span>
-                <span>{`TL${level}`}</span>
+                <span>{`TL${userData.data.level}`}</span>
               </div>
             </> : 
             <div className="h-10">
