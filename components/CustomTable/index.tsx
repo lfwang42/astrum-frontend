@@ -39,7 +39,7 @@ interface CustomTableProps<TData, TValue> {
 export type Params = {
   [key: string]: number | string | undefined;
   sortStat?: string;
-  order?: number;
+  order?: string;
   value?: number;
   size?: number;
   filter?: string;
@@ -54,12 +54,13 @@ export function CustomTable<TData, TValue>({
   columns,
   data,
   totalRows,
-  isLoading,
+  // isLoading,
   params,
   sortOptions,
   defaultSort
 }: CustomTableProps<TData, TValue>) {
   const [rows, setRows] = useState<TData[]>(data)
+  const [isLoading, setLoading] = useState<boolean>(true)
   const router = useRouter()
   const temp: any[] = [{"nickname":"AkoDako","uid":600549550,"tid":51081,"set_id":108,"main_affix_id":1,"hash":"8a0d01a7d26704bfeaa36fa51348dcf6924578c8","main_stat_value":469.64736,"main_stat_name":"HPDelta","substats":{"DefenceDelta":15.241518000000001,"CriticalDamage":0.150336,"AttackAddedRatio":0.065664,"DefenceAddedRatio":0.03888},"mainStat":"HPDelta","icon":"https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_108_1.png","region":"NA"}]
   
@@ -72,9 +73,7 @@ export function CustomTable<TData, TValue>({
   //   setData(data);
   // };
 
-  useEffect(() => {
 
-  }, [])
   
   const table = useReactTable({
     columns,
@@ -85,7 +84,7 @@ export function CustomTable<TData, TValue>({
   const pageSize = 10;
   const defaultParams: Params =  {
     sortStat: defaultSort,
-    order: -1,
+    order: 'desc',
     size: pageSize,
     page: 1,
   };
@@ -94,10 +93,11 @@ export function CustomTable<TData, TValue>({
   }
   const [searchParams, setParams] = useState<Params>(defaultParams)
   useEffect(() => {
-
+    setLoading(true)
     const res = axios.get(fetchUrl, {params: searchParams}) // Use the correct URL, it can be an API Route URL, an external URL...
     .then((res) => res.data)
     .then((data) => setRows(data))
+    .then(() => setLoading(false))
     .catch((error) => {
         console.log(error);
       });
@@ -111,7 +111,7 @@ export function CustomTable<TData, TValue>({
     }
     const paramString = new URLSearchParams(stringParams).toString()
     // console.log(paramString)
-    router.push(`?${paramString}`, {scroll: false})
+    // router.push(`?${paramString}`, {scroll: false})
     setParams(stringParams)
   }
   // useEffect(() => {

@@ -197,7 +197,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           accessorKey: "score",
           header: calcs.isLoading ? '??' : getName(calcs.data!, params.calc_id),
           cell: ({row}) => {
-            return <span>{row.original.score.toFixed(0)}</span>
+            return <span>{row.original.score?.toFixed(0)}</span>
           }
         },
       

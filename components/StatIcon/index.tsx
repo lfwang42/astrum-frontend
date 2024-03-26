@@ -25,6 +25,7 @@ const statIcons: {
     // "Quantum": '../../assets/icon/Quantum.png',
     "CriticalChance": CritRate,
     "CriticalDamage": CritDmg,
+    "CriticalDamageBase": CritDmg,
     "SpeedDelta": Speed,
     "AttackAddedRatio": Attack,
     "BreakDamageAddedRatio": BreakEffect,

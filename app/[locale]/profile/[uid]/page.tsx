@@ -52,18 +52,20 @@ export default function Profile({ params }: { params: { uid: number }}) {
 
   return (
       <div className="min-h-screen container mx-auto py-10">
-        <div style={{backgroundImage: `url('/Palace.png')`}} className="w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
+        <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-18 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
           <div className='flex justify-left gap-2 border-solid border-2 border-black w-1/4'>
             {!userData.isLoading ? 
             <>
-            <Image src={`https://enka.network/ui/hsr/${avatars[(userData.data.headicon as keyof typeof avatars)].Icon}`} height={60} width={60} alt="yo"/>
-            <span className="text-lg  text-shadow-sm shadow-black-2000">{userData.data.nickname}</span>
-            <div className="flex justify-end p-1 gap-4 w-full font-sans font-bold text-lg" >
+              <Image src={`https://enka.network/ui/hsr/${avatars[(userData.data.headicon as keyof typeof avatars)].Icon}`} height={60} width={60} alt="yo"/>
+              <span className="text-lg  text-shadow-sm shadow-black-2000">{userData.data.nickname}</span>
+              <div className="flex justify-end p-1 gap-4 w-full font-sans font-bold text-lg" >
 
-              <span>{getRegion(params.uid)}</span>
-              <span>{`TL${level}`}</span>
-            </div>
-            </> : <></>}
+                <span>{getRegion(params.uid)}</span>
+                <span>{`TL${level}`}</span>
+              </div>
+            </> : 
+            <div className="h-10">
+            </div>}
             
           </div>
           
