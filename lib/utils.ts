@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getParamsFromUrl(searchParams: ReadonlyURLSearchParams, defaultSort?: string ): Params {
 
-    const defaultParams: Params = {page: 1, order: -1, size: 20}
+    const defaultParams: Params = {page: 1, order: 'desc', size: 20}
     if (defaultSort) defaultParams.sortStat = defaultSort
     if (searchParams.size === 0) {
       return defaultParams
