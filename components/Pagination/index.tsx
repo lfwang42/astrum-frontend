@@ -54,7 +54,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     else {
         toggleNext(true)
     }
-    if (rows || currentPage > 1) {
+    if (currentPage > 1) {
         togglePrev(false)
     }
     else {
