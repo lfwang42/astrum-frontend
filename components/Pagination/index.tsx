@@ -60,8 +60,6 @@ export const Pagination: React.FC<PaginationProps> = ({
     else {
         togglePrev(true)
     }
-    // console.log(disableNext)
-    // console.log(rows?.length)
   }, [rows])
 
   useEffect(() => {
@@ -89,13 +87,12 @@ export const Pagination: React.FC<PaginationProps> = ({
     
     const nextValue = getSortFieldValue(lastItem, params.sortStat);
     const query = {
-        page: pageNumber + 1,
+        page: +(+pageNumber + 1),
         value: nextValue,
         order: params.order,
         comp: 'lt',
         from: lastItem['hash']
     }
-    setCurrentPage(currentPage + 1)
     nextFunction({...params, ...query})
     // setParams((prev: Params) => ({
     //     ...prev,
@@ -107,14 +104,14 @@ export const Pagination: React.FC<PaginationProps> = ({
     
     const nextValue = getSortFieldValue(firstItem, params.sortStat);
     const query = {
-        page: pageNumber - 1,
+        page: +(+pageNumber - 1),
         // sortStat: params.sortStat,
         value: nextValue,
         order: params.order,
         comp: 'gt',
         from: firstItem['hash']
     }
-    setCurrentPage(currentPage - 1)
+    // setCurrentPage(currentPage - 1)
     nextFunction({...params, ...query})
   }
 //   const onPageSelect = (props.pageNumber) => setCurrentPage(pageNo);

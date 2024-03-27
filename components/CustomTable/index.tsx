@@ -202,7 +202,7 @@ export function CustomTable<TData, TValue>({
         <Pagination 
           totalRows={totalRows} 
           pageSize = {10}
-          pageNumber = {params?.page ? params.page : 1} 
+          pageNumber = {searchParams.page} 
           setParams = {setParams}
           nextFunction = {navigateNext}
           loading = {isLoading}
