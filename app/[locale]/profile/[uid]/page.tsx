@@ -56,9 +56,9 @@ export default function Profile({ params }: { params: { uid: number }}) {
           <div className='flex justify-left gap-2 border-solid border-2 border-black w-1/4'>
             {!userData.isLoading ? 
             <>
-              <Image src={`https://enka.network/ui/hsr/
-              ${avatars[(userData.data.headicon as keyof typeof avatars)] ? avatars[(userData.data.headicon as keyof typeof avatars)].Icon
-              : avatars[200001].Icon}`} height={60} width={60} alt="yo"/>
+              <Image src={`https://enka.network/ui/hsr/${avatars[(userData.data.headicon as keyof typeof avatars)] ? 
+              avatars[(userData.data.headicon as keyof typeof avatars)].Icon : 
+              avatars[200001].Icon}`} height={60} width={60} alt="yo"/>
               <span className="text-lg  text-shadow-sm shadow-black-2000">{userData.data.nickname}</span>
               <div className="flex justify-end p-1 gap-4 w-full font-sans font-bold text-lg" >
 
