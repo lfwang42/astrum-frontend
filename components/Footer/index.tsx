@@ -34,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ( {locale} ) => {
           <div className="flex items-center h-full">
             <ul className="hidden md:flex gap-x-6 text-white">
               <li>
-                <a href='https://www.enka.network'><Image src="/enka.png" width={150} height={75} alt='Powered by enka.network'/></a>
+                <a href='https://www.enka.network'><Image src="/enka.png" width={150} height={75} className="w-100 h-auto" alt='Powered by enka.network'/></a>
               </li>
             </ul>
           </div>

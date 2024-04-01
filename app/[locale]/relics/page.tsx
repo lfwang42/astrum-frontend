@@ -54,7 +54,11 @@ export default function Relics() {
 
   const searchParams = useSearchParams()
   // const data = await fetchRelics();
-  const p = getParamsFromUrl(searchParams, 'SpeedDelta')
+  // const p = getParamsFromUrl(searchParams, 'SpeedDelta')
+  const p: Params = {
+    pageSize: 20,
+    sortStat: 'SpeedDelta'
+  }
   // console.log(p)
   const relicData = useSWR([getAPIURL('/api/relics'), {params: p}] , fetcher) 
 const sortOptions =

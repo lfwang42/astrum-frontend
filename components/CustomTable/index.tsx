@@ -81,7 +81,7 @@ export function CustomTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true
   })
-  const pageSize = 10;
+  const pageSize = 20;
   const defaultParams: Params =  {
     sortStat: defaultSort,
     order: 'desc',
@@ -201,7 +201,7 @@ export function CustomTable<TData, TValue>({
         </Table>
         <Pagination 
           totalRows={totalRows} 
-          pageSize = {10}
+          pageSize = {searchParams.size ? searchParams.size : 10}
           pageNumber = {searchParams.page} 
           setParams = {setParams}
           nextFunction = {navigateNext}

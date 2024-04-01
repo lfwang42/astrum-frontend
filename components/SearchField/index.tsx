@@ -45,12 +45,12 @@ export default function SearchField() {
     }
     
     return (
-        // <div className="flex w-30 gap-1">
+        <div className="flex w-30 gap-1 p-1">
             <form onSubmit={debounced}>
-                <input className="text-black" type="text" name="uid" value={uid} placeholder="enter UID" 
+                <input className="text-black min-w-5" type="text" name="uid" value={uid} placeholder="enter UID" 
                 onChange={e => setUid(e.target.value)}/>
-                <button type="submit">Submit</button>
+                <button type="submit" className="m-1">Submit</button>
             </form>
-        // </div>
+        </div>
         );
 };
