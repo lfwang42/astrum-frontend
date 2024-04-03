@@ -21,17 +21,24 @@ import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import { useRouter } from 'next/navigation'
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
-import { columns } from '../../app/[locale]/relics/columns';
 import axios from "axios";
+import { getAPIURL } from "@/lib/utils";
+
+
+interface tableParams {
+  table: string,
+  query?: number
+}
+
 
 interface CustomTableProps<TData, TValue> {
   fetchUrl: string,
-  columns: ColumnDef<TData, TValue>[]
+  columns: ColumnDef<TData, TValue>[],
   data: TData[], 
-  totalRows?: number,
   isLoading?: boolean,
   params?: Params,
-  // sortOptions?: Record<string, string>
+    // sortOptions?: Record<string, string>
+  tableParams: tableParams,
   sortOptions?: any[]
   defaultSort: string
 }
@@ -53,7 +60,8 @@ export function CustomTable<TData, TValue>({
   fetchUrl,
   columns,
   data,
-  totalRows,
+  tableParams,
+  // totalRows,
   // isLoading,
   params,
   sortOptions,
@@ -61,17 +69,25 @@ export function CustomTable<TData, TValue>({
 }: CustomTableProps<TData, TValue>) {
   const [rows, setRows] = useState<TData[]>(data)
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
+  const [tableSize, setTableSize] = useState<number>(0)
   const router = useRouter()
   const temp: any[] = [{"nickname":"AkoDako","uid":600549550,"tid":51081,"set_id":108,"main_affix_id":1,"hash":"8a0d01a7d26704bfeaa36fa51348dcf6924578c8","main_stat_value":469.64736,"main_stat_name":"HPDelta","substats":{"DefenceDelta":15.241518000000001,"CriticalDamage":0.150336,"AttackAddedRatio":0.065664,"DefenceAddedRatio":0.03888},"mainStat":"HPDelta","icon":"https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_108_1.png","region":"NA"}]
   
 
-  // const fetchData = async () => {
-  //   const opts = { params: params };
-  //   const response = await axios.get(getAPIURL('/api/leaderboard'), opts);
-  //   const { data } = response.data;
 
-  //   setData(data);
-  // };
+  const fetchTableSize = async () => {
+    setTableSizeLoading(true)
+    const res = await axios.get(getAPIURL('/api/tablesize'), {params: tableParams})
+    setTableSize(res.data)
+    console.log(tableSize)
+    setTableSizeLoading(false)
+    console.log(tableSizeLoading)
+  };
+
+  useEffect(() => {
+    fetchTableSize()
+  }, [])
 
 
   
@@ -200,7 +216,8 @@ export function CustomTable<TData, TValue>({
           </TableBody>
         </Table>
         <Pagination 
-          totalRows={totalRows} 
+          tableSize={tableSize} 
+          tableSizeLoading={tableSizeLoading}
           pageSize = {searchParams.size ? searchParams.size : 10}
           pageNumber = {searchParams.page} 
           setParams = {setParams}

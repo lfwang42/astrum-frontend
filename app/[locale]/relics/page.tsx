@@ -84,6 +84,9 @@ const sortOptions =
       <>
         <div className="container mx-auto py-10">
            <CustomTable
+           tableParams={
+              {table: 'relics'}
+           }
            fetchUrl={getAPIURL('/api/relics')}
            columns={columns} 
            data={relicData.data} 

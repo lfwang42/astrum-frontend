@@ -73,6 +73,12 @@ export default function Profile({ params }: { params: { uid: number }}) {
           
         </div>
         <CustomTable 
+        tableParams={
+          {
+            table: 'builds',
+            query: params.uid
+          }
+        }
         fetchUrl={getAPIURL(`/api/builds/${params.uid}`)}
         columns={columns} 
         defaultSort={'spd'} 

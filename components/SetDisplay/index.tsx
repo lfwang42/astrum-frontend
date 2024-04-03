@@ -15,7 +15,7 @@ export const SetDisplay: React.FC<SetProps> = ({ sets }) => {
                 return (
                     <div key={set.name} className="relative">
                         <div className="table-icon">
-                        <Image alt={""} fill={true} src={SPRITE_URL + set.icon} />
+                        <Image alt={""} width={22} height={22}  className="h-auto w-auto" src={SPRITE_URL + set.icon} />
                         </div>
                         <span className="absolute right-0 bottom-0">
                         {ind === 2 ? 4 : 2}

@@ -236,7 +236,13 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           isLoading={leaderboardData.isLoading}
           params={p}
           defaultSort="score"
-          sortOptions={sortOptions}/>
+          sortOptions={sortOptions}
+          tableParams={
+            {
+              table: 'leaderboard',
+              query: params.calc_id
+            }
+          }/>
         </div>
       </>
     );

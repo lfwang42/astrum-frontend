@@ -3,15 +3,14 @@ import { Params } from "../CustomTable";
 import { PaginationOptions } from "@tanstack/react-table";
 
 interface PaginationProps {
-    totalRows?: number,
     pageSize?: number;
     pageNumber?: number;
     setParams?: React.Dispatch<React.SetStateAction<Params>> | null;
     nextFunction: Function;
-    // isFetchingPagination?: boolean;
+    tableSizeLoading?: boolean;
+    tableSize?: number;
     loading?: boolean;
     defaultSort: string;
-    // order?: number;
     params: Params;
     rows?: any[];
 }
@@ -33,7 +32,8 @@ const stats: Record<string, string> = {
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
-    totalRows = 0, 
+    tableSizeLoading = false,
+    tableSize = 0, 
     pageSize = 20, 
     pageNumber = 0, 
     setParams = null, 
@@ -47,6 +47,11 @@ export const Pagination: React.FC<PaginationProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [disableNext, toggleNext] = useState<boolean>(rows?.length >= pageSize ? false : true)
   const [disablePrev, togglePrev] = useState<boolean>(pageNumber === 1)
+
+  useEffect(() => {
+    console.log(tableSizeLoading)
+  }, [tableSizeLoading])
+
   useEffect(() => {
     if (rows && rows?.length >= pageSize) {
         toggleNext(false)
@@ -61,6 +66,8 @@ export const Pagination: React.FC<PaginationProps> = ({
         togglePrev(true)
     }
   }, [rows])
+  const to = Math.min(currentPage * pageSize, tableSize);
+  const from = Math.max(to - pageSize + 1, 1);
 
   useEffect(() => {
     setCurrentPage(params.page ? params.page : 1)
@@ -117,22 +124,27 @@ export const Pagination: React.FC<PaginationProps> = ({
 //   const onPageSelect = (props.pageNumber) => setCurrentPage(pageNo);
 
   return (
-    <div className="flex justify-center items-center">
-    <button
-        className=""
-        onClick={onPrevPage}
-        disabled={disablePrev}
-    >
-        {'<<'}
-    </button>
-    <span>{currentPage}</span>
-    <button
-        className=""
-        onClick={onNextPage}
-        disabled={disableNext}
-    >
-        {'>>'}
-    </button>
+    <div className="relative justify-center items-center">
+      <div className="flex justify-center">
+        <button
+            className=""
+            onClick={onPrevPage}
+            disabled={disablePrev}
+        >
+            {'<<'}
+        </button>
+        <span>{currentPage}</span>
+        <button
+            className=""
+            onClick={onNextPage}
+            disabled={disableNext}
+        >
+            {'>>'}
+        </button>
+      </div>  
+      <div className="absolute right-0 bottom-0 mr-2">
+          {tableSizeLoading ? `---` : `${from}-${to}`} of{" "} {tableSizeLoading ? `???` : tableSize}
+      </div>
     </div>
   );
 };
