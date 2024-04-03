@@ -24,6 +24,7 @@ const statIcons: {
     // "Ice": '../../assets/icon/Ice.png',
     // "Quantum": '../../assets/icon/Quantum.png',
     "CriticalChance": CritRate,
+    "CriticalChanceBase": CritRate,
     "CriticalDamage": CritDmg,
     "CriticalDamageBase": CritDmg,
     "SpeedDelta": Speed,
