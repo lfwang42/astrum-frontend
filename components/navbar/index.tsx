@@ -61,12 +61,12 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
               <nav className={`xl:flex-1 xl:items-center`} >
 
                 <ul className="text-base text-white xl:flex w-full">
-                  <li>
+                  <li className="hover:text-orange-300">
                     <Link href="/relics" >
                       <p className="xl:px-5 py-2">Relics</p>
                     </Link>
                   </li>
-                  <li>
+                  <li className="hover:text-orange-300">
                     <Link href="/categories"  >
                       <p className="xl:px-5 py-2">Leaderboards</p>
                     </Link>
