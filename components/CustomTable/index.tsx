@@ -71,9 +71,7 @@ export function CustomTable<TData, TValue>({
   const [isLoading, setLoading] = useState<boolean>(true)
   const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
   const [tableSize, setTableSize] = useState<number>(0)
-  const router = useRouter()
-  const temp: any[] = [{"nickname":"AkoDako","uid":600549550,"tid":51081,"set_id":108,"main_affix_id":1,"hash":"8a0d01a7d26704bfeaa36fa51348dcf6924578c8","main_stat_value":469.64736,"main_stat_name":"HPDelta","substats":{"DefenceDelta":15.241518000000001,"CriticalDamage":0.150336,"AttackAddedRatio":0.065664,"DefenceAddedRatio":0.03888},"mainStat":"HPDelta","icon":"https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_108_1.png","region":"NA"}]
-  
+  const router = useRouter()  
 
 
   const fetchTableSize = async () => {
@@ -140,7 +138,7 @@ export function CustomTable<TData, TValue>({
   //   router.push(`/relics/${paramString}`)
   // }, [JSON.stringify(searchParams)])
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center w-full">
       {(sortOptions && sortOptions!.length > 0) ? 
       <div>
       <span>Sort By:</span>

@@ -27,14 +27,16 @@ export const columns: ColumnDef<CategoryRow>[] = [
   {
     header: "Leaderboard",
     cell: ({ row } ) => (
-      <a href={`/leaderboard/${row.original.calculations[0].calc_id}`}className="w-auto inline-flex items-center justify-start gap-5">
+      <div className="w-auto inline-flex items-center justify-start gap-4">
         <ElementIcon element={row.original.element} />
         <div>
           <Image width={40} height={40} src={row.original.char_icon} alt={row.original.char_name} />
         </div>
-        <span className="inline-block align-middle "> {row.original.name}</span>
-        <span className="inline-block align-middle "> {row.original.char_name}</span>
+        <a href={`/leaderboard/${row.original.calculations[0].calc_id}`} className="gap-5 hover:text-orange-300">
+          <span className="inline-block align-middle mr-2"> {row.original.name}</span>
+          <span className="inline-block align-middle "> {row.original.char_name}</span>
        </a>
+      </div>
     )
   },
   {

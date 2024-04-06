@@ -31,8 +31,6 @@ export type LeaderboardRow = {
   sets: SetInfo[]
 }
 
-const columnHelper = createColumnHelper<LeaderboardRow>()
-
 async function getData(calc_id: number): Promise<LeaderboardRow[]> {
   const res =  await axios.get(getAPIURL(`/api/leaderboard`), { params: {calc_id: calc_id } })
   return res.data
@@ -131,7 +129,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
     { value: 'critRate', label: 'Crit Chance' },
     { value: 'critDmg', label: 'Crit DMG' }
   ]
-  
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(() => [
         {
           accessorKey: "rank",
@@ -145,7 +142,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           header: "Owner",
           accessorKey: "nickname",
           cell: ({ row } ) => (
-            <a href={`../profile/${row.original.uid}`}>{row.original.nickname}</a>
+            <a href={`../profile/${row.original.uid}`}><span onClick={(e)=> {e.stopPropagation()}} className="hover:text-orange-300">{row.original.nickname}</span></a>
           ),
         },
         {

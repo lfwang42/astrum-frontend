@@ -35,7 +35,7 @@ export const RelicCanvas: React.FC<CanvasProps> = ({ backgroundImage }) => {
         // context!.fillRect(0, 0, context!.canvas.width, context!.canvas.height)
     }, [canvasRef, backgroundImage])
     return (
-        <canvas className='' width={100} height={100} ref={canvasRef}></canvas>
+        <canvas className='' width={90} height={90} ref={canvasRef}></canvas>
     );
   
 };

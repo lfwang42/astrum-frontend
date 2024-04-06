@@ -46,21 +46,22 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols })
                     key={row.id + 'expanded'}
                     data-state={"selected"}
                   >
-                    <td colSpan={100} ><div className="bg-slate-800 flex justify-center whitespace-nowrap gap-10">{!relics.isLoading ? 
+                    <td colSpan={100} >
+                      <div className="bg-slate-800 flex justify-center whitespace-nowrap gap-2">{!relics.isLoading ? 
                     relics.data.map((relic: Relic) => {
                         console.log(relic)
                         return(
-                        <div key={row.id + relic.tid} className="flex justify-center items-center border-slate-400 border-2 p-2">
+                        <div key={row.id + relic.tid} className="flex justify-center items-center border-slate-400 border-2 p-1">
                             <div className="justify-center">
                                 <RelicCanvas backgroundImage={relic.icon}/>
                                 {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
                                 <div className="bg-slate-800 flex justify-start items-center text-sm">
-                                    <StatIcon stat={relic.main_stat_name} /><span> {StatFormat[relic.main_stat_name](relic.main_stat_value)}</span>
+                                    <StatIcon stat={relic.main_stat_name} scale={0.9}/><span> {StatFormat[relic.main_stat_name](relic.main_stat_value)}</span>
                                 </div>
                             </div>
                             <div className="justify-start">
                                 {Object.keys(relic.stats).map((stat) => {
-                                    return (<div key={row.id + relic.tid + stat} className="bg-slate-800 flex justify-start items-center text-sm gap-0"><StatIcon stat={stat} /><span> {StatFormat[stat](relic.stats[stat])}</span></div>)
+                                    return (<div key={row.id + relic.tid + stat} className="bg-slate-800 flex justify-start items-center text-sm gap-0"><StatIcon stat={stat} scale={0.9}/><span> {StatFormat[stat](relic.stats[stat])}</span></div>)
                                 })}
                             </div>
                         </div>)

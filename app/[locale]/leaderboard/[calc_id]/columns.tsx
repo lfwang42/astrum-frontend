@@ -34,7 +34,7 @@ export const columns: ColumnDef<LeaderboardRow>[] = [
     header: "Owner",
     accessorKey: "nickname",
     cell: ({ row } ) => (
-      <a href={`../profile/${row.original.uid}`}>{row.original.nickname}</a>
+      <a href={`../profile/${row.original.uid}`}><span className="hover:text-orange-400">{row.original.nickname}</span></a>
     ),
   },
   {

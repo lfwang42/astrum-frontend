@@ -65,10 +65,11 @@ const statIcons: {
 
 type StatProps = {
     stat: string
+    scale?: number
   };
 
-export const StatIcon: React.FC<StatProps> = ({ stat }) => {
+export const StatIcon: React.FC<StatProps> = ({ stat, scale }) => {
     return (
-        <Image className="h-auto w-8" width={18} height={18} src={statIcons[stat]} alt={stat} />
-        );
+      <Image className="w-auto" width={18 * (scale ? scale : 1)} height={18 * (scale ? scale : 1)} src={statIcons[stat]} alt={stat} />
+    );
 };
