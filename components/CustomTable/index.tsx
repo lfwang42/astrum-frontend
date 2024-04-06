@@ -80,9 +80,9 @@ export function CustomTable<TData, TValue>({
     setTableSizeLoading(true)
     const res = await axios.get(getAPIURL('/api/tablesize'), {params: tableParams})
     setTableSize(res.data)
-    console.log(tableSize)
+    // console.log(tableSize)
     setTableSizeLoading(false)
-    console.log(tableSizeLoading)
+    // console.log(tableSizeLoading)
   };
 
   useEffect(() => {

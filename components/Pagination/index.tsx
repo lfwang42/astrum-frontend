@@ -49,7 +49,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   const [disablePrev, togglePrev] = useState<boolean>(pageNumber === 1)
 
   useEffect(() => {
-    console.log(tableSizeLoading)
+    // console.log(tableSizeLoading)
   }, [tableSizeLoading])
 
   useEffect(() => {
