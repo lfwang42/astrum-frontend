@@ -218,7 +218,7 @@ export function CustomTable<TData, TValue>({
         <Pagination 
           tableSize={tableSize} 
           tableSizeLoading={tableSizeLoading}
-          pageSize = {searchParams.size ? searchParams.size : 10}
+          pageSize = {searchParams.size ? searchParams.size : 20}
           pageNumber = {searchParams.page} 
           setParams = {setParams}
           nextFunction = {navigateNext}
