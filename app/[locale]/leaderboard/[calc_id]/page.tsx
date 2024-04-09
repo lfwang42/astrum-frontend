@@ -229,8 +229,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           <CustomTable
           fetchUrl={getAPIURL('/api/leaderboard')}
           columns={columns} 
-          data={leaderboardData.data} 
-          isLoading={leaderboardData.isLoading}
           params={p}
           defaultSort="score"
           sortOptions={sortOptions}

@@ -204,3 +204,20 @@ export function getRelativeStats(buildRow: any, type: string) {
     // console.log(res)
     return res;
 }
+
+export const formatRankNumber = (n: number) => {
+    if (n > 9999) {
+      const thousands = n / 1000;
+  
+      // if above 100k then dont show decimals
+      if (thousands > 99) {
+        return `${Math.round(thousands)}k`;
+      }
+  
+      // if below 100k then show one decimal ( e.g. 56.6k )
+      const rounded = thousands.toFixed(1);
+  
+      return `${rounded}k`;
+    }
+    return n;
+  };

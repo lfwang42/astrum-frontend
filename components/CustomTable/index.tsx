@@ -34,8 +34,6 @@ interface tableParams {
 interface CustomTableProps<TData, TValue> {
   fetchUrl: string,
   columns: ColumnDef<TData, TValue>[],
-  data: TData[], 
-  isLoading?: boolean,
   params?: Params,
     // sortOptions?: Record<string, string>
   tableParams: tableParams,
@@ -59,7 +57,6 @@ export type Params = {
 export function CustomTable<TData, TValue>({
   fetchUrl,
   columns,
-  data,
   tableParams,
   // totalRows,
   // isLoading,
@@ -67,7 +64,7 @@ export function CustomTable<TData, TValue>({
   sortOptions,
   defaultSort
 }: CustomTableProps<TData, TValue>) {
-  const [rows, setRows] = useState<TData[]>(data)
+  const [rows, setRows] = useState<TData[]>([])
   const [isLoading, setLoading] = useState<boolean>(true)
   const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
   const [tableSize, setTableSize] = useState<number>(0)
@@ -115,7 +112,8 @@ export function CustomTable<TData, TValue>({
     .catch((error) => {
         console.log(error);
       });
-  }, [searchParams])
+  }, [JSON.stringify(searchParams), fetchUrl])
+  
   const t = useTranslations();
   function navigateNext(newParams: Params) {
     const stringParams: any = {}

@@ -58,3 +58,28 @@ export interface LeaderboardCone {
     level: number,
     icon: string
 }
+
+interface CalcResult {
+    calc_id: number, 
+    rank: number, 
+    outof: number,
+    icon: string,
+    tid: number
+}
+
+interface LeaderboardResults {
+    avatar_id: number,
+    results: CalcResult[]
+}
+export interface User {
+    headicon: number;
+    level: number;
+    nickname: string;
+    platform: string | null;
+    signature: string | null;
+    uid: number;
+    updated_at: string;
+    achievementCount: number;
+    ranks: LeaderboardResults[];
+    ttl: number;
+}

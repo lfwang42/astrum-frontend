@@ -11,19 +11,25 @@ import { Timer } from '@/components/Timer'
 import { IoMdRefresh } from "react-icons/io";
 import { UpdatedDate } from '@/components/UpdatedDate'
 import { useRouter } from 'next/navigation'
+import { User } from '@/app/types'
+import { ResultsDisplay } from '@/components/ResultsDisplay'
 
 export default function Profile({ params }: { params: { uid: number }}) {
   const [refreshTime, setRefreshTime] = useState<number>();
   const [enableRefresh, setEnableRefresh] = useState<boolean>(false);
-  const [userData, setUserData] = useState<any>(null)
+  const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
   const router = useRouter()
+  const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
   const fetchProfile = async (uid: string) => {
     const res = await axios.get(getAPIURL(`/api/users/${params.uid}`))
     setUserData(res.data)
     var date = new Date(Date.parse(res.data.updated_at)).getTime()
-    console.log(date)
   }
+
+  // useEffect(() => {
+  //   console.log('changed')
+  // }, [params.uid])
 
   useEffect(() => {
     fetchProfile(params.uid.toString())
@@ -31,14 +37,14 @@ export default function Profile({ params }: { params: { uid: number }}) {
 
   useEffect(() => {
     if (!userData) return
-    setProfilePic(`https://enka.network/ui/hsr/${avatars[(userData.headicon as keyof typeof avatars)].Icon}`)
+    setProfilePic(`https://enka.network/ui/hsr/${avatars[(userData.headicon.toString() as keyof typeof avatars)].Icon}`)
     const now = new Date().getTime();
     const cooldown = now + (userData.ttl);
     setRefreshTime(cooldown)
     if (userData.ttl === 0) {
       setEnableRefresh(true)
     }
-  }, [params.uid, userData])
+  }, [userData])
   
   function fetcher(params: any) {
     const [url, query] = params;
@@ -117,11 +123,11 @@ export default function Profile({ params }: { params: { uid: number }}) {
     </div>
   );
 
-    const profileData = useSWR([getAPIURL(`/api/builds/${params.uid}`), {}] , fetcher, {
-      onErrorRetry: (error) => {
-        return
-      }
-    })
+    // const profileData = useSWR([getAPIURL(`/api/builds/${params.uid}`), {}] , fetcher, {
+    //   onErrorRetry: (error) => {
+    //     return
+    //   }
+    // })
     const sortOptions = [
       { value: 'spd', label: 'Speed' },
       { value: 'atk', label: 'Attack' },
@@ -156,6 +162,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
           </div>
           
         </div>
+        <ResultsDisplay user={userData}/>
         <CustomTable 
         tableParams={
           {
@@ -163,11 +170,9 @@ export default function Profile({ params }: { params: { uid: number }}) {
             query: params.uid
           }
         }
-        fetchUrl={getAPIURL(`/api/builds/${params.uid}`)}
+        fetchUrl={fetchURL}
         columns={columns} 
         defaultSort={'spd'} 
-        data={profileData.data} 
-        isLoading={profileData.isLoading} 
         sortOptions={sortOptions}
         params={p}
         />
