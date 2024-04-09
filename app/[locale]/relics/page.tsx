@@ -89,8 +89,6 @@ const sortOptions =
            }
            fetchUrl={getAPIURL('/api/relics')}
            columns={columns} 
-           data={relicData.data} 
-           isLoading={relicData.isLoading} 
            params={p} 
            sortOptions={sortOptions}
            defaultSort='SpeedDelta'/>
