@@ -21,8 +21,8 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({
             }
             const topPercentage = Math.min(100, Math.ceil((best.rank / best.outof) * 100));
             return(
-            <Link href={`/leaderboard/${best.calc_id}/`}>
-              <div key={`result-${user.uid}-${result.avatar_id}`} className="justify-center text-center bg-slate-700 p-2 hover:bg-slate-400 hover:border-sky-900 border-2 border-none">
+            <Link key={`result-${user.uid}-${result.avatar_id}`} href={`/leaderboard/${best.calc_id}/`}>
+              <div  className="justify-center text-center bg-slate-700 p-2 hover:bg-slate-400 hover:border-sky-900 border-2 border-none">
 
                   <div className="m-1 text-sm">{`Top ${topPercentage || "?"}%`}</div>
                   <div className="flex justify-start gap-1">
