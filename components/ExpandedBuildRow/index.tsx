@@ -8,7 +8,8 @@ import Image from "next/image";
 import { StatDisplay } from "../StatDisplay";
 import { StatIcon } from "../StatIcon";
 import { RelicCanvas } from "../RelicCanvas";
-
+import { SimResult } from "../SimResult";
+import results from '@/app/test.json'
 interface Relic {
     type: number,
     tid: number,
@@ -21,9 +22,10 @@ interface Relic {
 type ExpandedBuildRowProps = {
   row: any;
   cols: number;
+  calc_id?: number;
 };
 
-export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols }) => {
+export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, calc_id }) => {
     // var [relics, setRelics] = useState<Relic[]>([]);
     function fetcher(params: any) {
         const [url, query] = params;
@@ -47,8 +49,9 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols })
                     data-state={"selected"}
                   >
                     <td colSpan={100} >
-                      <div className="bg-slate-800 flex justify-center whitespace-nowrap gap-2">{!relics.isLoading ? 
-                    relics.data.map((relic: Relic) => {
+                      <div className="bg-slate-800 flex justify-center whitespace-nowrap gap-2">
+                        {!relics.isLoading ? 
+                        relics.data.map((relic: Relic) => {
                         console.log(relic)
                         return(
                         <div key={row.id + relic.tid} className="flex justify-center items-center border-slate-400 border-2 p-1">
@@ -65,9 +68,13 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols })
                                 })}
                             </div>
                         </div>)
-                    })
-                    : <></>    
-                }</div> </td>
+                        })
+                      : <></>}
+                      </div> 
+                      <div className="bg-slate-700">
+                        <SimResult bid={row.bid} calc_id={calc_id} avatar_id={row.avatar_id}/>
+                      </div>
+                    </td>
                    
         </TableRow>)
   

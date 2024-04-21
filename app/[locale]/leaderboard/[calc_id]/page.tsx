@@ -237,7 +237,9 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
               table: 'leaderboard',
               query: params.calc_id
             }
-          }/>
+          }
+          calc_id={params.calc_id}
+          />
         </div>
       </>
     );

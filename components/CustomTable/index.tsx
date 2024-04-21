@@ -38,7 +38,8 @@ interface CustomTableProps<TData, TValue> {
     // sortOptions?: Record<string, string>
   tableParams: tableParams,
   sortOptions?: any[]
-  defaultSort: string
+  defaultSort: string,
+  calc_id?: number,
 }
 
 export type Params = {
@@ -62,7 +63,8 @@ export function CustomTable<TData, TValue>({
   // isLoading,
   params,
   sortOptions,
-  defaultSort
+  defaultSort,
+  calc_id
 }: CustomTableProps<TData, TValue>) {
   const [rows, setRows] = useState<TData[]>([])
   const [isLoading, setLoading] = useState<boolean>(true)
@@ -198,7 +200,7 @@ export function CustomTable<TData, TValue>({
                     ))}
                   </TableRow>
                    {row.getIsExpanded() && 
-                    <ExpandedBuildRow row={buildrow} cols={columns.length}/>
+                    <ExpandedBuildRow row={buildrow} cols={columns.length} calc_id={calc_id}/>
                    }
                 </React.Fragment>
               )})

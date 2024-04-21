@@ -10,6 +10,7 @@ export type LeaderboardRow = {
   rank: number
   bid: number
   uid: number
+  avatar_id: number,
   score: number
   crit_value: number
   stats: CoreStats

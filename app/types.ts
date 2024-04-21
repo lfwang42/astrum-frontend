@@ -67,6 +67,63 @@ interface CalcResult {
     tid: number
 }
 
+interface SkillResult {
+    avatarId: number
+	type: string
+	value: number
+    // log?: SimLog
+}
+
+interface EPGain {
+    avatar_id: number,
+    energy: number
+}
+
+export interface SimLog {
+    avatarId: number;
+    id: number;
+    type: string;
+    av: number;
+    results: SkillResult[]
+    children: SimLog[],
+    message?: string,
+    energyGain: EPGain[]
+    skillId: number | null,
+    target?: number | null,
+    effect?: Debuff
+    // spGain: SPGain[],
+}
+
+export interface Debuff {
+    baseHitRate: number
+    char: any,
+    source: number;
+    received: number;
+    isDebuff: boolean;
+    effectHitRate: number,
+    realHitRate: number,
+    totalHitRate: number,
+    trials: any[],
+    reapply: boolean,
+    stackable: boolean,
+    dot?: {
+        element: string,
+        dmgRate: number
+    }
+    props?: Prop[],
+    statusEffect?: any,
+    turns: number,
+    stacks?: number,
+    maxStacks?: number,
+}
+
+interface Prop {
+	type: StatType
+	value: number
+	mult?: boolean
+}
+
+
 interface LeaderboardResults {
     avatar_id: number,
     results: CalcResult[]
@@ -83,3 +140,77 @@ export interface User {
     ranks: LeaderboardResults[];
     ttl: number;
 }
+
+type StatType = 'BaseHP' | 'HPAddedRatio' | 'HPDelta' | 'HPConvert' |  
+'BaseAttack' | 
+'AttackAddedRatio' | 
+'AttackDelta' | 
+'AttackConvert' | 
+'BaseDefence' | 
+'DefenceAddedRatio' | 
+'DefenceDelta' | 
+'DefenceConvert' | 
+'BaseSpeed' | 
+'SpeedAddedRatio' | 
+'SpeedDelta' | 
+'SpeedConvert' | 
+'CriticalChance' | 
+'CriticalDamage' | 
+'SPRatio' | 
+'SPRatioConvert' | 
+'StatusProbability' | 
+'StatusProbabilityConvert' | 
+'StatusResistance' | 
+'StatusResistanceConvert' | 
+'HealRatioBase' | 
+'HealRatioConvert' | 
+'HealTakenRatio' | 
+'ShieldAddedRatio' | 
+'ShieldTakenRatio' | 
+'AggroBase' | 
+'AggroAddedRatio' | 
+'AggroDelta' | 
+'BreakDamageAddedRatio' | 
+'BreakDamageAddedRatioBase' | 
+'AllDamageTypeResistance' | 
+'PhysicalResistanceDelta' | 
+'FireResistanceDelta' | 
+'IceResistanceDelta' | 
+'ThunderResistanceDelta' | 
+'QuantumResistanceDelta' | 
+'ImaginaryResistanceDelta' | 
+'WindResistanceDelta' | 
+'PhysicalPenetrate' | 
+'FirePenetrate' | 
+'IcePenetrate' | 
+'ThunderPenetrate' | 
+'QuantumPenetrate' | 
+'ImaginaryPenetrate' | 
+'WindPenetrate' | 
+'AllDamageTypeTakenRatio' | 
+'PhysicalTakenRatio' | 
+'FireTakenRatio' | 
+'IceTakenRatio' | 
+'ThunderTakenRatio' | 
+'QuantumTakenRatio' | 
+'ImaginaryTakenRatio' | 
+'WindTakenRatio' | 
+'AllDamageTypeAddedRatio' | 
+'DOTDamageAddedRatio' | 
+'PhysicalAddedRatio' | 
+'FireAddedRatio' | 
+'IceAddedRatio' | 
+'ThunderAddedRatio' | 
+'QuantumAddedRatio' | 
+'ImaginaryAddedRatio' | 
+'WindAddedRatio' | 
+'StanceBreakAddedRatio' | 
+'AllDamageReduce' | 
+'FatigueRatio' | 
+'MinimumFatigueRatio' |
+"FollowAddedRatio" | 
+"UltAddedRatio" | 
+"BasicAddedRatio" | 
+"SkillAddedRatio" |
+"UltCritDamage" |
+"DefenceIgnore";
