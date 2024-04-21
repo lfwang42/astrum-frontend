@@ -38,14 +38,14 @@ export const SimResult: React.FC<SimResultProps> = ({ avatar_id, bid, calc_id })
     } 
     if (calc_id) {
         return (
-        <div className='flex flex-col items-center align-middle p-1' >
+        <div key={`${bid}-${calc_id}-sim-wrapper`} className='flex flex-col items-center align-middle p-1' >
             <div className='mx-auto' onClick={onExpand}>{expand ? "Hide" : "Show"} Simulation result</div>
             {expand ? 
                 <div className="flex-col gap-1">
                     {logs.map((round, index) => {
                         
                     return (
-                        <div className='flex flex-col items-center align-middle p-1'>
+                        <div key={`${bid}-${calc_id}-sim-round-${index}`} className='flex flex-col items-center align-middle p-1'>
                         <span className="hover:text-orange-300" onClick={() => setRoundExpand((prev) => {
                           const prevValue = prev[index]
                           const arr = [...prev]
@@ -54,7 +54,7 @@ export const SimResult: React.FC<SimResultProps> = ({ avatar_id, bid, calc_id })
                         })}>Round: {index+1}</span>
                         {roundExpand[index] ? round.map((log) => {
                             return (
-                              <div className='flex flex-col items-center align-middle'>
+                              <div key={`${bid}-${calc_id}-sim-round-${index}-${log.id}`} className='flex flex-col items-center align-middle'>
                                 <span>
                                   <Translate str={log.avatarId.toString()}/>
                                   {' '}
