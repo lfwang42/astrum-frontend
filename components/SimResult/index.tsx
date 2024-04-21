@@ -69,7 +69,7 @@ export const SimResult: React.FC<SimResultProps> = ({ avatar_id, bid, calc_id })
                                 </span>
                                 {log.results.map((res) => {
                                   if (res.type == 'damage') {
-                                    return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-damage`}><Translate str='DamageDealt'/>: <span className={`${res.avatarId == avatar_id ? 'text-orange-400' : ''}`}>{res.value.toFixed(1)}</span></span>)
+                                    return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-damage`}><Translate str='DamageDealt'/>: <span className={`${res.avatarId == avatar_id ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
                                   }
                                 })}
                               </div>
