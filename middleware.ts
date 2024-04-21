@@ -9,7 +9,7 @@ import createMiddleware from 'next-intl/middleware';
 function getLocale(request: NextRequest) {
     let headers = { 'accept-language': request.headers.get('accept-language')!}
     let languages = new Negotiator({ headers }).languages()
-    let locales = ['en-US', 'nl-NL', 'nl', 'jp'];
+    let locales = ['en-US', 'ja'];
     let defaultLocale = 'en'
     console.log(match(languages, locales, defaultLocale))
 }
@@ -37,7 +37,19 @@ function getLocale(request: NextRequest) {
 
 export default createMiddleware({
   // A list of all locales that are supported
-  locales: ['en', 'jp'],
+  locales: [  'en',
+  'ja',
+  'zh-cn',
+  'zh-tw',
+  'fr',
+  'es',
+  'id',
+  'de',
+  'ko',
+  'vi',
+  'th',
+  'ru',
+  'pt',],
  
   // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
   defaultLocale: 'en'

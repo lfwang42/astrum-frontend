@@ -39,14 +39,68 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
     // router.push({ pathname, query }, asPath, { locale: nextLocale })
     router.replace(pathname, {locale: nextLocale});
   }
+
+ 
   const langs = [{
     locale: 'English',
     value: 'en'
   },
   {
     locale: '日本語',
-    value: 'jp' 
-  }    
+    value: 'ja' 
+  },
+  {
+    locale: '中文简体',
+    value: 'zh-cn' 
+  },
+  {
+    locale: '中文繁體',
+    value: 'zh-tw' 
+  },
+  {
+    locale: 'Français',
+    value:  'fr', 
+  },
+  {
+    locale: 'Español',
+    value:  'es',
+  },
+  {
+    locale: 'Bahasa Indonesia',
+    value:   'id',  
+  },
+  {
+    locale: 'Deutsch',
+    value: 'de',  
+  },
+  {
+    locale: '한국어',
+    value:   'ko',
+  },
+  {
+    locale: 'Tiếng Việt',
+    value:     'vi',
+  },
+  {
+    locale: 'ภาษาไทย',
+    value:    'th', 
+  },
+  {
+    locale: 'Русский',
+    value:  'ru',
+  },
+  {
+    locale: 'Português',
+    value:   'pt',
+  },
+
+  
+
+
+
+
+ 
+     
   ]
   return (
     <>
