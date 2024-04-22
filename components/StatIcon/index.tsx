@@ -8,7 +8,6 @@ import HitRate from '../../app/assets/icon/EffectHitRate.png'
 import StatusRes from '../../app/assets/icon/EffectRes.png'
 import BreakEffect from '../../app/assets/icon/BreakEffect.png'
 import HP from '../../app/assets/icon/HP.png'
-
 import QuantumBoost from '../../app/assets/icon/QuantumBoost.png'
 import FireBoost from '../../app/assets/icon/FireBoost.png'
 import IceBoost from '../../app/assets/icon/IceBoost.png'
@@ -61,6 +60,7 @@ const statIcons: {
     "critDmg": CritDmg,
     "critRate": CritRate,
     "breakEffect": BreakEffect,
+    'SPRatioBase': EnergyRecharge
   }
 
 type StatProps = {
