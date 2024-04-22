@@ -76,7 +76,8 @@ interface SkillResult {
 
 interface EPGain {
     avatar_id: number,
-    energy: number
+    energy: number,
+    energyGained: number
 }
 
 export interface SimLog {

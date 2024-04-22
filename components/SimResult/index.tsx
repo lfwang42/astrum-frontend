@@ -1,10 +1,11 @@
 import { SimLog } from '@/app/types';
 import Image from 'next/image';
-import results from '@/app/test.json'
+import { SlArrowDown,SlArrowUp  } from "react-icons/sl";
 import { useEffect, useState } from 'react';
 import { Translate } from '../Translate';
 import axios from 'axios';
 import { getAPIURL } from '@/lib/utils';
+import { SimResultRound } from '../SimResultRound';
 const SPRITE_URL = `https://enka.network/ui/hsr/`
 const meme = "SPRITE_URL + set.icon"
 type SimResultProps = {
@@ -45,54 +46,56 @@ export const SimResult: React.FC<SimResultProps> = ({ avatar_id, bid, calc_id })
     if (calc_id) {
         return (
         <div key={`${bid}-${calc_id}-sim-wrapper`} className='flex flex-col items-center align-middle p-1' >
-            <div className='mx-auto hover:text-orange-300' onClick={onExpand}>{expand ? "Hide" : "Show"} Simulation result</div>
+            <div className='flex items-center gap-1 mx-auto hover:text-orange-300' onClick={onExpand}>{expand ? "Hide" : "Show"} Simulation result {expand ? <SlArrowUp /> : <SlArrowDown />}</div>
             {expand ? 
                 <div className="flex-col gap-1">
                     {logs.map((round, index) => {
                         
                     return (
-                        <div key={`${bid}-${calc_id}-sim-round-${index}`} className='flex flex-col items-center align-middle p-1'>
-                        <span className="hover:text-orange-300" onClick={() => setRoundExpand((prev) => {
+                      <div key={`${bid}-${calc_id}-sim-round-${index}`} className='flex flex-col items-center align-middle p-1'>
+                        <span className="flex items-center gap-1 hover:text-orange-300" onClick={() => setRoundExpand((prev) => {
                           const prevValue = prev[index]
                           const arr = [...prev]
                           arr.splice(index, 1, !prevValue)
                           return arr
-                        })}><Translate str={'Cycles'}/>{' '}{index+1}</span>
+                        })}><Translate str={'Cycles'}/>{' '}{index+1}{roundExpand[index] ? <SlArrowUp /> : <SlArrowDown />}</span>
                         {roundExpand[index] ? round.map((log) => {
-                            const roundAvatarId = log.avatarId
-                            var src = ""
-                            if (tempMap[roundAvatarId.toString()] != undefined) {
-                              src = tempMap[roundAvatarId.toString()]
-                            }
-                            else {
-                              src = `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${roundAvatarId}.png`
-                            }
-                            return (
-                              <div key={`${bid}-${calc_id}-sim-round-${index}-${log.id}`} className='flex flex-col items-center align-middle'>
-                                <span className='flex gap-1 items-center'>
-                                  <Image src={src} width={25} height={25} unoptimized alt="character image"/>
-                                  <Translate str={log.avatarId.toString()}/>
-                                  {' '}
-                                  <Translate str={log.type} />
-                                  {log.target ? 
-                                    <span>{'--> '}
-                                    <Translate str={log.target.toString()}/>
-                                    </span>
-                                    :
-                                    <></>
-                                  } 
-                                  {log.results.map((res) => {
-                                    if (res.type == 'damage') {
-                                      return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-damage`}>{' || '}<Translate str='DamageDealt'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
-                                    }
-                                    if (res.type == 'shield') {
-                                      return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-shield`}>{' || '}<Translate str='Shield'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
-                                    }
-                                  })}
-                                </span>
+                            // const roundAvatarId = log.avatarId
+                            // var src = ""
+                            // if (tempMap[roundAvatarId.toString()] != undefined) {
+                            //   src = tempMap[roundAvatarId.toString()]
+                            // }
+                            // else {
+                            //   src = `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${roundAvatarId}.png`
+                            // }
+                            // return (
+                            //   <div key={`${bid}-${calc_id}-sim-round-${index}-${log.id}`} className='flex flex-col items-center align-middle'>
+                            //     {/* results display (ie.. seele -> enemy | damage) */}
+                            //     <span className='flex gap-1 items-center'>
+                            //       <Image src={src} width={25} height={25} unoptimized alt="character image"/>
+                            //       <Translate str={log.avatarId.toString()}/>
+                            //       {' '}
+                            //       <Translate str={log.type} />
+                            //       {log.target ? 
+                            //         <span>{'--> '}
+                            //         <Translate str={log.target.toString()}/>
+                            //         </span>
+                            //         :
+                            //         <></>
+                            //       } 
+                            //       {log.results.map((res) => {
+                            //         if (res.type == 'damage') {
+                            //           return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-damage`}>{' || '}<Translate str='DamageDealt'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
+                            //         }
+                            //         if (res.type == 'shield') {
+                            //           return(<span key={`${bid}-${calc_id}-sim-round-${index}-${log.id}-shield`}>{' || '}<Translate str='Shield'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
+                            //         }
+                            //       })}
+                            //     </span>
                                 
-                              </div>
-                            )
+                            //   </div>
+                            // )
+                            return (<SimResultRound trackedStat={trackedStat} log={log} key={`${bid}-${calc_id}-sim-round-${index}`} avatar_id={avatar_id} />)
                         })
                         :
                         <></>
