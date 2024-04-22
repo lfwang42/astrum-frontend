@@ -23,6 +23,7 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({
             return(
             <Link key={`result-${user.uid}-${result.avatar_id}`} href={`/leaderboard/${best.calc_id}/`}>
               <div  className="justify-center text-center bg-slate-700 p-2 hover:bg-slate-400 hover:border-sky-900 border-2 border-none">
+              <span className="text-sm mb-1 font-medium">{result.score_name}</span>
               <div className="flex justify-start gap-1">
                     <Image src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${result.avatar_id}.png`} className="m-1" unoptimized quality={100} height={30} width={30}  alt="character image" />
                     <Image src={`/icon/${best.tid}.png`} className="r-0" height={30} width={30} alt="lightcone image" unoptimized />

@@ -126,7 +126,8 @@ interface Prop {
 
 interface LeaderboardResults {
     avatar_id: number,
-    results: CalcResult[]
+    results: CalcResult[],
+    score_name: string,
 }
 export interface User {
     headicon: number;
