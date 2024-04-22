@@ -213,7 +213,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
               calcs.isLoading ? <></> : 
               calcs.data.map((category: any) => {
                 return (
-                  <div key={category.name}>
+                  <div key={category.name} className="mr-10">
                     <span className="my-4 text-lg">{category.name}</span>
                       <div className="flex justify-start whitespace-nowrap gap-5">
                       {category.calculations.map((calc: any) => {
