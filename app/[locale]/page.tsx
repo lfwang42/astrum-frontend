@@ -25,6 +25,9 @@ export default function Home() {
         <p>If your profile is not available, try fetching it on enka.network first, and wait a few minutes.</p>
         <SearchField />
       </div>
+      <div className='mx-auto mt-8 w-2/3 p-2 gap-2 flex flex-col justify-center items-center border-solid border-slate-800 border-2 bg-slate-800'>
+        <p>News test</p>
+      </div>
     </main>
   )
 }
