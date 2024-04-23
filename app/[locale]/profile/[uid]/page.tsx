@@ -145,17 +145,22 @@ export default function Profile({ params }: { params: { uid: number }}) {
       <div className="min-h-screen container mx-auto py-10">
         {refreshButton}
         <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-20 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
-          <div className='flex p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
+          <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
+            <Image src={profilePic} height={30} width={30} unoptimized className="mt-1 h-16 w-auto" alt="profile picture"/>
             {userData ? 
-            <>
-              <Image src={profilePic} height={60} width={60} alt="profile picture"/>
-              <div className="flex flex-col font-medium" ><span className="text-lg  font-sans font-bold">{userData.nickname}</span>{userData.signature}</div>
-              <div className="flex justify-end gap-4 w-full font-sans font-bold text-lg" >
+            <div className='flex flex-col'>
 
-                <span>{getRegion(params.uid)}</span>
-                <span>{`TL${userData.level}`}</span>
+              
+              <div className="flex justify-between" >
+                <span className="text-lg  font-sans font-bold">{userData.nickname}</span>
+                <div className="flex flex-row-reverse justify-start gap-3 w-full font-sans font-bold text-lg mr-2 " >
+                  <span>{getRegion(params.uid)}</span>
+                  <span>{`TL${userData.level}`}</span>
+                </div>
               </div>
-            </> : 
+              
+              <div className='flex whitespace-break-spaces break-all'>{userData.signature}</div>
+            </div>: 
             <div className="h-10 w-1/4">
             {'Loading...'}
             </div>}
