@@ -12,7 +12,7 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
         return (
             <div className="flex justify-start whitespace-nowrap gap-5">
             {cones.map((cone) => {
-                return(<ConeDisplay key={`${keyIndex}-${cone.name}`} name={cone.name} icon={cone.icon} imposition={cone.rank} />)
+                return(<ConeDisplay key={`${keyIndex}-${cone.name}`} name={cone.name.toString()} icon={cone.icon} imposition={cone.rank} />)
                 return (
                     <div key={cone.name} className="relative">
                         <img className="h-auto w-8 m-1" src={cone.icon} />
