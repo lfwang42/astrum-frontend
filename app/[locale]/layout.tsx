@@ -4,7 +4,7 @@ import {NextIntlClientProvider} from 'next-intl';
 import {notFound} from 'next/navigation';
 
 import '../globals.css'
-import Navbar from '../../components/navbar/index';
+import Navbar from '../../components/Navbar/index';
 import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
@@ -33,17 +33,23 @@ export default async function RootLayout({
   }
   return (
     <html lang={locale} className={inter.className}>
+
       <head>
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
-        crossOrigin="anonymous"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
+          crossOrigin="anonymous">
+        </script>
       </head>
-      <body className="min-h-screen bg-slate-800 text-slate-50">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Navbar locale={locale}/>
-          {children}
-          <Footer locale={locale}/>
-        </NextIntlClientProvider>
-      </body>
+    
+        <body className="min-h-screen items-center bg-slate-800 text-slate-50 mb-5">
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Navbar locale={locale}/>
+            {children}
+          </NextIntlClientProvider>
+          <Footer />
+        </body>
+
+
+
     </html>
   )
 }

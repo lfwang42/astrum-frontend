@@ -54,7 +54,7 @@ export const columns: ColumnDef<BuildRow>[] = [
   },
   {
     header: "Lightcone",
-    cell: ({ row } ) => row.original.cone_tid? <EquipmentDisplay keyIndex={row.index} cones={[{ name: row.original.cone_tid.toString(), 
+    cell: ({ row } ) => row.original.cone_tid? <EquipmentDisplay keyIndex={row.index} cones={[{ name: row.original.cone_tid, 
       rank: row.original.cone_rank, icon: `/icon/${row.original.cone_tid}.png`}]}/>
       : <></>
   },//`https://enka.network/ui/hsr/SpriteOutput/LightConeFigures/${row.original.cone_tid}.jpg`

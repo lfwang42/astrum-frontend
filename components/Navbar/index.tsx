@@ -103,7 +103,6 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
      
   ]
   return (
-    <>
       <header className="xl:flex flex flex-wrap justify-between items-center h-full px-[8%] w-full flex-auto bg-sky-900 top-0 py-4">
           <div>
             <Link href="/">
@@ -172,41 +171,9 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
                 </ul>
               </nav>
             }
-
-            {/* <FiMenu className="xl:hidden block mr-0 h-6 w-6 cursor-pointer" onClick={() => setOpen(!open)}/>
-              <nav className={`${open ? 'block' : 'hidden'} xl:flex-1 xl:items-center`} >
-
-                <ul className="text-base text-white xl:flex w-full">
-                  <li>
-                    <Link href="/relics" >
-                      <p className="xl:px-5 py-2">Relics</p>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/categories"  >
-                      <p className="xl:px-5 py-2">Leaderboards</p>
-                    </Link>
-                  </li>
-
-                <div className="ml-auto">
-                    <li>
-                      <select
-                        className="xl:px-5 py-2 appearance-none bg-sky-900"
-                        defaultValue={locale}
-                        onChange={onSelect}>
-                        {langs.map((lang) => (
-                          <option key={lang.locale} value={lang.value}>
-                            {lang.locale}
-                          </option>
-                        ))}
-                      </select>
-                  </li>
-                  </div>
-                </ul>
-            </nav> */}
             
         </header>
-    </>
+
   );
 };
 

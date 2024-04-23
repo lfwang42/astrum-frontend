@@ -1,4 +1,4 @@
-import Navbar from "../../../components/navbar";
+import Navbar from "../../../components/Navbar";
 import { CategoryRow, columns } from './columns';
 import { CategoryTable } from './category-table';
 import axios from 'axios'

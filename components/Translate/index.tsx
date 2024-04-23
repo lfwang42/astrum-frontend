@@ -10,7 +10,7 @@ type TProps = {
 export const Translate: React.FC<TProps> = ({ str }) => {
     const t = useTranslations()
     return (
-      <span>{t(str)}</span>
+      <span>{t(str.toString())}</span>
     );
   
 };

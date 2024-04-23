@@ -144,12 +144,12 @@ export default function Profile({ params }: { params: { uid: number }}) {
   return (
       <div className="min-h-screen container mx-auto py-10">
         {refreshButton}
-        <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-18 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
-          <div className='flex justify-left p-1 gap-2 border-solid border-2 border-black w-1/4'>
+        <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-20 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
+          <div className='flex p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
             {userData ? 
             <>
               <Image src={profilePic} height={60} width={60} alt="profile picture"/>
-              <span className="text-lg  font-sans font-bold">{userData.nickname}</span>
+              <div className="flex flex-col font-medium" ><span className="text-lg  font-sans font-bold">{userData.nickname}</span>{userData.signature}</div>
               <div className="flex justify-end gap-4 w-full font-sans font-bold text-lg" >
 
                 <span>{getRegion(params.uid)}</span>
@@ -157,6 +157,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
               </div>
             </> : 
             <div className="h-10 w-1/4">
+            {'Loading...'}
             </div>}
             
           </div>

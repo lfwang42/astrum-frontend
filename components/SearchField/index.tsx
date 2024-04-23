@@ -47,9 +47,9 @@ export default function SearchField() {
     return (
         <div className="flex w-30 gap-1 p-1">
             <form onSubmit={debounced}>
-                <input className="text-black min-w-5" type="text" name="uid" value={uid} placeholder="enter UID" 
+                <input className="text-gray-200 bg-slate-900 rounded-sm p-1 min-w-5 " type="text" name="uid" value={uid} placeholder="Enter UID" 
                 onChange={e => setUid(e.target.value)}/>
-                <button type="submit" className="m-1">Submit</button>
+                <button type="submit" className="ml-2 text-gray-200 hover:text-orange-400">{'-->'}</button>
             </form>
         </div>
         );
