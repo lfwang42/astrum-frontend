@@ -67,7 +67,7 @@ interface CalcResult {
     tid: number
 }
 
-interface SkillResult {
+export interface SkillResult {
     avatarId: number
 	type: string
 	value: number
@@ -87,6 +87,7 @@ export interface SimLog {
     av: number;
     results: SkillResult[]
     children: SimLog[],
+    childDamage: number,
     message?: string,
     energyGain: EPGain[]
     skillId: number | null,

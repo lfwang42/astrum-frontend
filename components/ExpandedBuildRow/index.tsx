@@ -5,7 +5,7 @@ import { StatFormat, getAPIURL } from "@/lib/utils";
 import useSWR from "swr";
 import { StatIcon } from "../StatIcon";
 import { RelicCanvas } from "../RelicCanvas";
-import { SimResult } from "../SimResult";
+import { SimResultDisplay } from "../SimResult";
 interface Relic {
     type: number,
     tid: number,
@@ -68,7 +68,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
                       : <></>}
                       </div> 
                       <div className="bg-slate-700">
-                        <SimResult bid={row.bid} calc_id={calc_id} avatar_id={row.avatar_id}/>
+                        <SimResultDisplay bid={row.bid} calc_id={calc_id} avatar_id={row.avatar_id}/>
                       </div>
                     </td>
                    

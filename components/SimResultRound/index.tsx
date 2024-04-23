@@ -1,12 +1,9 @@
-import { SimLog } from '@/app/types';
+import { SimLog, SkillResult } from '@/app/types';
 import Image from 'next/image';
 import { SlArrowDown,SlArrowUp  } from "react-icons/sl";
 import { useEffect, useState } from 'react';
 import { Translate } from '../Translate';
-import axios from 'axios';
-import { getAPIURL } from '@/lib/utils';
 const SPRITE_URL = `https://enka.network/ui/hsr/`
-const meme = "SPRITE_URL + set.icon"
 type SimResultRoundProps = {
   trackedStat: string;
   key: string;
@@ -30,14 +27,23 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
     else {
         src = `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${roundAvatarId}.png`
     }
+
+    const roundResult = (res: SkillResult, prepend: boolean) => {
+      if (res.type == 'damage') {
+        return(<span>{prepend ? ' || ' : ''}<Translate str='DamageDealt' />: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
+      }
+      if (res.type == 'shield') {
+        return(<span>{prepend ? ' || ' : ''}<Translate str='Shield'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
+      }
+      return (<></>)
+    }
+
     return (
       <div key={`${key}-${log.id}`} className='flex flex-col items-center align-middle' onClick={() => setExpand((prev) => !prev)}>
         {/* results display (ie.. seele -> enemy | damage) */}
         <span className='flex gap-1 items-center'>
             <Image src={src} width={25} height={25} unoptimized alt="character image"/>
-            <Translate str={log.avatarId.toString()}/>
-            {' '}
-            <Translate str={log.type} />
+            <Translate str={log.avatarId.toString()}/>{' '}<Translate str={log.type} />
             {log.target ? 
             <span>{'--> '}
             <Translate str={log.target.toString()}/>
@@ -46,17 +52,14 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
             <></>
             } 
             {log.results.map((res) => {
-            if (res.type == 'damage') {
-                return(<span key={`${key}-${log.id}-damage`}>{' || '}<Translate str='DamageDealt'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
-            }
-            if (res.type == 'shield') {
-                return(<span key={`${key}-${log.id}-shield`}>{' || '}<Translate str='Shield'/>: <span className={`${(res.avatarId == avatar_id && res.type == trackedStat) ? 'text-orange-400' : ''}`}>{res.value.toFixed(0)}</span></span>)
-            }
+              return (<span key={`${key}-${log.id}-${res.type}`}>{roundResult(res, true)}</span>)
             })}
+            {log.childDamage > 0 ? <span>{' || Damage Received: '}{log.childDamage.toFixed(0)}</span> : <></>}
 
             {expand ? <SlArrowUp /> : <SlArrowDown />}
         </span>
         {expand ? 
+        <div>
           <span className='text-center'>
             {log.energyGain.map((epgain) => {
               return (<span key={`${key}-${log.id}-${epgain.avatar_id}-energy`} className='flex gap-1 justify-center items-center text-center'>
@@ -67,6 +70,23 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
                 </span>)
             })} 
           </span> 
+          <span className='text-center'>
+            {log.children.map((child) => {
+              return (
+                <span key={`${key}-${child.id}-${child.avatarId}`} className='flex gap-1 justify-center items-center text-center'>
+                  <Image src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${child.avatarId}.png`} width={20} height={20} unoptimized alt="character image"/>
+                  <Translate str={child.avatarId.toString()}/>{' '}<Translate str={child.type} />
+                  {child.results.map((res, index) => {
+                    return (
+                    <span key={`${key}-${child.id}-${child.avatarId}-${index}`}>
+                      {roundResult(res, false)}
+                    </span>)
+                  })}
+                </span>
+              )
+            })} 
+          </span> 
+        </div>
           : 
           <></>}
       </div>
