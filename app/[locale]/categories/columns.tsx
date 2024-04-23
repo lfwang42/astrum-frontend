@@ -48,7 +48,7 @@ export const columns: ColumnDef<CategoryRow>[] = [
   {
     header: "Lightcones",
     cell: ({ row } ) => (
-      <EquipmentDisplay cones={row.original.calculations} />
+      <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
     )
   },
   {
