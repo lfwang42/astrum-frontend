@@ -61,9 +61,9 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
             {log.energyGain.map((epgain) => {
               return (<span key={`${key}-${log.id}-${epgain.avatar_id}-energy`} className='flex gap-1 justify-center items-center text-center'>
                 <Image src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${epgain.avatar_id}.png`} width={20} height={20} unoptimized alt="character image"/>
-                {'Energy Received: '}{epgain.energyGained.toFixed(1)}
+                <Translate str={'EnergyGained'}/>{': '}{epgain.energyGained.toFixed(1)}
                 {' || '}
-                {'Current Energy: '}{epgain.energy.toFixed(0)}
+                <Translate str={'Energy'}/>{': '}{epgain.energy.toFixed(0)}
                 </span>)
             })} 
           </span> 

@@ -27,7 +27,7 @@ export type SetInfo = {
 
 export type EquipInfo = {
     calc_id?: number,
-    name: string | number,
+    name: string,
     promotion?: number, 
     rank: number, 
     level?: number,

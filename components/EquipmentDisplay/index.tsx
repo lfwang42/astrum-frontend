@@ -1,4 +1,5 @@
 import { SetInfo, EquipInfo } from '../../app/types';
+import { ConeDisplay } from '../ConeDisplay';
 const SPRITE_URL = `https://enka.network/ui/hsr/`
 const meme = "SPRITE_URL + set.icon"
 type ConeProps = {
@@ -10,6 +11,7 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones }) => {
         return (
             <div className="flex justify-start whitespace-nowrap gap-5">
             {cones.map((cone) => {
+                return(<ConeDisplay name={cone.name} icon={cone.icon} imposition={cone.rank} />)
                 return (
                     <div key={cone.name} className="relative">
                         <img className="h-auto w-8 m-1" src={cone.icon} />

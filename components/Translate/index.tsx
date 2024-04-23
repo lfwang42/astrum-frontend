@@ -3,7 +3,7 @@ import {useTranslations} from 'next-intl';
 
 
 type TProps = {
-  str: string
+  str: string | number
 };
 
 
