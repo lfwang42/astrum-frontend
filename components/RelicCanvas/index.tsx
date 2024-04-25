@@ -6,7 +6,7 @@ type CanvasProps = {
 
  
 export const RelicCanvas: React.FC<CanvasProps> = ({ backgroundImage }) => {
-    console.log(backgroundImage)
+    // console.log(backgroundImage)
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const canvasWidth = 50;
     const canvasHeight = 50;

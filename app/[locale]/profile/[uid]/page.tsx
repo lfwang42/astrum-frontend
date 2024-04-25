@@ -148,12 +148,10 @@ export default function Profile({ params }: { params: { uid: number }}) {
           <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
             <Image src={profilePic} height={30} width={30} unoptimized className="mt-1 h-16 w-auto" alt="profile picture"/>
             {userData ? 
-            <div className='flex flex-col'>
-
-              
-              <div className="flex justify-between" >
+            <div className='flex w-full flex-col'>   
+              <div className="flex justify-between min-w-20" >
                 <span className="text-lg  font-sans font-bold">{userData.nickname}</span>
-                <div className="flex flex-row-reverse justify-start gap-3 w-full font-sans font-bold text-lg mr-2 " >
+                <div className="flex flex-row-reverse gap-3 w-full font-sans font-bold text-lg mr-2 " >
                   <span>{getRegion(params.uid)}</span>
                   <span>{`TL${userData.level}`}</span>
                 </div>
