@@ -13,11 +13,11 @@ export const SetDisplay: React.FC<SetProps> = ({ sets }) => {
             {sets.map((set, ind) => {
                 if (set) {
                 return (
-                    <div key={set.name} className="relative">
-                        <div className="table-icon">
-                        <Image alt={""} width={22} height={22}  className="h-auto w-auto" src={SPRITE_URL + set.icon} />
+                    <div key={set.name} className="flex relative">
+                        <div className="table-icon mb-1 mr-1">
+                        <Image alt={""} width={20} height={20}  className="h-auto w-auto" src={SPRITE_URL + set.icon} />
                         </div>
-                        <span className="absolute right-0 bottom-0">
+                        <span className="absolute right-0 bottom-0 font-medium m-0">
                         {ind === 2 ? 4 : 2}
                         </span>
                     </div>

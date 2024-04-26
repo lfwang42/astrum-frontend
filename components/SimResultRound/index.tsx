@@ -73,7 +73,8 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
           <span className='text-center'>
             {log.children.map((child) => {
               return (
-                <span key={`${key}-${child.id}-${child.avatarId}`} className='flex gap-1 justify-center items-center text-center'>
+                // <div >
+                <span key={`${key}-${child.id}-${child.avatarId}`}  className='flex gap-1 justify-center items-center text-center'>
                   <Image src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${child.avatarId}.png`} width={20} height={20} unoptimized alt="character image"/>
                   <Translate str={child.avatarId.toString()}/>{' '}<Translate str={child.type} />
                   {child.results.map((res, index) => {
@@ -82,7 +83,9 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
                       {roundResult(res, false)}
                     </span>)
                   })}
+                  {child.message ? ": " + child.message : ""}
                 </span>
+                // </div>
               )
             })} 
           </span> 

@@ -6,6 +6,7 @@ import march from "./march.webp"
 import {usePathname, useRouter} from 'next-intl/client';
 import {ChangeEvent} from 'react';
 import { FiMenu } from 'react-icons/fi'
+import { LanguageSelector } from "../LanguageSelector";
 
 interface NavProps {
   locale: string
@@ -126,18 +127,19 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
                   </li>
 
                 <div className="ml-auto">
-                    <li>
-                      <select
-                        className="xl:px-5 py-2 appearance-none bg-sky-900"
-                        defaultValue={locale}
-                        onChange={onSelect}>
-                        {langs.map((lang) => (
-                          <option key={lang.locale} value={lang.value}>
-                            {lang.locale}
-                          </option>
-                        ))}
-                      </select>
-                  </li>
+                  <LanguageSelector locale={locale} />
+                      {/* <li>
+                        <select
+                          className="xl:px-5 py-2 appearance-none bg-sky-900"
+                          defaultValue={locale}
+                          onChange={onSelect}>
+                          {langs.map((lang) => (
+                            <option key={lang.locale} value={lang.value}>
+                              {lang.locale}
+                            </option>
+                          ))}
+                        </select>
+                    </li> */}
                   </div>
                 </ul>
             </nav>
