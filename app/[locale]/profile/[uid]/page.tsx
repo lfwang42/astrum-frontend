@@ -179,6 +179,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
         defaultSort={'spd'} 
         sortOptions={sortOptions}
         params={p}
+        pagination
         />
       </div>
   )

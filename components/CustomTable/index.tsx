@@ -33,13 +33,14 @@ interface tableParams {
 
 interface CustomTableProps<TData, TValue> {
   fetchUrl: string,
-  columns: ColumnDef<TData, TValue>[],
+  columns: ColumnDef<any, TValue>[],
   params?: Params,
     // sortOptions?: Record<string, string>
-  tableParams: tableParams,
+  tableParams?: tableParams,
   sortOptions?: any[]
   defaultSort: string,
   calc_id?: number,
+  pagination: boolean;
 }
 
 export type Params = {
@@ -64,7 +65,8 @@ export function CustomTable<TData, TValue>({
   params,
   sortOptions,
   defaultSort,
-  calc_id
+  calc_id,
+  pagination
 }: CustomTableProps<TData, TValue>) {
   const [rows, setRows] = useState<TData[]>([])
   const [isLoading, setLoading] = useState<boolean>(true)
@@ -83,7 +85,7 @@ export function CustomTable<TData, TValue>({
   };
 
   useEffect(() => {
-    fetchTableSize()
+    if (tableParams)    fetchTableSize()
   }, [])
 
 
@@ -194,7 +196,7 @@ export function CustomTable<TData, TValue>({
                   } 
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="px-3 py-1">
+                      <TableCell key={cell.id} className="px-3 py-[3px]">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
@@ -213,7 +215,7 @@ export function CustomTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        <Pagination 
+        {pagination && <Pagination 
           tableSize={tableSize} 
           tableSizeLoading={tableSizeLoading}
           pageSize = {searchParams.size ? searchParams.size : 20}
@@ -225,7 +227,8 @@ export function CustomTable<TData, TValue>({
           // order = {searchParams.order}
           rows = {rows}
           params={searchParams!}
-          />
+          />}
+        
       </div>
     </div>
   )

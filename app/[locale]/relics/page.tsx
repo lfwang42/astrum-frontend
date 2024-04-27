@@ -91,7 +91,8 @@ const sortOptions =
            columns={columns} 
            params={p} 
            sortOptions={sortOptions}
-           defaultSort='SpeedDelta'/>
+           defaultSort='SpeedDelta'
+           pagination/>
         </div>
       </>
     );

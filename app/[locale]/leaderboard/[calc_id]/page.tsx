@@ -171,22 +171,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           header: "Crit Value",
           accessorFn: row => (row.crit_value * 100).toFixed(1)
         },
-        // {
-        //   header: "HP",
-        //   accessorFn: row => (row.stats.maxHP).toFixed(0)
-        // },
-        // {
-        //   header: "ATK",
-        //   accessorFn: row => (row.stats.atk).toFixed(0)
-        // },
-        // {
-        //   header: "DEF",
-        //   accessorFn: row => (row.stats.def).toFixed(0)
-        // },
-        // {
-        //   header: "SPD",
-        //   accessorFn: row => (row.stats.spd).toFixed(0)
-        // },
         ...[0, 1, 2, 3, 4].map((i) => ({
           header: "-",
           id: `${i}`,
@@ -223,17 +207,17 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
     return (
       <div className="min-h-screen container justify-center mx-auto py-1">
           <div className="mx-auto flex justify-between w-2/3" >
-            <div className="flex py-1">
+            <div className="flex mt-2">
               {
                 calcs.isLoading ? <></> : 
                 calcs.data.map((category: any) => {
                   return (
-                    <div key={category.name} className="mr-10">
-                      <span className="my-4 text-lg">{category.name}</span>
-                        <div className="flex justify-start whitespace-nowrap gap-5">
+                    <div key={category.name} className="mt-1 mr-10">
+                      <span className=" text-lg font-medium">{category.name}</span>
+                        <div className="flex justify-start mt-1 whitespace-nowrap gap-2">
                         {category.calculations.map((calc: any) => {
                           // if (calc.calc_id === +params.calc_id) console.log('same')
-                          return <div key={calc.calc_id} className={calc.calc_id === +params.calc_id ? "p-2 bg-slate-600" : "p-2"}><a href={`${calc.calc_id}`}><ConeDisplay name={calc.name} icon={calc.icon} imposition={calc.rank}/></a></div>
+                          return <div key={calc.calc_id} className={`p-2 hover:bg-slate-600 ${calc.calc_id === +params.calc_id ? "bg-slate-600" : ""}`}><a href={`${calc.calc_id}`}><ConeDisplay name={calc.name} icon={calc.icon} imposition={calc.rank}/></a></div>
                         })}
                         </div>
                     </div>
@@ -286,6 +270,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
             }
           }
           calc_id={params.calc_id}
+          pagination
           />
         </div>
     );

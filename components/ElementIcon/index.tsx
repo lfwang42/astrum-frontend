@@ -19,9 +19,9 @@ type IconProps = {
 
 export const ElementIcon: React.FC<IconProps> = ({ element }) => {
     return (
-        <div className="justify-start gap-5">
-          <Image className="h-auto w-10 m-1" width={50} height={50} src={elements[element]} alt={element} />
-        </div>
-        );
+      <div className="justify-start">
+        <Image className="h-[35px] w-auto" width={35} height={35} src={elements[element]} alt={element} />
+      </div>
+    );
   
 };

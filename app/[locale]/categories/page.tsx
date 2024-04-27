@@ -1,8 +1,7 @@
-import Navbar from "../../../components/Navbar";
 import { CategoryRow, columns } from './columns';
-import { CategoryTable } from './category-table';
 import axios from 'axios'
 import { getAPIURL } from "@/lib/utils";
+import { CustomTable } from "@/components/CustomTable";
 
 async function getCategories(): Promise<CategoryRow[]> {
   // console.log(getAPIURL("/api/categories"))
@@ -13,6 +12,7 @@ async function getCategories(): Promise<CategoryRow[]> {
   arr.sort((a: any, b: any) => b.count - a.count)
   return arr
 }
+
 
 export default async function Leaderboard() {
     // const [data, setData] = useState<LeaderboardRow[]>();
@@ -31,7 +31,7 @@ export default async function Leaderboard() {
             <span>All leaderboards use your character and run it in an MOC simulator for 4 turns, taking the average result (e.g. average of crits, debuff application).  
               Your lightcone is overwritten and your character is capped at E0 (including skill levels).  You can view a simulations result for a build in its spot on the leaderboard.</span>
           </div>
-          <CategoryTable columns={columns} data={categories} />
+          <CustomTable columns={columns} fetchUrl={getAPIURL('/api/categories')} defaultSort="" pagination={false}/>
         </div>
     );
   }
