@@ -36,16 +36,23 @@ export type EquipInfo = {
 
 export interface AvatarCategory {
     name: string,
+    avatar_id: number,
     score_name: string,
     element: string,
     char_name: string,
-    add_date: Date,
+    add_date: string,
     char_icon: string,
     desc: string,
     calculations: LeaderboardCone[],
-    count?: number
+    count?: number,
+    team?: Teammate[]
 }
 
+interface Teammate {
+    avatar: string,
+    desc: string,
+    icon?: string,
+  }
 
 export interface LeaderboardCone {
     calc: string,

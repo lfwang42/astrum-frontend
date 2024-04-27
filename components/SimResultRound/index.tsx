@@ -19,14 +19,17 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
       "3": '/avatar/abundance.webp',
     }
 
+    const getImgURL = (id: number) => {
+      if (tempMap[id.toString()] != undefined) {
+        return tempMap[id.toString()]
+      }
+      else {
+          return `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${id}.png`
+      }
+    }
+
     const roundAvatarId = log.avatarId
-    var src = ""
-    if (tempMap[roundAvatarId.toString()] != undefined) {
-        src = tempMap[roundAvatarId.toString()]
-    }
-    else {
-        src = `https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${roundAvatarId}.png`
-    }
+    var src = getImgURL(roundAvatarId)
 
     const roundResult = (res: SkillResult, prepend: boolean) => {
       if (res.type == 'damage') {
@@ -75,7 +78,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({ trackedStat, key
               return (
                 // <div >
                 <span key={`${key}-${child.id}-${child.avatarId}`}  className='flex gap-1 justify-center items-center text-center'>
-                  <Image src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${child.avatarId}.png`} width={20} height={20} unoptimized alt="character image"/>
+                  <Image src={getImgURL(child.avatarId)} width={20} height={20} unoptimized alt="character image"/>
                   <Translate str={child.avatarId.toString()}/>{' '}<Translate str={child.type} />
                   {child.results.map((res, index) => {
                     return (

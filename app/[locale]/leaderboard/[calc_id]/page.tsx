@@ -15,6 +15,21 @@ import React from "react";
 import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 import { StatIcon } from "@/components/StatIcon";
+import Image from "next/image";
+
+interface LeaderboardCone {
+  calc: string,
+  calc_id: number,
+
+  // lightcone: WeaponInfo
+  name: string,
+  promotion: number, 
+  rank: number, 
+  level: number,
+  icon: string
+  tid: number
+}
+
 
 
 export type LeaderboardRow = {
@@ -206,26 +221,58 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
   )
 
     return (
-      <>
-        <div className="min-h-screen container mx-auto py-1">
-          <div className="flex py-1">
+      <div className="min-h-screen container justify-center mx-auto py-1">
+          <div className="mx-auto flex justify-between w-2/3" >
+            <div className="flex py-1">
+              {
+                calcs.isLoading ? <></> : 
+                calcs.data.map((category: any) => {
+                  return (
+                    <div key={category.name} className="mr-10">
+                      <span className="my-4 text-lg">{category.name}</span>
+                        <div className="flex justify-start whitespace-nowrap gap-5">
+                        {category.calculations.map((calc: any) => {
+                          // if (calc.calc_id === +params.calc_id) console.log('same')
+                          return <div key={calc.calc_id} className={calc.calc_id === +params.calc_id ? "p-2 bg-slate-600" : "p-2"}><a href={`${calc.calc_id}`}><ConeDisplay name={calc.name} icon={calc.icon} imposition={calc.rank}/></a></div>
+                        })}
+                        </div>
+                    </div>
+                    )
+                })
+              }
+            </div>
             {
-              calcs.isLoading ? <></> : 
-              calcs.data.map((category: any) => {
-                return (
-                  <div key={category.name} className="mr-10">
-                    <span className="my-4 text-lg">{category.name}</span>
-                      <div className="flex justify-start whitespace-nowrap gap-5">
-                      {category.calculations.map((calc: any) => {
-                        // if (calc.calc_id === +params.calc_id) console.log('same')
-                        return <div key={calc.calc_id} className={calc.calc_id === +params.calc_id ? "p-2 bg-slate-600" : "p-2"}><a href={`${calc.calc_id}`}><ConeDisplay name={calc.name} icon={calc.icon} imposition={calc.rank}/></a></div>
-                      })}
-                      </div>
-                  </div>
-                  )
-              })
+                calcs.isLoading ? <></> : 
+                calcs.data.map((category: AvatarCategory) => {
+                  for (let calc of category.calculations) {
+                    if (calc.calc_id == params.calc_id) {
+                      return (
+                        <div className="flex justify-start items-center whitespace-nowrap gap-2">
+                          <span>Teammates: </span>
+                          {category.team!.map((teammate, index) => {
+                            if (teammate.avatar === 'any' || teammate.avatar == 'none') {
+                                return (
+                                <Image width={20} height={20} className="m-1 w-auto h-8" 
+                                src={'/avatar/anon.png'} alt={teammate.desc} 
+                                key={calc.calc_id + "-" + index}
+                                title={teammate.desc}/>)
+                            }
+                            else {
+                              return (
+                              <Image width={20} height={20} className="w-auto h-8 m-1" 
+                              src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`} 
+                              alt={teammate.desc} 
+                              key={calc.calc_id + '-' +  index}
+                              title={teammate.desc}/>)
+                            }
+                          })}       
+                        </div>
+                      )
+                    }
+                  }               
+               })
             }
-          </div>
+            </div>
           <CustomTable
           fetchUrl={getAPIURL('/api/leaderboard')}
           columns={columns} 
@@ -241,6 +288,5 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           calc_id={params.calc_id}
           />
         </div>
-      </>
     );
   }
