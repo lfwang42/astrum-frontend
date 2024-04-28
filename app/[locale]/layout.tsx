@@ -35,12 +35,12 @@ export default async function RootLayout({
     <html lang={locale} className={inter.className}>
 
       <head>
-      <link
-          rel="icon"
-          href="/icon?<generated>"
-          type="image/<generated>"
-          sizes="<generated>"
-        />
+        <link
+            rel="icon"
+            href="/icon?<generated>"
+            type="image/<generated>"
+            sizes="<generated>"
+          />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
           crossOrigin="anonymous">
         </script>

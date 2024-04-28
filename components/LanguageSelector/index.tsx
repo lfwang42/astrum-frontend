@@ -101,7 +101,7 @@ export const LanguageSelector: React.FC<LanguageProps> = ({ locale }) => {
           setIsOpen(true);
         }}
       >
-        <CiGlobe size={25}/> {locale.toUpperCase()}
+        <CiGlobe size={25}/><span className="hover:text-orange-300"> {locale.toUpperCase()}</span>
       </a>
       {isOpen && <div className="absolute bg-sky-900 top-[50px]">{languageList}</div>}
     </div>
