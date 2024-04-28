@@ -7,6 +7,7 @@ import {usePathname, useRouter} from 'next-intl/client';
 import {ChangeEvent} from 'react';
 import { FiMenu } from 'react-icons/fi'
 import { LanguageSelector } from "../LanguageSelector";
+import { FaDiscord } from "react-icons/fa";
 
 interface NavProps {
   locale: string
@@ -40,6 +41,7 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
     // router.push({ pathname, query }, asPath, { locale: nextLocale })
     router.replace(pathname, {locale: nextLocale});
   }
+  const discordURL:string = process.env.NEXT_PUBLIC_DISCORD_LINK!
 
  
   const langs = [{
@@ -117,30 +119,23 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
                 <ul className="text-base text-white xl:flex w-full">
                   <li className="hover:text-orange-300">
                     <Link href="/relics" >
-                      <p className="xl:px-5 py-2">Relics</p>
+                      <p className="xl:px-4 py-2">Relics</p>
                     </Link>
                   </li>
                   <li className="hover:text-orange-300">
                     <Link href="/categories"  >
-                      <p className="xl:px-5 py-2">Leaderboards</p>
+                      <p className="xl:px-4 py-2">Leaderboards</p>
                     </Link>
                   </li>
-
-                <div className="ml-auto">
-                  <LanguageSelector locale={locale} />
-                      {/* <li>
-                        <select
-                          className="xl:px-5 py-2 appearance-none bg-sky-900"
-                          defaultValue={locale}
-                          onChange={onSelect}>
-                          {langs.map((lang) => (
-                            <option key={lang.locale} value={lang.value}>
-                              {lang.locale}
-                            </option>
-                          ))}
-                        </select>
-                    </li> */}
-                  </div>
+                  <li className="ml-auto flex flex-row items-center gap-4">
+                    <LanguageSelector locale={locale} />
+                    <Link href={discordURL}>
+                      <div className=" flex flex-row gap-1">
+                        <div><FaDiscord size={25} /></div>
+                        <span className="hover:text-orange-300 text-base text-white font-medium">Discord</span>
+                      </div>
+                    </Link>
+                  </li>
                 </ul>
             </nav>
             
@@ -158,18 +153,28 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
                       <p className="xl:px-5 py-2 block text-right">Leaderboards</p>
                     </Link>
                   </li>
-                    <li>
-                      <select
-                        className="block xl:px-5 py-2 appearance-none bg-sky-900 ml-auto"
-                        defaultValue={locale}
-                        onChange={onSelect}>
-                        {langs.map((lang) => (
-                          <option key={lang.locale} value={lang.value}>
-                            {lang.locale}
-                          </option>
-                        ))}
-                      </select>
+                  <li>
+                   <Link href={discordURL}>
+                      <div className="flex flex-row justify-end gap-1 xl:px-5 py-2 text-right ml-auto">
+                        <div><FaDiscord size={25} /></div>
+                        <span className="hover:text-orange-300 text-base text-white font-medium">Discord</span>
+                      </div>
+                    </Link>
                   </li>
+                  <li>
+                    <select
+                      className="block xl:px-5 py-2 appearance-none bg-sky-900 ml-auto text-right"
+                      defaultValue={locale}
+                      onChange={onSelect}>
+                      {langs.map((lang) => (
+                        <option key={lang.locale} value={lang.value}>
+                          {lang.locale}
+                        </option>
+                      ))}
+                    </select>
+                  </li>
+
+               
                 </ul>
               </nav>
             }

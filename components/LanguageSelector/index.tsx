@@ -103,7 +103,7 @@ export const LanguageSelector: React.FC<LanguageProps> = ({ locale }) => {
       >
         <CiGlobe size={25}/> {locale.toUpperCase()}
       </a>
-      {isOpen && <div className="absolute bg-sky-900 top-[56px]">{languageList}</div>}
+      {isOpen && <div className="absolute bg-sky-900 top-[50px]">{languageList}</div>}
     </div>
   );
 };
