@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import march from "./march.webp"
+import icon from './icon.png'
 import {usePathname, useRouter} from 'next-intl/client';
 import {ChangeEvent} from 'react';
 import { FiMenu } from 'react-icons/fi'
@@ -107,9 +108,9 @@ export const Navbar: React.FC<NavProps> = ( {locale} ) => {
   ]
   return (
       <header className="xl:flex flex flex-wrap justify-between items-center h-full px-[8%] w-full flex-auto bg-sky-900 top-0 py-4">
-          <div>
+          <div className="mr-2">
             <Link href="/">
-              <Image src={march} width={30}   height={30}   alt="cutie"/>
+              <Image src={icon} width={30}   height={30}   alt="cutie"/>
             </Link>
           </div>
           <FiMenu className="xl:hidden block mr-0 h-6 w-6 cursor-pointer" onClick={() => setOpen(!open)} />
