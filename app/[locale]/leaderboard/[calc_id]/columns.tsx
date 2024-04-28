@@ -41,13 +41,16 @@ export const columns: ColumnDef<LeaderboardRow>[] = [
   {
     header: "Sets",
     accessorKey: "set",
-    cell: ({ row} ) => (
+    cell: ({ row } ) => (
       <SetDisplay sets={row.original.sets} />
     ),
   },
   {
     header: "Crit Value",
-    accessorFn: row => (row.crit_value * 100).toFixed(1)
+    accessorFn: row => (row.crit_value * 100).toFixed(1),
+    cell: ({ row } ) => (
+      <span>{`(${row.original.stats.critRate}:${row.original.stats.critDmg})`}</span>
+    ),
   },
   {
     header: "HP",

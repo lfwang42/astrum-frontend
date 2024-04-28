@@ -16,6 +16,7 @@ import useSWR from "swr";
 import { useSearchParams } from "next/navigation";
 import { StatIcon } from "@/components/StatIcon";
 import Image from "next/image";
+import { Translate } from "@/components/Translate";
 
 interface LeaderboardCone {
   calc: string,
@@ -169,7 +170,9 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
         },
         {
           header: "Crit Value",
-          accessorFn: row => (row.crit_value * 100).toFixed(1)
+          cell: ({ row } ) => (
+            <span>{(row.original.crit_value * 100).toFixed(1)}<span className="text-sm text-gray-400">{` (${(row.original.stats.critRate * 100).toFixed(1)}:${(row.original.stats.critDmg * 100).toFixed(1)})`}</span></span>
+          ),
         },
         ...[0, 1, 2, 3, 4].map((i) => ({
           header: "-",
@@ -232,7 +235,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
                     if (calc.calc_id == params.calc_id) {
                       return (
                         <div className="flex justify-start items-center whitespace-nowrap gap-2">
-                          <span>Teammates: </span>
+                          <span><Translate str={'Team'} />: </span>
                           {category.team!.map((teammate, index) => {
                             if (teammate.avatar === 'any' || teammate.avatar == 'none') {
                                 return (
