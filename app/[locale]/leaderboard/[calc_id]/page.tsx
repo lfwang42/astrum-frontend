@@ -79,7 +79,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
   const p = getParamsFromUrl(searchParams)
   p.calc_id = params.calc_id
   const avatar_id = params?.calc_id.toString().slice(0, -2)
-
+  console.log('here')
   const fetchCalc = async () => {
     if (!avatar_id) return;
 
@@ -135,7 +135,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           ),
           accessorKey: "avatar_id",
           cell: ({ row } ) => (
-            <Image alt={/*t*/(row.original.avatar_id.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`} width={25} height={25} />
+            <Image alt={/*t*/(row.original.avatar_id?.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`} width={25} height={25} />
           ),
         },
         {
