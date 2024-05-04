@@ -1,18 +1,13 @@
 import Image from 'next/image';  
 import avatar from '../../app/assets/icon/AvatarIcon.png'
+import { Teammate } from '@/app/types';
 type TeamProps = {
     team: Teammate[]
     short: boolean
 };
 
 
-interface Teammate {
-  avatar: string,
-  desc: string,
-  fromUser: boolean,
-  icon?: string,
-  element?: string,
-}
+
 
 const colors: Record<string, any> = {
   "Thunder": {
@@ -47,7 +42,7 @@ const colors: Record<string, any> = {
 
 export const TeamDisplay: React.FC<TeamProps> = ({ team, short }) => {
   // const rt = team;
-  const arr = short ? team.slice(0, 2).toReversed() : team
+  const arr = short ? team.slice(0, 2) : team
   // if (team) team.reverse()
         return (
           <div className="flex justify-start w-300 whitespace-nowrap gap-1 text-sm mr-1">
@@ -70,7 +65,7 @@ export const TeamDisplay: React.FC<TeamProps> = ({ team, short }) => {
                   title={teammate.desc}
                   unoptimized/>
                   {teammate.fromUser ?
-                   <Image width={17} height={17} className="text-gray-100 absolute right-[-5px] bottom-[-5px] border-gray-100 border-2 rounded-md bg-gray-600"
+                  <Image width={17} height={17} className="text-gray-100 absolute right-[-5px] bottom-[-5px] border-gray-100 border-2 rounded-md bg-gray-600"
                    src={avatar} 
                    alt={'Character taken from user'}
                    title="Character fetched from user" 

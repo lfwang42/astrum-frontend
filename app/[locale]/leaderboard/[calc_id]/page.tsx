@@ -1,15 +1,13 @@
 
 'use client'
-import { DataTable } from "./data-table"
 import axios from 'axios'
-import react, { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { AvatarCategory } from '../../../types';
 import { ConeDisplay } from "@/components/ConeDisplay";
 import { StatFormat, getAPIURL, getParamsFromUrl, getRelativeStats } from "@/lib/utils";
-import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table"
 import { CoreStats, SetInfo } from '../../../types';
 import { SetDisplay } from '../../../../components/SetDisplay/index';
-import { getRegion } from '../../../../lib/utils';
 import { CustomTable } from "@/components/CustomTable";
 import React from "react";
 import useSWR from "swr";
@@ -17,6 +15,8 @@ import { useSearchParams } from "next/navigation";
 import { StatIcon } from "@/components/StatIcon";
 import Image from "next/image";
 import { Translate } from "@/components/Translate";
+import { TeamDisplay } from '@/components/TeamDisplay';
+import avatar from '../../../assets/icon/AvatarIconGray.png'
 
 interface LeaderboardCone {
   calc: string,
@@ -34,6 +34,7 @@ interface LeaderboardCone {
 
 
 export type LeaderboardRow = {
+  avatar_id: number
   region: string
   rank: number
   bid: number
@@ -45,16 +46,6 @@ export type LeaderboardRow = {
   platform: string
   calc_name: string
   sets: SetInfo[]
-}
-
-async function getData(calc_id: number): Promise<LeaderboardRow[]> {
-  const res =  await axios.get(getAPIURL(`/api/leaderboard`), { params: {calc_id: calc_id } })
-  return res.data
-}
-
-async function getCalcs(calc: number): Promise<AvatarCategory[]> {
-  const res = await axios.get(getAPIURL('/api/categories'), { params: {avatar_id: calc.toString().slice(0, 4)}})
-  return res.data
 }
 
 function getName(cats: AvatarCategory[], calc_id: number): string {
@@ -82,33 +73,12 @@ function fetcher(params: any) {
 }
 
 export default function Leaderboard({ params }: { params: { calc_id: number }}) {
-  // const [data, setData] = useState<LeaderboardRow[]>();
-  // useEffect(() => {
-  //   async function getData() {
-  //     const res: LeaderboardRow[] = await axios.get("localhost:3000/api/leaderboard")
-  //     setData(res)
-  //   }
-  //   getData();
-  // }, [])
   const [data, setData] = useState<LeaderboardRow[]>([])
   const [calc, setCalc] = useState<AvatarCategory[]>([])
   const searchParams = useSearchParams()
   const p = getParamsFromUrl(searchParams)
   p.calc_id = params.calc_id
-  const avatar_id = params?.calc_id.toString().slice(0, 4)
-  // useEffect(() => {
-  //   fetchData()
-  // }, [avatar_id])
-
-  // const fetchData = async () => {
-  //   if (!avatar_id) return;
-
-  //   const opts = { params: {calc_id: params.calc_id} };
-  //   const response = await axios.get(getAPIURL('/api/leaderboard'), opts);
-  //   const { data } = response.data;
-
-  //   setData(data);
-  // };
+  const avatar_id = params?.calc_id.toString().slice(0, -2)
 
   const fetchCalc = async () => {
     if (!avatar_id) return;
@@ -130,8 +100,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
       return
     }
   }) 
-  // const data = await getData(params.calc_id)
-  // const calcs = await getCalcs(params.calc_id)
   const sortOptions = [
     { value: 'score', label: 'Score'},
     { value: 'spd', label: 'Speed' },
@@ -159,6 +127,15 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
           accessorKey: "nickname",
           cell: ({ row } ) => (
             <a href={`../profile/${row.original.uid}`}><span onClick={(e)=> {e.stopPropagation()}} className="hover:text-orange-300">{row.original.nickname}</span></a>
+          ),
+        },
+        {
+          header: () => (
+            <Image alt={'character'} className="" src={avatar} width={22} height={22} />
+          ),
+          accessorKey: "avatar_id",
+          cell: ({ row } ) => (
+            <Image alt={/*t*/(row.original.avatar_id.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`} width={25} height={25} />
           ),
         },
         {
@@ -236,23 +213,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
                       return (
                         <div className="flex justify-start items-center whitespace-nowrap gap-2">
                           <span><Translate str={'Team'} />: </span>
-                          {category.team!.map((teammate, index) => {
-                            if (teammate.avatar === 'any' || teammate.avatar == 'none') {
-                                return (
-                                <Image width={20} height={20} className="m-1 w-auto h-8" 
-                                src={'/avatar/anon.png'} alt={teammate.desc} 
-                                key={calc.calc_id + "-" + index}
-                                title={teammate.desc}/>)
-                            }
-                            else {
-                              return (
-                              <Image width={20} height={20} className="w-auto h-8 m-1" 
-                              src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`} 
-                              alt={teammate.desc} 
-                              key={calc.calc_id + '-' +  index}
-                              title={teammate.desc}/>)
-                            }
-                          })}       
+                          <TeamDisplay team={category.team!} short={false} />       
                         </div>
                       )
                     }

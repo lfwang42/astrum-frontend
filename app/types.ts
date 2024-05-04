@@ -48,11 +48,13 @@ export interface AvatarCategory {
     team?: Teammate[]
 }
 
-interface Teammate {
-    avatar: string,
-    desc: string,
-    icon?: string,
-  }
+export interface Teammate {
+  avatar: string,
+  desc: string,
+  fromUser: boolean,
+  icon?: string,
+  element?: string,
+}
 
 export interface LeaderboardCone {
     calc: string,

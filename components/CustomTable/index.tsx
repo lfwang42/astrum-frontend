@@ -72,6 +72,7 @@ export function CustomTable<TData, TValue>({
   const [isLoading, setLoading] = useState<boolean>(true)
   const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
   const [tableSize, setTableSize] = useState<number>(0)
+  const [rowSpan, setRowSpan] = useState<number>(0)
   const router = useRouter()  
 
 
@@ -83,6 +84,11 @@ export function CustomTable<TData, TValue>({
     setTableSizeLoading(false)
     // console.log(tableSizeLoading)
   };
+
+  const filterCellName = (name: string) => {
+    if (name == 'score' || name == 'rank' || name == 'region' || name == 'nickname') return true
+    return false
+  }
 
   useEffect(() => {
     if (tableParams)    fetchTableSize()
@@ -111,7 +117,10 @@ export function CustomTable<TData, TValue>({
     setLoading(true)
     const res = axios.get(fetchUrl, {params: searchParams}) // Use the correct URL, it can be an API Route URL, an external URL...
     .then((res) => res.data)
-    .then((data) => setRows(data))
+    .then((data) => {
+      setRows(data)
+      setRowSpan(data[0].hasMultiRows? data[0].bids.length : 1)
+    })
     .then(() => setLoading(false))
     .catch((error) => {
         console.log(error);
@@ -141,16 +150,16 @@ export function CustomTable<TData, TValue>({
   // }, [JSON.stringify(searchParams)])
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      {(sortOptions && sortOptions!.length > 0) ? 
-      <div>
-      <span>Sort By:</span>
-      <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...defaultParams, ...{sortStat: e.target.value, page: 1}})}>
-        {sortOptions?.map(option => {
-          return (<option key={option.value} value={option.value}>{option.label}</option>)
-        })}
-      </select>
+      {(sortOptions && sortOptions!.length > 0 && rowSpan == 1) ? 
+      <div className="mb-1">
+        <span>Sort By:</span>
+        <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...defaultParams, ...{sortStat: e.target.value, page: 1}})}>
+          {sortOptions?.map(option => {
+            return (<option key={option.value} value={option.value}>{option.label}</option>)
+          })}
+        </select>
       </div> : 
-      <></>}
+      <div className="mb-2"></div>}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -173,35 +182,49 @@ export function CustomTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {(!isLoading && rows && table.getRowModel().rows?.length) ? (
-              table.getRowModel().rows.map((row) => {
+              table.getRowModel().rows.map((row, indexForRow) => {
                 const buildrow: any = row.original
-                // console.log(buildrow.bid)
-                // console.log(row)
-                // const fetchRelics = async () => {
-                //   const relics = await axios.get(getAPIURL(`/api/relics`),  { params: {bid: buildrow.bid}})
-                //   console.log(relics)
-                // }
-                // fetchRelics()
-                // console.log(row.id)
                 return (
                 <React.Fragment key={row.id}>
                   <TableRow
-                    
                     data-state={row.getIsSelected() && "selected"}
                     onClick={() => {
                       const r: any = row.original
-                        if (r.score)                        row.toggleExpanded()
-
-                    }
-                  } 
+                        if (r.score) row.toggleExpanded()
+                      }
+                    } 
+                    className={`${rowSpan == 1 ? 'hover:bg-muted/50' : ""}`}
                   >
-                    {row.getVisibleCells().map((cell) => (
+                    {row.original.hasMultiRows ? 
+                    <>
+                    {row.getVisibleCells().map((cell, indexForCell) => {
+                      if (filterCellName(cell.column.id)) {
+                        if (indexForRow % rowSpan == 0) {
+                          return (
+                            <TableCell key={cell.id} rowSpan={row.original.bids.length} className="px-3 py-[3px]">
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </TableCell>
+                          )
+                        }
+                      }
+                      else {
+                        return (
+                          <TableCell key={cell.id} className="px-3 py-[3px]">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        )
+                      }
+                    }
+                    )}
+                    </>
+                        :  <>{row.getVisibleCells().map((cell, indexForCell) => (
                       <TableCell key={cell.id} className="px-3 py-[3px]">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
-                    ))}
+                    ))}</> }
+
                   </TableRow>
-                   {row.getIsExpanded() && 
+                   {row.getIsExpanded() && rowSpan == 1 && 
                     <ExpandedBuildRow row={buildrow} cols={columns.length} calc_id={calc_id}/>
                    }
                 </React.Fragment>
