@@ -1,7 +1,5 @@
 import Image from 'next/image';  
-import { FaUser } from "react-icons/fa";
 import avatar from '../../app/assets/icon/AvatarIcon.png'
-import './style.css'
 type TeamProps = {
     team: Teammate[]
     short: boolean
