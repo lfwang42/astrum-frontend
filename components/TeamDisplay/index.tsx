@@ -1,10 +1,11 @@
 import Image from 'next/image';  
 import { FaUser } from "react-icons/fa";
 import avatar from '../../app/assets/icon/AvatarIcon.png'
-
+import './style.css'
 type TeamProps = {
     team: Teammate[]
-  };
+    short: boolean
+};
 
 
 interface Teammate {
@@ -46,16 +47,16 @@ const colors: Record<string, any> = {
   }
 }
 
-export const TeamDisplay: React.FC<TeamProps> = ({ team }) => {
+export const TeamDisplay: React.FC<TeamProps> = ({ team, short }) => {
   // const rt = team;
-
+  const arr = short ? team.slice(0, 2).toReversed() : team
   // if (team) team.reverse()
         return (
-          <div className="flex justify-start w-300 whitespace-nowrap gap-1 text-sm">
-            {team ? team.reverse().map((teammate, index) => {
+          <div className="flex justify-start w-300 whitespace-nowrap gap-1 text-sm mr-1">
+            {arr ? arr.map((teammate, index) => {
               if (teammate.avatar === 'any' || teammate.avatar == 'none') {
                 return (
-                <div key={teammate.avatar + index} className={`bg-gray-700 p-[2px] rounded-lg bg-opacity-75 flex justify-center items-center align-middle border-gray-400 border-2`}>
+                <div key={teammate.avatar + index} className={`bg-gray-700 p-[2px] rounded-md bg-opacity-75 flex justify-center items-center align-middle border-gray-400 border-2`}>
                   <Image width="25" height="25" className="w-7 h-auto " 
                       src={'/avatar/anon.png'} alt={teammate.desc}        
                       title={teammate.desc}
@@ -64,8 +65,8 @@ export const TeamDisplay: React.FC<TeamProps> = ({ team }) => {
               }
               else {
                 return (
-                <div key={teammate.avatar + index} className={`${colors[teammate.element!].back} ${colors[teammate.element!].border} p-[2px] rounded-lg relative justify-center items-center align-middle bg-opacity-75 border-2`}>
-                  <Image width="25" height="25" className="w-7 h-auto" 
+                <div key={teammate.avatar + index} className={` ${colors[teammate.element!].back} ${colors[teammate.element!].border} p-[2px] rounded-md relative items-center align-middle flex bg-opacity-75 border-2`}>
+                  <Image width="25" height="25" className="w-7 h-auto "  
                   src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`} 
                   alt={teammate.desc} 
                   title={teammate.desc}

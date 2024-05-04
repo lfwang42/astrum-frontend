@@ -10,7 +10,7 @@ type ConeProps = {
 export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
     if (cones) {
         return (
-            <div className="flex justify-start whitespace-nowrap gap-3">
+            <div className="flex justify-start whitespace-nowrap gap-2">
             {cones.map((cone) => {
                 return(<ConeDisplay key={`${keyIndex}-${cone.name}`} name={cone.name.toString()} icon={cone.icon} imposition={cone.rank} />)
             })}

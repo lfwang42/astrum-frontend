@@ -33,7 +33,7 @@ export const columns: ColumnDef<CategoryRow>[] = [
         <div className="mr-1">
           <Image width={35} height={35} src={row.original.char_icon} alt={row.original.char_name} />
         </div> */}
-        <TeamDisplay team={row.original.team} />
+        <TeamDisplay team={row.original.team} short={true} />
         <a href={`/leaderboard/${row.original.calculations[0].calc_id}`} className="gap-4 hover:text-orange-300">
           <span className="inline-block align-middle mr-2"> {row.original.name}</span>
           <span className="inline-block align-middle "><Translate str={row.original.avatar_id}/></span>
@@ -52,14 +52,14 @@ export const columns: ColumnDef<CategoryRow>[] = [
       <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
     )
   },
-  // {
-  //   header: 'Team',
-  //   cell: ({ row }) => {
-  //     return (
-  //       <TeamDisplay team={row.original.team} />
-  //     )
-  //   }
-  // },
+  {
+    header: 'Team',
+    cell: ({ row }) => {
+      return (
+        <TeamDisplay team={row.original.team} short={false}/>
+      )
+    }
+  },
   {
     accessorKey: "add_date",
     header: "Added",
