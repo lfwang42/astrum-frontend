@@ -6,6 +6,7 @@ import { ElementIcon } from '../../../components/ElementIcon/index';
 import Image from 'next/image';
 import { EquipmentDisplay } from '../../../components/EquipmentDisplay/index';
 import { Translate } from "@/components/Translate";
+import { TeamDisplay } from "@/components/TeamDisplay";
 
 export type CategoryRow = {
   avatar_id: number;
@@ -28,10 +29,11 @@ export const columns: ColumnDef<CategoryRow>[] = [
     header: "Leaderboard",
     cell: ({ row } ) => (
       <div className="w-auto inline-flex items-center justify-start gap-1">
-        <ElementIcon element={row.original.element} />
+        {/* <ElementIcon element={row.original.element} />
         <div className="mr-1">
           <Image width={35} height={35} src={row.original.char_icon} alt={row.original.char_name} />
-        </div>
+        </div> */}
+        <TeamDisplay team={row.original.team} />
         <a href={`/leaderboard/${row.original.calculations[0].calc_id}`} className="gap-4 hover:text-orange-300">
           <span className="inline-block align-middle mr-2"> {row.original.name}</span>
           <span className="inline-block align-middle "><Translate str={row.original.avatar_id}/></span>
@@ -50,33 +52,14 @@ export const columns: ColumnDef<CategoryRow>[] = [
       <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
     )
   },
-  {
-    header: 'Team',
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-start whitespace-nowrap gap-2">
-          {row.original.team ? row.original.team.map((teammate, index) => {
-            if (teammate.avatar === 'any' || teammate.avatar == 'none') {
-              return (<Image width="25" height="25" className="w-8 h-auto " 
-              src={'/avatar/anon.png'} alt={teammate.desc} 
-              key={row.original.char_name + index}
-              title={teammate.desc}/>)
-            }
-            else {
-              return (<Image width="25" height="25" className="w-8 h-auto" 
-              src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`} 
-              alt={teammate.desc} 
-              key={row.original.char_name + index}
-              title={teammate.desc}/>)
-            }
-            })
-            :
-            <></>
-          }
-        </div>
-      )
-    }
-  },
+  // {
+  //   header: 'Team',
+  //   cell: ({ row }) => {
+  //     return (
+  //       <TeamDisplay team={row.original.team} />
+  //     )
+  //   }
+  // },
   {
     accessorKey: "add_date",
     header: "Added",

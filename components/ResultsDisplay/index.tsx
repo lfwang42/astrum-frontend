@@ -30,10 +30,6 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({
               </div>  
                   <div className="text-sm">{`Top ${topPercentage || "?"}%`}</div>
                   <span className="text-sm">{best.rank}/{formatRankNumber(best.outof)}</span>
-                
-
-
-      
               </div>
             </Link>)
         })) 
