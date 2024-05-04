@@ -148,7 +148,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
         {
           header: "Crit Value",
           cell: ({ row } ) => (
-            <span>{(row.original.crit_value * 100).toFixed(1)}<span className="text-sm text-gray-400">{` (${(row.original.stats.critRate * 100).toFixed(1)}:${(row.original.stats.critDmg * 100).toFixed(1)})`}</span></span>
+            <span>{(row.original?.crit_value * 100).toFixed(1)}<span className="text-sm text-gray-400">{` (${(row.original?.stats.critRate * 100).toFixed(1)}:${(row.original?.stats.critDmg * 100).toFixed(1)})`}</span></span>
           ),
         },
         ...[0, 1, 2, 3, 4].map((i) => ({
