@@ -39,7 +39,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
         }
       }) 
 
-
+    
     return (<TableRow
                     key={row.id + 'expanded'}
                     data-state={"selected"}
@@ -50,7 +50,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
                         relics.data.map((relic: Relic) => {
                         // console.log(relic)
                         return(
-                        <div key={row.id + relic.tid} className="flex justify-center items-center border-slate-400 border-2 p-1">
+                        <div key={row.id + relic.tid.toString()} className="flex justify-center items-center border-slate-400 border-2 p-1">
                             <div className="justify-center">
                                 <RelicCanvas backgroundImage={relic.icon}/>
                                 {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
@@ -68,7 +68,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
                       : <></>}
                       </div> 
                       <div className="bg-slate-700">
-                        <SimResultDisplay bid={row.bid} calc_id={calc_id} avatar_id={row.avatar_id}/>
+                        <SimResultDisplay cbid={row.cbid} calc_id={calc_id} avatar_id={row.avatar_id}/>
                       </div>
                     </td>
                    

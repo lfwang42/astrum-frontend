@@ -73,6 +73,7 @@ export function CustomTable<TData, TValue>({
   const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
   const [tableSize, setTableSize] = useState<number>(0)
   const [rowSpan, setRowSpan] = useState<number>(0)
+  const [rowExpand, setRowExpand] = useState<boolean[]>([])
   const router = useRouter()  
 
 
@@ -127,6 +128,13 @@ export function CustomTable<TData, TValue>({
       });
   }, [JSON.stringify(searchParams), fetchUrl])
   
+  useEffect(() => {
+    const arr = []
+    for (let i = 0; i < Math.floor(rows.length / rowSpan); i++) {
+      arr.push(false)
+    }
+    setRowExpand(arr)
+  }, [rowSpan])
   const t = useTranslations();
   function navigateNext(newParams: Params) {
     const stringParams: any = {}
@@ -182,15 +190,21 @@ export function CustomTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {(!isLoading && rows && table.getRowModel().rows?.length) ? (
-              table.getRowModel().rows.map((row, indexForRow) => {
-                const buildrow: any = row.original
+              table.getRowModel().rows.map((row, rowIndex) => {
+                const buildrow: any = rowSpan > 1 ? rows[rowIndex - (rowIndex % rowSpan)] : row.original
                 return (
                 <React.Fragment key={row.id}>
                   <TableRow
                     data-state={row.getIsSelected() && "selected"}
-                    onClick={() => {
-                      const r: any = row.original
-                        if (r.score) row.toggleExpanded()
+                    onClick={() => { 
+                      if (row.original?.score) {
+                        const index = Math.floor(rowIndex / rowSpan)
+                        setRowExpand((prev) => {
+                          const prevValue = prev[index]
+                          const arr = [...prev]
+                          arr.splice(index, 1, !prevValue)
+                          return arr
+                        })}
                       }
                     } 
                     className={`${rowSpan == 1 ? 'hover:bg-muted/50' : ""}`}
@@ -199,7 +213,7 @@ export function CustomTable<TData, TValue>({
                     <>
                     {row.getVisibleCells().map((cell, indexForCell) => {
                       if (filterCellName(cell.column.id)) {
-                        if (indexForRow % rowSpan == 0) {
+                        if (rowIndex % rowSpan == 0) {
                           return (
                             <TableCell key={cell.id} rowSpan={row.original.bids.length} className="px-3 py-[3px]">
                               {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -217,14 +231,17 @@ export function CustomTable<TData, TValue>({
                     }
                     )}
                     </>
-                        :  <>{row.getVisibleCells().map((cell, indexForCell) => (
+                    :  
+                    <>
+                    {row.getVisibleCells().map((cell, indexForCell) => (
                       <TableCell key={cell.id} className="px-3 py-[3px]">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
-                    ))}</> }
+                    ))}
+                    </> }
 
                   </TableRow>
-                   {row.getIsExpanded() && rowSpan == 1 && 
+                   {rowExpand[Math.floor(rowIndex / rowSpan)] && (rowSpan == 1 || rowSpan > 1 && (rowIndex % rowSpan == rowSpan - 1)) && 
                     <ExpandedBuildRow row={buildrow} cols={columns.length} calc_id={calc_id}/>
                    }
                 </React.Fragment>

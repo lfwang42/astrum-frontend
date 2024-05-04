@@ -79,7 +79,6 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
   const p = getParamsFromUrl(searchParams)
   p.calc_id = params.calc_id
   const avatar_id = params?.calc_id.toString().slice(0, -2)
-  console.log('here')
   const fetchCalc = async () => {
     if (!avatar_id) return;
 
@@ -211,7 +210,7 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
                   for (let calc of category.calculations) {
                     if (calc.calc_id == params.calc_id) {
                       return (
-                        <div className="flex justify-start items-center whitespace-nowrap gap-2">
+                        <div key={calc.calc_id} className="flex justify-start items-center whitespace-nowrap gap-2">
                           <span><Translate str={'Team'} />: </span>
                           <TeamDisplay team={category.team!} short={false} />       
                         </div>
