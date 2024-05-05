@@ -73,7 +73,7 @@ export function CustomTable<TData, TValue>({
   const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
   const [tableSize, setTableSize] = useState<number>(0)
   const [rowSpan, setRowSpan] = useState<number>(0)
-  const [rowExpand, setRowExpand] = useState<boolean[]>([])
+  const [rowExpand, setRowExpand] = useState<{expand: boolean, row: any}[]>([])
   const router = useRouter()  
 
 
@@ -131,7 +131,7 @@ export function CustomTable<TData, TValue>({
   useEffect(() => {
     const arr = []
     for (let i = 0; i < Math.floor(rows.length / rowSpan); i++) {
-      arr.push(false)
+      arr.push({row: rows[Math.floor(rows.length / rowSpan)], expand: false})
     }
     setRowExpand(arr)
   }, [rowSpan])
@@ -191,7 +191,7 @@ export function CustomTable<TData, TValue>({
           <TableBody>
             {(!isLoading && rows && table.getRowModel().rows?.length) ? (
               table.getRowModel().rows.map((row, rowIndex) => {
-                const buildrow: any = rowSpan > 1 ? rows[rowIndex - (rowIndex % rowSpan)] : row.original
+                const buildrow: any = row.original
                 return (
                 <React.Fragment key={row.id}>
                   <TableRow
@@ -202,7 +202,7 @@ export function CustomTable<TData, TValue>({
                         setRowExpand((prev) => {
                           const prevValue = prev[index]
                           const arr = [...prev]
-                          arr.splice(index, 1, !prevValue)
+                          arr.splice(index, 1, {expand: prevValue.row.avatar_id == buildrow.avatar_id ? !prevValue.expand : prevValue.expand, row: buildrow})
                           return arr
                         })}
                       }
@@ -241,8 +241,8 @@ export function CustomTable<TData, TValue>({
                     </> }
 
                   </TableRow>
-                   {rowExpand[Math.floor(rowIndex / rowSpan)] && (rowSpan == 1 || rowSpan > 1 && (rowIndex % rowSpan == rowSpan - 1)) && 
-                    <ExpandedBuildRow row={buildrow} cols={columns.length} calc_id={calc_id}/>
+                   {rowExpand.length && rowExpand[Math.floor(rowIndex / rowSpan)].expand && (rowSpan == 1 || rowSpan > 1 && (rowIndex % rowSpan == rowSpan - 1)) && 
+                    <ExpandedBuildRow row={rowExpand[Math.floor(rowIndex / rowSpan)].row} cols={columns.length} calc_id={calc_id}/>
                    }
                 </React.Fragment>
               )})
