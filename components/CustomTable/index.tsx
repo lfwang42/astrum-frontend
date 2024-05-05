@@ -202,7 +202,14 @@ export function CustomTable<TData, TValue>({
                         setRowExpand((prev) => {
                           const prevValue = prev[index]
                           const arr = [...prev]
-                          arr.splice(index, 1, {expand: prevValue.row.avatar_id == buildrow.avatar_id ? !prevValue.expand : prevValue.expand, row: buildrow})
+                          var newBool = false;
+                          if (prevValue.row.avatar_id == buildrow.avatar_id) {
+                            newBool = !prevValue.expand
+                          }
+                          else {
+                            newBool = true
+                          }
+                          arr.splice(index, 1, {expand: newBool, row: buildrow})
                           return arr
                         })}
                       }

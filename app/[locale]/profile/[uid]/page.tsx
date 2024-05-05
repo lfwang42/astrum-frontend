@@ -167,7 +167,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
           
         </div>
         <ResultsDisplay user={userData}/>
-        <CustomTable 
+        {userData && <CustomTable 
         tableParams={
           {
             table: 'builds',
@@ -180,7 +180,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
         sortOptions={sortOptions}
         params={p}
         pagination
-        />
+        />}
       </div>
   )
 }
