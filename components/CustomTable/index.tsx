@@ -131,7 +131,7 @@ export function CustomTable<TData, TValue>({
   useEffect(() => {
     const arr = []
     for (let i = 0; i < Math.floor(rows.length / rowSpan); i++) {
-      arr.push({row: rows[Math.floor(rows.length / rowSpan)], expand: false})
+      arr.push({row: rows[Math.floor(i / rowSpan)], expand: false})
     }
     setRowExpand(arr)
   }, [rowSpan])
