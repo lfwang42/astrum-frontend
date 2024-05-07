@@ -66,13 +66,13 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
       return (
         <div className="flex justify-start gap-2 m-2">
           <div className={skillclass}>
-            <Image className={`${asc.a2.level ? "opacity-100" : "opacity-20"}`} src={SPRITE_URL + skills[asc.a2.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a2'}/>
+            <Image className={`${asc.a2.level ? "opacity-100" : "opacity-30"}`} src={SPRITE_URL + skills[asc.a2.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a2'}/>
           </div>
           <div className={skillclass}>
-          <Image className={asc.a4.level ? "opacity-100" : "opacity-20"} src={SPRITE_URL + skills[asc.a4.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a4'}/>
+          <Image className={asc.a4.level ? "opacity-100" : "opacity-30"} src={SPRITE_URL + skills[asc.a4.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a4'}/>
           </div>
           <div className={skillclass}>
-            <Image className={asc.a6.level ? "opacity-100" : "opacity-20"} src={SPRITE_URL + skills[asc.a6.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a6'}/>
+            <Image className={asc.a6.level ? "opacity-100" : "opacity-30"} src={SPRITE_URL + skills[asc.a6.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'a6'}/>
           </div>
 
         </div>
@@ -86,15 +86,15 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
         <div className="flex justify-start gap-2 m-2">
           <div className={skillclass}>
             <Image src={SPRITE_URL + skills[skill_levels.basic.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'basic'}/>
-            {skill_levels.basic.cappedLevel}
+            <span className={`font-medium bg-slate-900  rounded-xl py-[2px] px-2 ${skill_levels.basic.level > 10 ? 'text-cyan-400' : 'text-gray-100'}`}>{skill_levels.basic.level}</span>
           </div>
           <div className={skillclass}>
             <Image src={SPRITE_URL + skills[skill_levels.skill.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'skill'}/>
-            {skill_levels.skill.cappedLevel}
+            <span className={`font-medium  bg-slate-900 rounded-xl py-[2px] px-2 ${skill_levels.skill.level > 10 ? 'text-cyan-400' : 'text-gray-100'}`}>{skill_levels.skill.level}</span>
           </div>
           <div className={skillclass}>
             <Image src={SPRITE_URL + skills[skill_levels.ult.id as keyof typeof skills].IconPath} width={iconSize} height={iconSize} alt={'ult'}/>
-            {skill_levels.ult.cappedLevel}
+            <span className={`font-medium  bg-slate-900 rounded-xl py-[2px] px-2 ${skill_levels.ult.level > 10 ? 'text-cyan-400' : 'text-gray-100'}`}>{skill_levels.ult.level}</span>
           </div>
 
         </div>
@@ -113,11 +113,12 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({ row, cols, c
       data-state={"selected"}
       >
       <td colSpan={100} >
-        <div className="bg-slate-800 flex justify-start pl-4 whitespace-nowrap gap-2">
+        <div className="bg-slate-800 flex justify-start items-center pl-3 pt-[2px] whitespace-nowrap gap-2">
+          <Image alt={/*t*/(row.avatar_id.toString())} src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.avatar_id}.png`} width={30} height={30} className="h-8 w-auto" />
           {displaySkills(row.skill_levels)}
           {displayAscension(row.skill_levels.ascensions)}
         </div>
-        <div className="bg-slate-800 flex justify-center whitespace-nowrap gap-2">
+        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-2 px-2">
           {!relics.isLoading ? 
           relics.data.map((relic: Relic) => {
           return(

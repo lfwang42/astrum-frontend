@@ -210,9 +210,11 @@ export default function Leaderboard({ params }: { params: { calc_id: number }}) 
                   for (let calc of category.calculations) {
                     if (calc.calc_id == params.calc_id) {
                       return (
-                        <div key={calc.calc_id} className="flex justify-start items-center whitespace-nowrap gap-2">
+                        <div key={calc.calc_id} className="flex flex-col p-2 mt-2">
+                          <span className='mb-3'>{category.desc}</span>    
                           <span><Translate str={'Team'} />: </span>
                           <TeamDisplay team={category.team!} short={false} />       
+
                         </div>
                       )
                     }

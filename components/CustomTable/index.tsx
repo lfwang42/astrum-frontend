@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 
 import {
   Table,
@@ -14,32 +14,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 
-import {useTranslations} from 'next-intl';
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
 
-
 interface tableParams {
-  table: string,
-  query?: number
+  table: string;
+  query?: number;
 }
 
-
 interface CustomTableProps<TData, TValue> {
-  fetchUrl: string,
-  columns: ColumnDef<any, TValue>[],
-  params?: Params,
-    // sortOptions?: Record<string, string>
-  tableParams?: tableParams,
-  sortOptions?: any[]
-  defaultSort: string,
-  calc_id?: number,
+  fetchUrl: string;
+  columns: ColumnDef<any, TValue>[];
+  params?: Params;
+  // sortOptions?: Record<string, string>
+  tableParams?: tableParams;
+  sortOptions?: any[];
+  defaultSort: string;
+  calc_id?: number;
   pagination: boolean;
 }
 
@@ -54,7 +52,7 @@ export type Params = {
   comp?: string;
   page?: number;
   from?: string;
-}
+};
 
 export function CustomTable<TData, TValue>({
   fetchUrl,
@@ -66,86 +64,93 @@ export function CustomTable<TData, TValue>({
   sortOptions,
   defaultSort,
   calc_id,
-  pagination
+  pagination,
 }: CustomTableProps<TData, TValue>) {
-  const [rows, setRows] = useState<TData[]>([])
-  const [isLoading, setLoading] = useState<boolean>(true)
-  const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true)
-  const [tableSize, setTableSize] = useState<number>(0)
-  const [rowSpan, setRowSpan] = useState<number>(0)
-  const [rowExpand, setRowExpand] = useState<{expand: boolean, row: any}[]>([])
-  const router = useRouter()  
-
+  const [rows, setRows] = useState<TData[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const [tableSizeLoading, setTableSizeLoading] = useState<boolean>(true);
+  const [tableSize, setTableSize] = useState<number>(0);
+  const [rowSpan, setRowSpan] = useState<number>(0);
+  const [rowExpand, setRowExpand] = useState<{ expand: boolean; row: any }[]>(
+    []
+  );
+  const router = useRouter();
 
   const fetchTableSize = async () => {
-    setTableSizeLoading(true)
-    const res = await axios.get(getAPIURL('/api/tablesize'), {params: tableParams})
-    setTableSize(res.data)
+    setTableSizeLoading(true);
+    const res = await axios.get(getAPIURL("/api/tablesize"), {
+      params: tableParams,
+    });
+    setTableSize(res.data);
     // console.log(tableSize)
-    setTableSizeLoading(false)
+    setTableSizeLoading(false);
     // console.log(tableSizeLoading)
   };
 
   const filterCellName = (name: string) => {
-    if (name == 'score' || name == 'rank' || name == 'region' || name == 'nickname') return true
-    return false
-  }
+    if (
+      name == "score" ||
+      name == "rank" ||
+      name == "region" ||
+      name == "nickname"
+    )
+      return true;
+    return false;
+  };
 
   useEffect(() => {
-    if (tableParams)    fetchTableSize()
-  }, [])
+    if (tableParams) fetchTableSize();
+  }, []);
 
-
-  
   const table = useReactTable({
     columns,
-    data: rows,    
+    data: rows,
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true
-  })
+    manualPagination: true,
+  });
   const pageSize = 20;
-  const defaultParams: Params =  {
+  const defaultParams: Params = {
     sortStat: defaultSort,
-    order: 'desc',
+    order: "desc",
     size: pageSize,
     page: 1,
   };
   if (params && params.calc_id) {
-    defaultParams.calc_id = params.calc_id
+    defaultParams.calc_id = params.calc_id;
   }
-  const [searchParams, setParams] = useState<Params>(defaultParams)
+  const [searchParams, setParams] = useState<Params>(defaultParams);
   useEffect(() => {
-    setLoading(true)
-    const res = axios.get(fetchUrl, {params: searchParams}) // Use the correct URL, it can be an API Route URL, an external URL...
-    .then((res) => res.data)
-    .then((data) => {
-      setRows(data)
-      setRowSpan(data[0].hasMultiRows? data[0].bids.length : 1)
-    })
-    .then(() => setLoading(false))
-    .catch((error) => {
+    setLoading(true);
+    const res = axios
+      .get(fetchUrl, { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
+      .then((res) => res.data)
+      .then((data) => {
+        setRows(data);
+        setRowSpan(data[0].hasMultiRows ? data[0].bids.length : 1);
+      })
+      .then(() => setLoading(false))
+      .catch((error) => {
         console.log(error);
       });
-  }, [JSON.stringify(searchParams), fetchUrl])
-  
+  }, [JSON.stringify(searchParams), fetchUrl]);
+
   useEffect(() => {
-    const arr = []
+    const arr = [];
     for (let i = 0; i < Math.floor(rows.length / rowSpan); i++) {
-      arr.push({row: rows[Math.floor(i / rowSpan)], expand: false})
+      arr.push({ row: rows[Math.floor(i / rowSpan)], expand: false });
     }
-    setRowExpand(arr)
-  }, [rowSpan])
+    setRowExpand(arr);
+  }, [rowSpan]);
   const t = useTranslations();
   function navigateNext(newParams: Params) {
-    const stringParams: any = {}
+    const stringParams: any = {};
     for (const key in newParams) {
-      if (newParams[key]) stringParams[key] = newParams[key]?.toString()
-
+      if (newParams[key]) stringParams[key] = newParams[key]?.toString();
     }
-    const paramString = new URLSearchParams(stringParams).toString()
+    const paramString = new URLSearchParams(stringParams).toString();
     // console.log(paramString)
     // router.push(`?${paramString}`, {scroll: false})
-    setParams(stringParams)
+    setParams(stringParams);
   }
   // useEffect(() => {
   //   const stringParams: any = {}
@@ -158,16 +163,31 @@ export function CustomTable<TData, TValue>({
   // }, [JSON.stringify(searchParams)])
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      {(sortOptions && sortOptions!.length > 0 && rowSpan == 1) ? 
-      <div className="mb-1">
-        <span>Sort By:</span>
-        <select defaultValue={params?.sortStat ? params?.sortStat : defaultSort} className="text-black" onChange={e => navigateNext({...defaultParams, ...{sortStat: e.target.value, page: 1}})}>
-          {sortOptions?.map(option => {
-            return (<option key={option.value} value={option.value}>{option.label}</option>)
-          })}
-        </select>
-      </div> : 
-      <div className="mb-2"></div>}
+      {sortOptions && sortOptions!.length > 0 && rowSpan == 1 ? (
+        <div className="mb-1">
+          <span>Sort By:</span>
+          <select
+            defaultValue={params?.sortStat ? params?.sortStat : defaultSort}
+            className="text-black"
+            onChange={(e) =>
+              navigateNext({
+                ...defaultParams,
+                ...{ sortStat: e.target.value, page: 1 },
+              })
+            }
+          >
+            {sortOptions?.map((option) => {
+              return (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      ) : (
+        <div className="mb-2"></div>
+      )}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -183,100 +203,128 @@ export function CustomTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {(!isLoading && rows && table.getRowModel().rows?.length) ? (
+            {!isLoading && rows && table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row, rowIndex) => {
-                const buildrow: any = row.original
+                const buildrow: any = row.original;
                 return (
-                <React.Fragment key={row.id}>
-                  <TableRow
-                    data-state={row.getIsSelected() && "selected"}
-                    onClick={() => { 
-                      if (row.original?.score) {
-                        const index = Math.floor(rowIndex / rowSpan)
-                        setRowExpand((prev) => {
-                          const prevValue = prev[index]
-                          const arr = [...prev]
-                          var newBool = false;
-                          if (prevValue.row.avatar_id == buildrow.avatar_id) {
-                            newBool = !prevValue.expand
-                          }
-                          else {
-                            newBool = true
-                          }
-                          arr.splice(index, 1, {expand: newBool, row: buildrow})
-                          return arr
-                        })}
-                      }
-                    } 
-                    className={`${rowSpan == 1 ? 'hover:bg-muted/50' : ""}`}
-                  >
-                    {row.original.hasMultiRows ? 
-                    <>
-                    {row.getVisibleCells().map((cell, indexForCell) => {
-                      if (filterCellName(cell.column.id)) {
-                        if (rowIndex % rowSpan == 0) {
-                          return (
-                            <TableCell key={cell.id} rowSpan={row.original.bids.length} className="px-3 py-[3px]">
-                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  <React.Fragment key={row.id}>
+                    <TableRow
+                      data-state={row.getIsSelected() && "selected"}
+                      className={`select-none ${rowSpan == 1 ? "hover:bg-muted/50" : ""}`}
+                    >
+                      {row.original.hasMultiRows ? (
+                        <>
+                          {row.getVisibleCells().map((cell, indexForCell) => {
+                            if (filterCellName(cell.column.id)) {
+                              if (rowIndex % rowSpan == 0) {
+                                return (
+                                  <TableCell
+                                    key={cell.id}
+                                    rowSpan={row.original.bids.length}
+                                    className="px-3 py-[3px]"
+                                  >
+                                    {flexRender(
+                                      cell.column.columnDef.cell,
+                                      cell.getContext()
+                                    )}
+                                  </TableCell>
+                                );
+                              }
+                            } else {
+                              return (
+                                <TableCell
+                                  key={cell.id}
+                                  className="px-3 py-[3px] cursor-pointer"
+                                  onClick={() => {
+                                    if (row.original?.score) {
+                                      const index = Math.floor(rowIndex / rowSpan);
+                                      setRowExpand((prev) => {
+                                        const prevValue = prev[index];
+                                        const arr = [...prev];
+                                        var newBool = false;
+                                        if (prevValue.row.avatar_id == buildrow.avatar_id) {
+                                          newBool = !prevValue.expand;
+                                        } else {
+                                          newBool = true;
+                                        }
+                                        arr.splice(index, 1, {
+                                          expand: newBool,
+                                          row: buildrow,
+                                        });
+                                        return arr;
+                                      });
+                                    }
+                                  }}
+                                >
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext()
+                                  )}
+                                </TableCell>
+                              );
+                            }
+                          })}
+                        </>
+                      ) : (
+                        <>
+                          {row.getVisibleCells().map((cell, indexForCell) => (
+                            <TableCell key={cell.id} className="px-3 py-[3px]">
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
                             </TableCell>
-                          )
-                        }
-                      }
-                      else {
-                        return (
-                          <TableCell key={cell.id} className="px-3 py-[3px]">
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </TableCell>
-                        )
-                      }
-                    }
-                    )}
-                    </>
-                    :  
-                    <>
-                    {row.getVisibleCells().map((cell, indexForCell) => (
-                      <TableCell key={cell.id} className="px-3 py-[3px]">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
-                    </> }
-
-                  </TableRow>
-                   {rowExpand.length && rowExpand[Math.floor(rowIndex / rowSpan)].expand && (rowSpan == 1 || rowSpan > 1 && (rowIndex % rowSpan == rowSpan - 1)) && 
-                    <ExpandedBuildRow row={rowExpand[Math.floor(rowIndex / rowSpan)].row} cols={columns.length} calc_id={calc_id}/>
-                   }
-                </React.Fragment>
-              )})
+                          ))}
+                        </>
+                      )}
+                    </TableRow>
+                    {rowExpand.length &&
+                      rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
+                      (rowSpan == 1 ||
+                        (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1)) && (
+                        <ExpandedBuildRow
+                          row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
+                          cols={columns.length}
+                          calc_id={calc_id}
+                        />
+                      )}
+                  </React.Fragment>
+                );
+              })
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
                   No results.
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-        {pagination && <Pagination 
-          tableSize={tableSize} 
-          tableSizeLoading={tableSizeLoading}
-          pageSize = {searchParams.size ? searchParams.size : 20}
-          pageNumber = {searchParams.page} 
-          setParams = {setParams}
-          nextFunction = {navigateNext}
-          loading = {isLoading}
-          defaultSort = {defaultSort}
-          // order = {searchParams.order}
-          rows = {rows}
-          params={searchParams!}
-          />}
-        
+        {pagination && (
+          <Pagination
+            tableSize={tableSize}
+            tableSizeLoading={tableSizeLoading}
+            pageSize={searchParams.size ? searchParams.size : 20}
+            pageNumber={searchParams.page}
+            setParams={setParams}
+            nextFunction={navigateNext}
+            loading={isLoading}
+            defaultSort={defaultSort}
+            // order = {searchParams.order}
+            rows={rows}
+            params={searchParams!}
+          />
+        )}
       </div>
     </div>
-  )
+  );
 }
