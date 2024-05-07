@@ -1,6 +1,5 @@
 'use client'
 import { columns } from './columns';
-import { RelicTable } from './relic-table';
 import axios from 'axios'
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import useSWR from 'swr'
