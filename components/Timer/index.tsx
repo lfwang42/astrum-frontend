@@ -48,10 +48,10 @@ export const Timer: React.FC<TimerProps> = ({
     return timeLeft;
   };
 
-
   return (
     <span className="text-slate-200">
-      {label && <span>{label}</span>} <span className="value">{getFormattedText(timestamp)}</span>
+      {label && <span>{label}</span>}{" "}
+      <span className="value">{getFormattedText(timestamp)}</span>
     </span>
   );
 };
