@@ -193,7 +193,9 @@ export function CustomTable<TData, TValue>({
         <>
           {rowExpand.length && rowExpand[rowIndex].expand && (
             <TableRow key={row.avatar_id + "expanded"}>
+              <td colSpan={100}>
               ADD STUFF HERE
+              </td>
               
             </TableRow>
           )}
