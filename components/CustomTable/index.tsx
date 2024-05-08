@@ -153,9 +153,6 @@ export function CustomTable<TData, TValue>({
     setParams(stringParams);
   }
   const expandRow = (row: any, rowIndex: number) => {
-    console.log(rowSpan);
-    console.log(rowIndex);
-
     if (row?.score) {
       if (rowSpan == 1) {
         return (
@@ -305,7 +302,7 @@ export function CustomTable<TData, TValue>({
                               return (
                                 <TableCell
                                   key={cell.id}
-                                  className="px-3 py-[3px] cursor-pointer"
+                                  className="px-3 py-[2px] cursor-pointer"
                                   onClick={() => {
                                     const index = Math.floor(
                                       rowIndex / rowSpan
