@@ -153,7 +153,7 @@ export function CustomTable<TData, TValue>({
     setParams(stringParams);
   }
   const expandRow = (row: any, rowIndex: number) => {
-    if (row.original?.score) {
+    if (row?.score) {
       return (
         <>
         {rowExpand.length &&
