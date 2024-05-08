@@ -153,6 +153,7 @@ export function CustomTable<TData, TValue>({
     setParams(stringParams);
   }
   const expandRow = (row: any, rowIndex: number) => {
+    console.log(row)
     if (row?.score) {
       return (
         <>
@@ -166,6 +167,17 @@ export function CustomTable<TData, TValue>({
               calc_id={calc_id}
             />
           )}
+        </>
+      )
+    }
+
+    //overwrite this for profile row expansion 
+    if (tableParams?.table && tableParams.table == 'builds') {
+      return (
+        <>
+          <TableRow key={row.avatar_id + 'expanded'}>
+            ADD STUFF HERE
+          </TableRow>
         </>
       )
     }
