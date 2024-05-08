@@ -152,15 +152,25 @@ export function CustomTable<TData, TValue>({
     // router.push(`?${paramString}`, {scroll: false})
     setParams(stringParams);
   }
-  // useEffect(() => {
-  //   const stringParams: any = {}
-  //   for (const key in searchParams) {
-  //     stringParams[key] = searchParams[key]?.toString()
-  //   }
-  //   const paramString = new URLSearchParams(stringParams).toString()
-  //   console.log(paramString)
-  //   router.push(`/relics/${paramString}`)
-  // }, [JSON.stringify(searchParams)])
+  const expandRow = (row: any, rowIndex: number) => {
+    if (row.original?.score) {
+      return (
+        <>
+        {rowExpand.length &&
+          rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
+          (rowSpan == 1 ||
+            (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1)) && (
+            <ExpandedBuildRow
+              row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
+              cols={columns.length}
+              calc_id={calc_id}
+            />
+          )}
+        </>
+      )
+    }
+  }
+
   return (
     <div className="flex flex-col justify-center items-center w-full">
       {sortOptions && sortOptions!.length > 0 && rowSpan == 1 ? (
@@ -242,7 +252,6 @@ export function CustomTable<TData, TValue>({
                                   key={cell.id}
                                   className="px-3 py-[3px] cursor-pointer"
                                   onClick={() => {
-                                    if (row.original?.score) {
                                       const index = Math.floor(rowIndex / rowSpan);
                                       setRowExpand((prev) => {
                                         const prevValue = prev[index];
@@ -259,7 +268,6 @@ export function CustomTable<TData, TValue>({
                                         });
                                         return arr;
                                       });
-                                    }
                                   }}
                                 >
                                   {flexRender(
@@ -284,16 +292,7 @@ export function CustomTable<TData, TValue>({
                         </>
                       )}
                     </TableRow>
-                    {rowExpand.length &&
-                      rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
-                      (rowSpan == 1 ||
-                        (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1)) && (
-                        <ExpandedBuildRow
-                          row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
-                          cols={columns.length}
-                          calc_id={calc_id}
-                        />
-                      )}
+                    {expandRow(buildrow, rowIndex)}
                   </React.Fragment>
                 );
               })
