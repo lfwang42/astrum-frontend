@@ -183,7 +183,6 @@ export function CustomTable<TData, TValue>({
         );
       }
     }
-
     //overwrite this for profile row expansion
     if (tableParams?.table && tableParams.table == "builds") {
       return (
@@ -289,7 +288,7 @@ export function CustomTable<TData, TValue>({
                                   <TableCell
                                     key={cell.id}
                                     rowSpan={row.original.bids.length}
-                                    className="px-3 py-[3px]"
+                                    className="px-3 py-[2px]"
                                   >
                                     {flexRender(
                                       cell.column.columnDef.cell,
