@@ -153,22 +153,37 @@ export function CustomTable<TData, TValue>({
     setParams(stringParams);
   }
   const expandRow = (row: any, rowIndex: number) => {
-    console.log(row)
+    console.log(rowSpan)
+    console.log(rowIndex)
+
     if (row?.score) {
-      return (
-        <>
-        {rowExpand.length &&
-          rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
-          (rowSpan == 1 ||
-            (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1)) && (
+      if (rowSpan == 1) {
+        return (
+          <>{rowExpand[rowIndex].expand && 
             <ExpandedBuildRow
               row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
               cols={columns.length}
               calc_id={calc_id}
             />
-          )}
-        </>
-      )
+          }</>
+        )
+      }
+      else {
+        return (
+          <>
+          {rowExpand.length &&
+            rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
+              (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1) && (
+              <ExpandedBuildRow
+                row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
+                cols={columns.length}
+                calc_id={calc_id}
+              />
+            )}
+          </>
+        )
+      }
+
     }
 
     //overwrite this for profile row expansion 
