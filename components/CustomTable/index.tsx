@@ -191,7 +191,7 @@ export function CustomTable<TData, TValue>({
     if (tableParams?.table && tableParams.table == "builds") {
       return (
         <>
-          {rowExpand[rowIndex].expand && (
+          {rowExpand.length && rowExpand[rowIndex].expand && (
             <TableRow key={row.avatar_id + "expanded"}>
               ADD STUFF HERE
               
