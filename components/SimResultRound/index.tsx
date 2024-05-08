@@ -19,8 +19,8 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
 }) => {
   const [expand, setExpand] = useState<Boolean>(false);
   const tempMap: Record<string, string> = {
-    "1": "/avatar/phantalyia.webp",
-    "2": "/avatar/destruction.webp",
+    "2": "/avatar/phantalyia.webp",
+    "1": "/avatar/destruction.webp",
     "3": "/avatar/abundance.webp",
   };
 
