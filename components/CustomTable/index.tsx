@@ -153,27 +153,14 @@ export function CustomTable<TData, TValue>({
     setParams(stringParams);
   }
   const expandRow = (row: any, rowIndex: number) => {
-    console.log(rowSpan)
-    console.log(rowIndex)
+    console.log(rowSpan);
+    console.log(rowIndex);
 
     if (row?.score) {
       if (rowSpan == 1) {
         return (
-          <>{rowExpand.length && rowExpand[rowIndex].expand && 
-            <ExpandedBuildRow
-              row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
-              cols={columns.length}
-              calc_id={calc_id}
-            />
-          }</>
-        )
-      }
-      else {
-        return (
           <>
-          {rowExpand.length &&
-            rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
-              (rowSpan > 1 && rowIndex % rowSpan == rowSpan - 1) && (
+            {rowExpand.length && rowExpand[rowIndex].expand && (
               <ExpandedBuildRow
                 row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
                 cols={columns.length}
@@ -181,23 +168,36 @@ export function CustomTable<TData, TValue>({
               />
             )}
           </>
-        )
+        );
+      } else {
+        return (
+          <>
+            {rowExpand.length &&
+              rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
+              rowSpan > 1 &&
+              rowIndex % rowSpan == rowSpan - 1 && (
+                <ExpandedBuildRow
+                  row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
+                  cols={columns.length}
+                  calc_id={calc_id}
+                />
+              )}
+          </>
+        );
       }
-
     }
 
-    //overwrite this for profile row expansion 
-    if (tableParams?.table && tableParams.table == 'builds') {
+    //overwrite this for profile row expansion
+    if (tableParams?.table && tableParams.table == "builds") {
       return (
         <>
-          {rowExpand[rowIndex] && <TableRow key={row.avatar_id + 'expanded'}>
-            ADD STUFF HERE
-          </TableRow>}
-
+          {rowExpand[rowIndex] && (
+            <TableRow key={row.avatar_id + "expanded"}>ADD STUFF HERE</TableRow>
+          )}
         </>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
@@ -254,7 +254,29 @@ export function CustomTable<TData, TValue>({
                   <React.Fragment key={row.id}>
                     <TableRow
                       data-state={row.getIsSelected() && "selected"}
-                      className={`select-none ${rowSpan == 1 ? "hover:bg-muted/50" : ""}`}
+                      className={`select-none ${
+                        rowSpan == 1 ? "hover:bg-muted/50" : ""
+                      }`}
+                      onClick={() => {
+                        if (rowSpan == 1) {
+                          const index = rowIndex;
+                          setRowExpand((prev) => {
+                            const prevValue = prev[index];
+                            const arr = [...prev];
+                            var newBool = false;
+                            if (prevValue.row.avatar_id == buildrow.avatar_id) {
+                              newBool = !prevValue.expand;
+                            } else {
+                              newBool = true;
+                            }
+                            arr.splice(index, 1, {
+                              expand: newBool,
+                              row: buildrow,
+                            });
+                            return arr;
+                          });
+                        }
+                      }}
                     >
                       {row.original.hasMultiRows ? (
                         <>
@@ -280,22 +302,27 @@ export function CustomTable<TData, TValue>({
                                   key={cell.id}
                                   className="px-3 py-[3px] cursor-pointer"
                                   onClick={() => {
-                                      const index = Math.floor(rowIndex / rowSpan);
-                                      setRowExpand((prev) => {
-                                        const prevValue = prev[index];
-                                        const arr = [...prev];
-                                        var newBool = false;
-                                        if (prevValue.row.avatar_id == buildrow.avatar_id) {
-                                          newBool = !prevValue.expand;
-                                        } else {
-                                          newBool = true;
-                                        }
-                                        arr.splice(index, 1, {
-                                          expand: newBool,
-                                          row: buildrow,
-                                        });
-                                        return arr;
+                                    const index = Math.floor(
+                                      rowIndex / rowSpan
+                                    );
+                                    setRowExpand((prev) => {
+                                      const prevValue = prev[index];
+                                      const arr = [...prev];
+                                      var newBool = false;
+                                      if (
+                                        prevValue.row.avatar_id ==
+                                        buildrow.avatar_id
+                                      ) {
+                                        newBool = !prevValue.expand;
+                                      } else {
+                                        newBool = true;
+                                      }
+                                      arr.splice(index, 1, {
+                                        expand: newBool,
+                                        row: buildrow,
                                       });
+                                      return arr;
+                                    });
                                   }}
                                 >
                                   {flexRender(
