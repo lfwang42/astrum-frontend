@@ -159,7 +159,7 @@ export function CustomTable<TData, TValue>({
     if (row?.score) {
       if (rowSpan == 1) {
         return (
-          <>{rowExpand[rowIndex].expand && 
+          <>{rowExpand.length && rowExpand[rowIndex].expand && 
             <ExpandedBuildRow
               row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
               cols={columns.length}
@@ -190,9 +190,10 @@ export function CustomTable<TData, TValue>({
     if (tableParams?.table && tableParams.table == 'builds') {
       return (
         <>
-          <TableRow key={row.avatar_id + 'expanded'}>
+          {rowExpand[rowIndex] && <TableRow key={row.avatar_id + 'expanded'}>
             ADD STUFF HERE
-          </TableRow>
+          </TableRow>}
+
         </>
       )
     }
