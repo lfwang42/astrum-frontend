@@ -157,28 +157,28 @@ export function CustomTable<TData, TValue>({
       if (rowSpan == 1) {
         return (
           <>
-            {rowExpand.length && rowExpand[rowIndex].expand && (
+            {(rowExpand.length && rowExpand[rowIndex].expand) ? (
               <ExpandedBuildRow
                 row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
                 cols={columns.length}
                 calc_id={calc_id}
               />
-            )}
+            ) : null}
           </>
         );
       } else {
         return (
           <>
-            {rowExpand.length &&
+            {(rowExpand.length &&
               rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
               rowSpan > 1 &&
-              rowIndex % rowSpan == rowSpan - 1 && (
+              rowIndex % rowSpan == rowSpan - 1) ? (
                 <ExpandedBuildRow
                   row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
                   cols={columns.length}
                   calc_id={calc_id}
                 />
-              )}
+              ) : null}
           </>
         );
       }
@@ -187,14 +187,11 @@ export function CustomTable<TData, TValue>({
     if (tableParams?.table && tableParams.table == "builds") {
       return (
         <>
-          {rowExpand.length && rowExpand[rowIndex].expand && (
+          {(rowExpand.length && rowExpand[rowIndex].expand) ?  (
             <TableRow key={row.avatar_id + "expanded"}>
-              <td colSpan={100}>
-              ADD STUFF HERE
-              </td>
-              
+              <td colSpan={100}><span>ADD STUFF HERE</span></td>
             </TableRow>
-          )}
+          ) : null}
         </>
       );
     }
@@ -248,7 +245,7 @@ export function CustomTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {!isLoading && rows && table.getRowModel().rows?.length ? (
+            {(!isLoading && rows && table.getRowModel().rows?.length) ? (
               table.getRowModel().rows.map((row, rowIndex) => {
                 const buildrow: any = row.original;
                 return (
@@ -278,8 +275,7 @@ export function CustomTable<TData, TValue>({
                           });
                         }
                       }}
-                    >
-                      {row.original.hasMultiRows ? (
+                    >{row.original.hasMultiRows ? (
                         <>
                           {row.getVisibleCells().map((cell, indexForCell) => {
                             if (filterCellName(cell.column.id)) {
@@ -358,7 +354,7 @@ export function CustomTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <span>No results.</span>
                 </TableCell>
               </TableRow>
             )}

@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { AvatarCategory } from "../../../types";
 import { ConeDisplay } from "@/components/ConeDisplay";
 import {
@@ -22,6 +22,7 @@ import { Translate } from "@/components/Translate";
 import { TeamDisplay } from "@/components/TeamDisplay";
 import avatar from "../../../assets/icon/AvatarIconGray.png";
 import calcdetails from "../../../calcdetails.json";
+import Link from "next/link";
 export type LeaderboardRow = {
   avatar_id: number;
   region: string;
@@ -77,7 +78,7 @@ export default function Leaderboard({
         url += a_ids[aid]
       }
     }
-    console.log(url)
+    // console.log(url)
     return url
   }
   const checkCategory = (category: AvatarCategory) => {
@@ -110,7 +111,7 @@ export default function Leaderboard({
                     key={`${combo_id}-cone`}
                     className={`flex justify-center p-2 min-h-16 min-w-12  hover:bg-slate-600 ${a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""} `}
                   >
-                    <a href={generateURL(calc[0], cone[0])}>
+                    <Link href={generateURL(calc[0], cone[0])}>
                       <ConeDisplay
                         name={cone[1].name}
                         icon={cone[1].icon}
@@ -118,7 +119,7 @@ export default function Leaderboard({
                         width={25}
                         height={38}
                       />
-                    </a>
+                    </Link>
                   </div>
                 );
               })}

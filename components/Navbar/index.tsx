@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import march from "./march.webp";
 import icon from "./icon.png";
 import { usePathname, useRouter } from "next-intl/client";
 import { ChangeEvent } from "react";
@@ -97,7 +96,7 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
     },
   ];
   return (
-    <header className="xl:flex flex flex-wrap justify-between items-center h-full px-[8%] w-full flex-auto bg-sky-900 top-0 py-4">
+    <header className="xl:flex flex flex-wrap justify-between items-center h-full px-[8%] w-full flex-auto bg-sky-800 top-0 py-4">
       <div className="mr-2">
         <Link href="/">
           <Image src={icon} width={30} height={30} alt="cutie" />

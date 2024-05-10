@@ -14,7 +14,6 @@ type ConeDisplayProps = {
     imposition,
     height, width
   }) => {
-    console.log(icon)
     return (
         <div className="flex justify-center items-center whitespace-nowrap gap-2">
             <div className="relative flex justify-center p-[2px]" title={name} >

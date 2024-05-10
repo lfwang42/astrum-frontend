@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import Navbar from "../../components/Navbar/index";
 import Footer from "@/components/Footer";
+import { ProfilesContextProvider } from "@/contexts/PinnedProfiles/ProfilesContext";
+import { ProfileTabs } from "@/components/ProfileTabs";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Astrum",
@@ -46,10 +48,13 @@ export default async function RootLayout({
         ></script>
       </head>
       <body className="min-h-screen items-center bg-slate-800 text-slate-50 mb-5">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <Navbar locale={locale} />
-          {children}
-        </NextIntlClientProvider>
+        <ProfilesContextProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <Navbar locale={locale} />
+            <ProfileTabs />
+            {children}
+          </NextIntlClientProvider>
+        </ProfilesContextProvider>
         <Footer />
       </body>
     </html>

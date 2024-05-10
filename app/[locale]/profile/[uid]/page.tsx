@@ -1,18 +1,18 @@
 'use client'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import avatars from '../../../../honker_avatars.json'
 import axios from 'axios'
 import { columns } from './columns'
 import { CustomTable } from '../../../../components/CustomTable/index';
 import { getAPIURL, getRegion } from '../../../../lib/utils';
-import useSWR from 'swr'
 import { Timer } from '@/components/Timer'
 import { IoMdRefresh } from "react-icons/io";
 import { UpdatedDate } from '@/components/UpdatedDate'
 import { useRouter } from 'next/navigation'
 import { User } from '@/app/types'
 import { ResultsDisplay } from '@/components/ResultsDisplay'
+import { ProfilesContext } from '@/contexts/PinnedProfiles/ProfilesContext'
 
 export default function Profile({ params }: { params: { uid: number }}) {
   const [refreshTime, setRefreshTime] = useState<number>();
@@ -20,16 +20,18 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
   const router = useRouter()
+  const { profiles, addTab } = useContext(ProfilesContext)
   const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
   const fetchProfile = async (uid: string) => {
     const res = await axios.get(getAPIURL(`/api/users/${params.uid}`))
     setUserData(res.data)
-    var date = new Date(Date.parse(res.data.updated_at)).getTime()
+
+    // var date = new Date(Date.parse(res.data.updated_at)).getTime()
   }
 
-  // useEffect(() => {
-  //   console.log('changed')
-  // }, [params.uid])
+  useEffect(() => {
+    handleNewTab(userData)
+  }, [profiles, userData])
 
   useEffect(() => {
     fetchProfile(params.uid.toString())
@@ -46,17 +48,14 @@ export default function Profile({ params }: { params: { uid: number }}) {
     }
   }, [userData])
   
-  function fetcher(params: any) {
-    const [url, query] = params;
-    const res = axios.get(url, query).then(res => {
-      return res.data
-    })
-    res.catch((error) => {
-      console.log(error)
-      throw(error)
-    })
-    return res
-  }
+  const handleNewTab = (userData: User | undefined) => {
+    if (!params.uid || !userData) return;
+    console.log(userData)
+    const nickname = userData?.nickname || "???";
+    addTab(params.uid.toString(), nickname);
+    document.title = `${nickname}'s Profile - Astrum`;
+  };
+
 
   function profileFetcher(params: any) {
     const [url, query] = params;
