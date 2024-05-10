@@ -122,12 +122,6 @@ export default function Profile({ params }: { params: { uid: number }}) {
        
     </div>
   );
-
-    // const profileData = useSWR([getAPIURL(`/api/builds/${params.uid}`), {}] , fetcher, {
-    //   onErrorRetry: (error) => {
-    //     return
-    //   }
-    // })
     const sortOptions = [
       { value: 'spd', label: 'Speed' },
       { value: 'atk', label: 'Attack' },

@@ -69,13 +69,13 @@ export interface LeaderboardCone {
   icon: string
   tid: number
 }
-
 interface CalcResult {
     calc_id: number, 
     rank: number, 
     outof: number,
     icon: string,
-    tid: number
+    tids: number[],
+    score_name: string;
 }
 
 export interface SkillResult {
@@ -140,7 +140,6 @@ interface Prop {
 interface LeaderboardResults {
     avatar_id: number,
     results: CalcResult[],
-    score_name: string,
 }
 export interface User {
     headicon: number;

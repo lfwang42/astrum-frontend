@@ -10,6 +10,7 @@ import { getRelativeStats } from '../../../../lib/utils';
 import { StatIcon } from '../../../../components/StatIcon/index';
 import { StatFormat } from '../../../../lib/utils';
 import { Translate } from "@/components/Translate";
+import { ConeDisplay } from "@/components/ConeDisplay";
 
 export type BuildRow = {
   avatar_id: number
@@ -54,10 +55,9 @@ export const columns: ColumnDef<BuildRow>[] = [
   },
   {
     header: "Lightcone",
-    cell: ({ row } ) => row.original.cone_tid? <EquipmentDisplay keyIndex={row.index} cones={[{ name: row.original.cone_tid, 
-      rank: row.original.cone_rank, icon: `/icon/${row.original.cone_tid}.png`}]}/>
+    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank} icon={`/icon/${row.original.cone_tid}.png`} />
       : <></>
-  },//`https://enka.network/ui/hsr/SpriteOutput/LightConeFigures/${row.original.cone_tid}.jpg`
+  },
   {
     header: "Sets",
     cell: ({ row } ) => <SetDisplay sets={row.original.sets}/>

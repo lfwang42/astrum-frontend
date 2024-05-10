@@ -31,7 +31,7 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
               <div className="justify-center align-middle text-center bg-slate-700 py-[4px] px-[6px] hover:bg-slate-400 max-w-28 min-h-34 hover:border-sky-900 border-2 border-none">
                 <div className="flex align-middle items-center justify-center min-h-8">
                   <span className="text-center text-xs items-center align-middle font-medium text-wrap">
-                    {result.score_name}
+                    {best.score_name}
                   </span>
                 </div>
                 <div className="flex justify-center gap-[2px] mb-[1px]">
@@ -49,7 +49,7 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
                     );
                   })}
                   <Image
-                    src={`/icon/${best.tid}.png`}
+                    src={`/icon/${best.tids[0]}.png`}
                     className="ml-1"
                     height={30}
                     width={30}
