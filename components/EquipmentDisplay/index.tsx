@@ -1,9 +1,8 @@
-import { SetInfo, EquipInfo } from "../../app/types";
+import React from "react";
+import { LeaderboardCone } from "../../app/types";
 import { ConeDisplay } from "../ConeDisplay";
-const SPRITE_URL = `https://enka.network/ui/hsr/`;
-const meme = "SPRITE_URL + set.icon";
 type ConeProps = {
-  cones: EquipInfo[];
+  cones: Record<string, Record<string, LeaderboardCone>>;
   keyIndex: number;
 };
 
@@ -11,15 +10,22 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
   if (cones) {
     return (
       <div className="flex justify-start whitespace-nowrap gap-2">
-        {cones.map((cone) => {
+        {Object.entries(cones).map((aid) => {
           return (
-            <ConeDisplay
-              key={`${keyIndex}-${cone.name}`}
-              name={cone.name.toString()}
-              icon={cone.icon}
-              imposition={cone.rank}
-            />
-          );
+            <React.Fragment key={`${aid[0]}-conedisplay`}>
+            {Object.values(aid[1]).map((cone) => {
+                return (
+                  <ConeDisplay
+                    key={`${keyIndex}-${cone.name}`}
+                    name={cone.name.toString()}
+                    icon={cone.icon}
+                    imposition={cone.rank}
+                  />
+                );
+              })
+            }
+            </React.Fragment>
+          )
         })}
       </div>
     );

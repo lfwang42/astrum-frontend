@@ -21,18 +21,7 @@ import Image from "next/image";
 import { Translate } from "@/components/Translate";
 import { TeamDisplay } from "@/components/TeamDisplay";
 import avatar from "../../../assets/icon/AvatarIconGray.png";
-
-interface LeaderboardCone {
-  calc: string;
-  calc_id: number;
-  name: string;
-  promotion: number;
-  rank: number;
-  level: number;
-  icon: string;
-  tid: number;
-}
-
+import calcdetails from "../../../calcdetails.json";
 export type LeaderboardRow = {
   avatar_id: number;
   region: string;
@@ -47,18 +36,6 @@ export type LeaderboardRow = {
   calc_name: string;
   sets: SetInfo[];
 };
-
-function getName(cats: AvatarCategory[], calc_id: number): string {
-  // console.log(cats)
-  for (let category of cats) {
-    for (let calc of category.calculations) {
-      if (calc.calc_id === +calc_id) {
-        return category.score_name;
-      }
-    }
-  }
-  return "";
-}
 
 function fetcher(params: any) {
   const [url, query] = params;
@@ -77,36 +54,85 @@ export default function Leaderboard({
 }: {
   params: { calc_id: number };
 }) {
-  const [data, setData] = useState<LeaderboardRow[]>([]);
-  const [calc, setCalc] = useState<AvatarCategory[]>([]);
+  const cids = params.calc_id.toString().match(/.{1,6}/g);
+  var team_id = "";
+  const aidOrdered: string[] = []
+  const a_ids: Record<string, string> = {};
+  for (let cid of cids!) {
+    const aid: string = cid.slice(0, 4);
+    const calc: string = cid.slice(-2);
+    aidOrdered.push(aid)
+    a_ids[aid] = calc;
+    team_id = team_id + aid;
+  }
+
+  const generateURL = (avatar_id: string, calc: string) => {
+    var url = "/leaderboard/"
+    for (let aid of aidOrdered) {
+      url += aid
+      if (aid == avatar_id) {
+        url += calc
+      }
+      else {
+        url += a_ids[aid]
+      }
+    }
+    console.log(url)
+    return url
+  }
+  const checkCategory = (category: AvatarCategory) => {
+    for (let avatar_id in a_ids) {
+      if (!category.calculations[avatar_id][a_ids[avatar_id]]) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const displayCones = (category: AvatarCategory) => {
+    return (
+      <>
+        {Object.entries(category.calculations).map((calc) => {
+          return (
+            <div key={`${calc[0]}-lightcones`} className="flex flex-row gap-1 min-h-20 items-center">
+              <Image
+                width={25}
+                height={25}
+                className="w-auto h-8 m-1"
+                src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${calc[0]}.png`}
+                alt="icon"
+                unoptimized
+              />
+              {Object.entries(calc[1]).map((cone) => {
+                const combo_id = calc[0] + cone[0];
+                return (
+                  <div
+                    key={`${combo_id}-cone`}
+                    className={`flex justify-center p-2 min-h-16 min-w-12  hover:bg-slate-600 ${a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""} `}
+                  >
+                    <a href={generateURL(calc[0], cone[0])}>
+                      <ConeDisplay
+                        name={cone[1].name}
+                        icon={cone[1].icon}
+                        imposition={cone[1].rank}
+                        width={25}
+                        height={38}
+                      />
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </>
+    );
+  };
   const searchParams = useSearchParams();
   const p = getParamsFromUrl(searchParams);
   p.calc_id = params.calc_id;
-  const avatar_id = params?.calc_id.toString().slice(0, -2);
-  const fetchCalc = async () => {
-    if (!avatar_id) return;
-
-    const opts = { params: { avatar_id: avatar_id } };
-    const response = await axios.get(getAPIURL("/api/categories"), opts);
-    const { data } = response.data;
-
-    setData(data);
-  };
-  const leaderboardData = useSWR(
-    [
-      getAPIURL("/api/leaderboard"),
-      { params: { ...p, calc_id: params.calc_id } },
-    ],
-    fetcher,
-    {
-      onErrorRetry: (error) => {
-        return;
-      },
-    }
-  );
-
   const calcs = useSWR(
-    [getAPIURL("/api/categories"), { params: { avatar_id: avatar_id } }],
+    [getAPIURL("/api/categories"), { params: { avatar_id: team_id } }],
     fetcher,
     {
       onErrorRetry: (error) => {
@@ -199,7 +225,6 @@ export default function Leaderboard({
             row?.original,
             !calcs.isLoading ? calcs.data[0].element : ""
           );
-          // console.log(ordered)
           const key = ordered?.[i];
           if (key)
             return (
@@ -217,7 +242,10 @@ export default function Leaderboard({
       })),
       {
         accessorKey: "score",
-        header: calcs.isLoading ? "??" : getName(calcs.data!, params.calc_id),
+        header: calcs.isLoading
+          ? "??"
+          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]
+              .score_name,
         cell: ({ row }) => {
           return <span>{row.original.score?.toFixed(0)}</span>;
         },
@@ -227,38 +255,18 @@ export default function Leaderboard({
   );
 
   return (
-    <div className="min-h-screen container justify-center mx-auto py-1">
-      <div className="mx-auto flex justify-between w-2/3">
-        <div className="flex mt-2">
+    <div className="min-h-screen flex flex-col container items-center mx-auto py-1">
+      <div className="flex flex-row justify-between min-w-1/3 max-w-[60%] mb-2">
+        <div className="flex w-1/2 justify-start mt-2">
           {calcs.isLoading ? (
             <></>
           ) : (
-            calcs.data.map((category: any) => {
+            calcs.data.map((category: AvatarCategory) => {
               return (
-                <div key={category.name} className="mt-1 mr-10">
-                  <span className=" text-lg font-medium">{category.name}</span>
+                <div key={category.name} className="min-w-1/2 mt-1 p-1 mr-1">
+                  <span className="whitespace-normal text-lg font-normal">{category.name}</span>
                   <div className="flex justify-start mt-1 whitespace-nowrap gap-2">
-                    {category.calculations.map((calc: any) => {
-                      // if (calc.calc_id === +params.calc_id) console.log('same')
-                      return (
-                        <div
-                          key={calc.calc_id}
-                          className={`p-2 hover:bg-slate-600 ${
-                            calc.calc_id === +params.calc_id
-                              ? "bg-slate-600"
-                              : ""
-                          }`}
-                        >
-                          <a href={`${calc.calc_id}`}>
-                            <ConeDisplay
-                              name={calc.name}
-                              icon={calc.icon}
-                              imposition={calc.rank}
-                            />
-                          </a>
-                        </div>
-                      );
-                    })}
+                    {displayCones(category)}
                   </div>
                 </div>
               );
@@ -269,18 +277,21 @@ export default function Leaderboard({
           <></>
         ) : (
           calcs.data.map((category: AvatarCategory) => {
-            for (let calc of category.calculations) {
-              if (calc.calc_id == params.calc_id) {
-                return (
-                  <div key={calc.calc_id} className="flex flex-col p-2 mt-2">
-                    <span className="mb-3">{category.desc}</span>
-                    <span>
-                      <Translate str={"Team"} />:{" "}
-                    </span>
-                    <TeamDisplay team={category.team!} short={false} />
-                  </div>
-                );
-              }
+            if (checkCategory(category)) {
+              return (
+                <div
+                  key={`category-${category.name}-team`}
+                  className="flex flex-col p-2 mt-2 max-w-1/2 w-1/2"
+                >
+                  <span className="mb-3 whitespace-normal">
+                    {category.desc}
+                  </span>
+                  <span>
+                    <Translate str={"Team"} />:{" "}
+                  </span>
+                  <TeamDisplay team={category.team!} short={false} />
+                </div>
+              );
             }
           })
         )}

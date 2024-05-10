@@ -150,7 +150,7 @@ const threshold: {
     maxHP: 3500,
     critDmg: 1,
     critRate: 0.3,
-    breakEffect: 0.2,
+    breakEffect: 0.5,
     effectHitRate: 0.3,
     healingBonus: 0.2,
     energyRecharge: 1.05

@@ -187,13 +187,13 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
           {displaySkills(row.skill_levels)}
           {displayAscension(row.skill_levels.ascensions)}
         </div>
-        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-2 px-2">
+        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-2 px-2 overflow-auto">
           {!relics.isLoading ? (
             relics.data.map((relic: Relic) => {
               return (
                 <div
                   key={row.id + relic.tid.toString()}
-                  className="flex justify-center items-center border-slate-400 border-2 p-1"
+                  className="flex justify-center items-center border-slate-400 border-2 p-1 min-w-44"
                 >
                   <div className="justify-center">
                     <RelicCanvas backgroundImage={relic.icon} />

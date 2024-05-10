@@ -34,19 +34,22 @@ export type EquipInfo = {
     icon: string
 }
 
-export interface AvatarCategory {
-    name: string,
-    avatar_id: number,
-    score_name: string,
-    element: string,
-    char_name: string,
-    add_date: string,
-    char_icon: string,
-    desc: string,
-    calculations: LeaderboardCone[],
-    count?: number,
-    team?: Teammate[]
+export type AvatarCategory = {
+  avatar_ids?: number[]
+  default_calc_id: number,
+  name: string,
+  avatar_id: number,
+  score_name: string,
+  element: string,
+  char_name: string,
+  add_date: string,
+  char_icon: string,
+  desc: string,
+  calculations: Record<string, Record<string, LeaderboardCone>>,
+  count?: number,
+  team: Teammate[]
 }
+
 
 export interface Teammate {
   avatar: string,
@@ -57,15 +60,14 @@ export interface Teammate {
 }
 
 export interface LeaderboardCone {
-    calc: string,
-    calc_id: number,
-
-    // lightcone: WeaponInfo
-    name: string,
-    promotion: number, 
-    rank: number, 
-    level: number,
-    icon: string
+  calc_id: number
+  calc: string,
+  name: string,
+  promotion: number, 
+  rank: number, 
+  level: number,
+  icon: string
+  tid: number
 }
 
 interface CalcResult {
