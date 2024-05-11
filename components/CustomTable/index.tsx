@@ -21,6 +21,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import { useRouter } from "next/navigation";
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
+import {}
 import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
 
@@ -183,16 +184,12 @@ export function CustomTable<TData, TValue>({
         );
       }
     }
-    //overwrite this for profile row expansion
     if (tableParams?.table && tableParams.table == "builds") {
       return (
         <>
           {rowExpand.length && rowExpand[rowIndex].expand && (
             <TableRow key={row.avatar_id + "expanded"}>
-              <td colSpan={100}>
-              ADD STUFF HERE
-              </td>
-              
+              <td colSpan={100}>ADD STUFF HERE</td>
             </TableRow>
           )}
         </>
