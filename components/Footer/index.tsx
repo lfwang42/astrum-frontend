@@ -19,7 +19,7 @@ export const Footer: React.FC<FooterProps> = () =>
                 src="/enka.png"
                 width={150}
                 height={75}
-                className="w-100 h-auto"
+                className="h-auto w-auto"
                 alt="Powered by enka.network"
               />
             </a>

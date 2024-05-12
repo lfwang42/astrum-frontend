@@ -101,7 +101,7 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
     <header className="xl:flex flex flex-wrap justify-between items-center h-full px-[8%] w-full flex-auto bg-sky-800 top-0 py-4">
       <div className="mr-2">
         <Link href="/">
-          <Image src={icon} width={30} height={30} alt="cutie" />
+          <Image src={icon} width={30} height={30} className="w-auto" alt="logo" />
         </Link>
       </div>
       <FiMenu

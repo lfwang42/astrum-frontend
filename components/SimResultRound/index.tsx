@@ -6,14 +6,14 @@ import { Translate } from "../Translate";
 const SPRITE_URL = `https://enka.network/ui/hsr/`;
 type SimResultRoundProps = {
   trackedStat: string;
-  key: string;
+  prekey: string;
   log: SimLog;
   avatar_id: number;
 };
 
 export const SimResultRound: React.FC<SimResultRoundProps> = ({
   trackedStat,
-  key,
+  prekey,
   log,
   avatar_id,
 }) => {
@@ -75,7 +75,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
 
   return (
     <div
-      key={`${key}-${log.id}`}
+      key={`${prekey}-${log.id}`}
       className="flex flex-col items-center align-middle"
       onClick={() => setExpand((prev) => !prev)}
     >
@@ -99,7 +99,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
         )}
         {log.results.map((res) => {
           return (
-            <span key={`${key}-${log.id}-${res.type}`}>
+            <span key={`${prekey}-${log.id}-${res.type}`}>
               {roundResult(res, true)}
             </span>
           );
@@ -120,7 +120,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
             {log.energyGain.map((epgain) => {
               return (
                 <span
-                  key={`${key}-${log.id}-${epgain.avatar_id}-energy`}
+                  key={`${prekey}-${log.id}-${epgain.avatar_id}-energy`}
                   className="flex gap-1 justify-center items-center text-center"
                 >
                   <Image
@@ -146,7 +146,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
               return (
                 // <div >
                 <span
-                  key={`${key}-${child.id}-${child.avatarId}`}
+                  key={`${prekey}-${child.id}-${child.avatarId}`}
                   className="flex gap-1 justify-center items-center text-center"
                 >
                   <Image
@@ -161,7 +161,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
                   {child.results.map((res, index) => {
                     return (
                       <span
-                        key={`${key}-${child.id}-${child.avatarId}-${index}`}
+                        key={`${prekey}-${child.id}-${child.avatarId}-${index}`}
                       >
                         {roundResult(res, false)}
                       </span>

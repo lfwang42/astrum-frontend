@@ -84,12 +84,13 @@ export const SimResultDisplay: React.FC<SimResultProps> = ({
                     {roundExpand[index] ? <SlArrowUp /> : <SlArrowDown />}
                   </span>
                   {roundExpand[index] ? (
-                    round.map((log) => {
+                    round.map((log, logind) => {
                       return (
                         <SimResultRound
                           trackedStat={trackedStat}
                           log={log}
-                          key={`${cbid}-${calc_id}-sim-round-${index}`}
+                          key={`${cbid}-${calc_id}-sim-round-${index}-${logind}`}
+                          prekey={`${cbid}-${calc_id}-${avatar_id}-sim-round-${index}`}
                           avatar_id={avatar_id}
                         />
                       );
