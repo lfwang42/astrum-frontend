@@ -39,22 +39,20 @@ const ProfilesContextProvider: React.FC<{ children: any }> = ({
   useEffect(() => {
     if (typeof window != "undefined" && isClient) {
       const obj = JSON.parse(localStorage?.getItem("profiles") ?? "{}")
-      console.log('initial read:')
-      console.log(obj)
+      // console.log('initial read:')
+      // console.log(obj)
       if (obj && obj.profiles) {
         setProfiles(obj.profiles);
       }
     } 
-
-
   }, [isClient]);
 
   // save to local storage
   useEffect(() => {
     if (typeof window != "undefined" && isClient) {
       const obj = { profiles };
-      console.log('saving:')
-      console.log(obj)
+      //console.log('saving:')
+      //console.log(obj)
       localStorage.setItem("profiles", JSON.stringify(obj));
     }
   }, [profiles]);
@@ -77,10 +75,10 @@ const ProfilesContextProvider: React.FC<{ children: any }> = ({
       if (prev.length >= limit) {
         return prev.slice(limit - prev.length + 1).concat(newProfile)
       }
-      console.log("curr")
-      console.log(profiles)
-      console.log('new arr: ')
-      console.log(profiles.concat(newProfile))
+      // console.log("curr")
+      // console.log(profiles)
+      // console.log('new arr: ')
+      // console.log(profiles.concat(newProfile))
       return profiles.concat(newProfile);
     });
   };

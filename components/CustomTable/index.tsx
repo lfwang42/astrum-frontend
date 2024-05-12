@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
+import { AvatarCategory } from "@/app/types";
 
 interface tableParams {
   table: string;
@@ -74,8 +75,6 @@ export function CustomTable<TData, TValue>({
   const [rowExpand, setRowExpand] = useState<{ expand: boolean; row: any }[]>(
     []
   );
-  const router = useRouter();
-
   const fetchTableSize = async () => {
     setTableSizeLoading(true);
     const res = await axios.get(getAPIURL("/api/tablesize"), {
@@ -125,6 +124,10 @@ export function CustomTable<TData, TValue>({
       .get(fetchUrl, { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
       .then((res) => res.data)
       .then((data) => {
+
+        if (defaultSort=="count") {
+          data.sort((a: AvatarCategory,b: AvatarCategory) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0))
+        }
         setRows(data);
         setRowSpan(data[0].hasMultiRows ? data[0].bids.length : 1);
       })

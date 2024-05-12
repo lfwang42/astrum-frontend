@@ -245,8 +245,7 @@ export default function Leaderboard({
         accessorKey: "score",
         header: calcs.isLoading
           ? "??"
-          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]
-              .score_name,
+          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]?.score_name,
         cell: ({ row }) => {
           return <span>{row.original.score?.toFixed(0)}</span>;
         },

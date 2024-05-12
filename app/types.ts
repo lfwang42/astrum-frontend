@@ -46,7 +46,7 @@ export type AvatarCategory = {
   char_icon: string,
   desc: string,
   calculations: Record<string, Record<string, LeaderboardCone>>,
-  count?: number,
+  count: number,
   team: Teammate[]
 }
 
@@ -67,7 +67,8 @@ export interface LeaderboardCone {
   rank: number, 
   level: number,
   icon: string
-  tid: number
+  tid: number,
+  default_calc_id: number
 }
 interface CalcResult {
     calc_id: number, 

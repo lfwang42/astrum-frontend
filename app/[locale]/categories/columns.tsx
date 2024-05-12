@@ -25,11 +25,6 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     )
   },
   {
-    header: "Entries",
-    accessorKey: "count",
-    cell: ({ row } ) => (<div className="">{row.original.count}</div>)
-  },
-  {
     header: "Lightcones",
     cell: ({ row } ) => (
       <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
@@ -44,6 +39,11 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     }
   },
   {
+    header: "Entries",
+    accessorKey: "count",
+    cell: ({ row } ) => (<div className="">{row.original.count}</div>)
+  },
+  {
     accessorKey: "add_date",
     header: "Added",
     cell: ({row}) => {
@@ -51,6 +51,5 @@ export const columns: ColumnDef<AvatarCategory>[] = [
       return <span>{date}</span>
     }
   },
-
 ]
 
