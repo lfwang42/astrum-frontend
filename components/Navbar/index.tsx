@@ -8,6 +8,8 @@ import { ChangeEvent } from "react";
 import { FiMenu } from "react-icons/fi";
 import { LanguageSelector } from "../LanguageSelector";
 import { FaDiscord } from "react-icons/fa";
+import { Translate } from "../Translate";
+import { IoIosPodium } from "react-icons/io";
 
 interface NavProps {
   locale: string;
@@ -110,13 +112,14 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
         <nav className={`xl:flex-1 xl:items-center`}>
           <ul className="text-base text-white xl:flex w-full">
             <li className="hover:text-orange-300">
-              <Link href="/relics">
-                <p className="xl:px-4 py-2">Relics</p>
+              <Link href={`../${locale}/relics`}>
+                <p className="xl:px-4 py-2"><Translate str={"Relics"} /></p>
               </Link>
             </li>
-            <li className="hover:text-orange-300">
-              <Link href="/categories">
-                <p className="xl:px-4 py-2">Leaderboards</p>
+            <li className=" hover:text-orange-300">
+              <Link href={`../${locale}/categories`} className="xl:px-4 py-2 flex flex-row items-center gap-1">
+                <IoIosPodium size={25}/>
+                <p className="">Leaderboards</p>
               </Link>
             </li>
             <li className="ml-auto flex flex-row items-center gap-4">
@@ -138,12 +141,12 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
         <nav className={`${open ? "block" : "hidden"} flex flex-wrap w-full`}>
           <ul className="text-base text-white xl:flex w-full">
             <li>
-              <Link href="/relics">
-                <p className="xl:px-5 py-2 block text-right">Relics</p>
+              <Link href={`../${locale}/relics`}>
+                <p className="xl:px-5 py-2 block text-right"><Translate str={"Relics"} /></p>
               </Link>
             </li>
             <li>
-              <Link href="/categories">
+              <Link href={`../${locale}/categories`}>
                 <p className="xl:px-5 py-2 block text-right">Leaderboards</p>
               </Link>
             </li>

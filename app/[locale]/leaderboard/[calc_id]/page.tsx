@@ -160,24 +160,30 @@ export default function Leaderboard({
         accessorKey: "rank",
         header: "#",
       },
+      // {
+      //   header: "Region",
+      //   accessorKey: "region",
+      // },
       {
-        header: "Region",
-        accessorKey: "region",
-      },
-      {
-        header: "Owner",
+        header: () => {
+          return (<Translate str={'Trailblazer'} />)
+        },
         accessorKey: "nickname",
         cell: ({ row }) => (
-          <a href={`../profile/${row.original.uid}`}>
-            <span
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              className="hover:text-orange-300"
-            >
-              {row.original.nickname}
-            </span>
-          </a>
+          <React.Fragment>
+            <Link href={`../profile/${row.original.uid}`}>
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="text-base hover:text-orange-300 mr-1 "
+              >
+                {row.original.nickname}
+              </span>
+
+            </Link>
+            <span className="text-sm text-gray-500">{row.original.region}</span>
+          </React.Fragment>
         ),
       },
       {
@@ -201,7 +207,9 @@ export default function Leaderboard({
         ),
       },
       {
-        header: "Sets",
+        header: () => {
+          return (<Translate str={'Relics'} />)
+        },
         accessorKey: "set",
         cell: ({ row }) => <SetDisplay sets={row.original.sets} />,
       },

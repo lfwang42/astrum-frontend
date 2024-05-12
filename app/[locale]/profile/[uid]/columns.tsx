@@ -36,7 +36,10 @@ export const columns: ColumnDef<BuildRow>[] = [
     cell: ({ row } ) => (<div>{row.index+1}</div>)
   },
   {
-    header: "Name",
+    header: () => {
+      return (<Translate str={'Characters'} />)
+    },
+    accessorKey: "Name",
     cell: ({ row } ) => { 
       return (<div className="inline-flex gap-2 p-0">
       <div className="table-icon">
@@ -54,12 +57,18 @@ export const columns: ColumnDef<BuildRow>[] = [
     accessorKey: "eidolon",
   },
   {
-    header: "Lightcone",
+    header: () => {
+      return (<Translate str={'Lightcone'} />)
+    },
+    accessorKey: "Lightcone",
     cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank} icon={`/icon/${row.original.cone_tid}.png`} />
       : <></>
   },
   {
-    header: "Sets",
+    header: () => {
+      return (<Translate str={'Relics'} />)
+    },
+    accessorKey: "Sets",
     cell: ({ row } ) => <SetDisplay sets={row.original.sets}/>
   },
   ...[0, 1, 2, 3, 4].map((i) => ({

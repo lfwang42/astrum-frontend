@@ -25,13 +25,19 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     )
   },
   {
-    header: "Lightcones",
+    header: () => {
+      return (<Translate str={'Lightcone'} />)
+    },
+    accessorKey: "Lightcone",
     cell: ({ row } ) => (
       <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
     )
   },
   {
-    header: 'Team',
+    header: () => {
+      return (<Translate str={'Team'} />)
+    },
+    accessorKey: "Team",
     cell: ({ row }) => {
       return (
         <TeamDisplay team={row.original.team} short={false}/>

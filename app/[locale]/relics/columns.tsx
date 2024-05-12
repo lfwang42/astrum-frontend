@@ -5,6 +5,9 @@ import { StatDisplay } from '../../../components/StatDisplay';
 import { RelicDisplay } from '../../../components/RelicDisplay';
 import { StatIcon } from '../../../components/StatIcon';
 import { StatFormat } from '../../../lib/utils';
+import React from 'react';
+import Link from 'next/link';
+import { Translate } from '@/components/Translate';
 export type RelicRow = {
   region: string//maybe do region serverside lol idk @TODO
   uid: number
@@ -57,26 +60,47 @@ export const columns: ColumnDef<RelicRow>[] = [
     header: "#",
     cell: ({ row } ) => (<div>{row.index+1}</div>)
   },
+  // {
+  //   header: "Region",
+  //   accessorKey: "region"
+  // },
   {
-    header: "Region",
-    accessorKey: "region"
-  },
-  {
-    header: "Owner",
+    header: () => {
+      return (<Translate str={'Trailblazer'} />)
+    },
     accessorKey: "nickname",
-    cell: ({ row } ) => (
-      <a href={`../profile/${row.original.uid}`}>{row.original.nickname}</a>
+    cell: ({ row }) => (
+      <React.Fragment>
+        <Link href={`../profile/${row.original.uid}`}>
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="text-base hover:text-orange-300 mr-1 "
+          >
+            {row.original.nickname}
+          </span>
+
+        </Link>
+        <span className="text-sm text-gray-500">{row.original.region}</span>
+      </React.Fragment>
     ),
   },
   {
-    header: "Relic",
+    header: () => {
+      return (<Translate str={'Relics'} />)
+    },
+    accessorKey: "Relic",
     cell: ({ row } ) => {
       return (
         <RelicDisplay icon={row.original.icon} tid={row.original.tid} />
     )}
   },
   {
-    header: "Main Stat",
+    header: () => {
+      return (<Translate str={'Main Stat'} />)
+    },
+    accessorKey: "Main Stat",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
       return <span><StatDisplay type={row.original.main_stat_name} value={row.original.main_stat_value} /></span>

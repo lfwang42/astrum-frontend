@@ -19,7 +19,6 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [enableRefresh, setEnableRefresh] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
-  const router = useRouter()
   const { profiles, addTab } = useContext(ProfilesContext)
   const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
   const fetchProfile = async (uid: string) => {
@@ -56,23 +55,6 @@ export default function Profile({ params }: { params: { uid: number }}) {
     document.title = `${nickname}'s Profile - Astrum`;
   };
 
-
-  function profileFetcher(params: any) {
-    const [url, query] = params;
-    const res = axios.get(url, query).then(res => {
-      if (res.data.ttl !== undefined) {
-        console.log(res.data.ttl)
-        setRefreshTime(res.data.ttl)
-      }
-      console.log('ttl: ' + refreshTime)
-      return res.data
-    })
-    res.catch((error) => {
-      console.log(error)
-      throw(error)
-    })
-    return res
-  }
 
   const enableRefreshButton = () => {
     setEnableRefresh(true);
@@ -138,7 +120,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
       <div className="min-h-screen container mx-auto py-10">
         {refreshButton}
         <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-20 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
-          <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
+          <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/3'>
             <Image src={profilePic} height={30} width={30} unoptimized className="mt-1 h-16 w-auto" alt="profile picture"/>
             {userData ? 
             <div className='flex w-full flex-col'>   
