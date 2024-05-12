@@ -15,9 +15,9 @@ type ConeDisplayProps = {
     height, width
   }) => {
     return (
-        <div className="flex justify-center items-center whitespace-nowrap gap-2">
+        <div className="flex justify-center items-center whitespace-nowrap">
             <div className="relative flex justify-center p-[2px]" title={name} >
-                <Image height={height ? height : 45} width={width ? width : 30} className="m-1" src={icon} alt="lightcone" />
+                <Image height={height ? height : 45} width={width ? width : 30} className="m-1" src={icon} alt="lightcone" unoptimized/>
                 <span className="absolute right-0 bottom-0 font-medium text-orange-300">
                     {imposition? `S${imposition}` : `S${1}`}
                 </span>

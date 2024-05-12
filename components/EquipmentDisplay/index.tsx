@@ -20,9 +20,9 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
             >
               {Object.keys(cones).length > 1 ? (
                 <Image
-                  width={25}
-                  height={25}
-                  className="w-auto h-7 m-1"
+                  width={40}
+                  height={40}
+                  className="w-[40px] h-auto m-[6px]"
                   src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${aid[0]}.png`}
                   alt="icon"
                   unoptimized
@@ -33,10 +33,10 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
                   <Link key={`${keyIndex}-${cone.name}`} href={`/leaderboard/${cone.calc_id}`} className="hover:bg-slate-600">
                     <ConeDisplay
                       name={cone.name.toString()}
-                      icon={cone.icon}
+                      icon={`/icon/${cone.tid}.png`}
                       imposition={cone.rank}
-                      height={42}
-                      width={25}
+                      height={40}
+                      width={40}
                     />
                   </Link>
                 );
