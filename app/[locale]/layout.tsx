@@ -48,14 +48,14 @@ export default async function RootLayout({
         ></script>
       </head>
       <body className="min-h-screen items-center bg-slate-800 text-slate-50 mb-5">
+        <NextIntlClientProvider locale={locale} messages={messages}>
         <ProfilesContextProvider>
-          <NextIntlClientProvider locale={locale} messages={messages}>
             <Navbar locale={locale} />
             <ProfileTabs />
             {children}
-          </NextIntlClientProvider>
+            <Footer />
         </ProfilesContextProvider>
-        <Footer />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -204,7 +204,7 @@ export function CustomTable<TData, TValue>({
     <div className="flex flex-col justify-center items-center w-full">
       {sortOptions && sortOptions!.length > 0 && rowSpan == 1 ? (
         <div className="mb-1">
-          <span>Sort By:</span>
+          <span>Sort By: </span>
           <select
             defaultValue={params?.sortStat ? params?.sortStat : defaultSort}
             className="text-black"

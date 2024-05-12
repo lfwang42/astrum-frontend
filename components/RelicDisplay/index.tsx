@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-// import { useTranslation } from 'react-i18next';
 import { useTranslations } from "next-intl";
 type RelicProps = {
   icon: string;

@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { AvatarCategory } from "../../../types";
 import { ConeDisplay } from "@/components/ConeDisplay";
 import {
@@ -57,30 +57,32 @@ export default function Leaderboard({
 }) {
   const cids = params.calc_id.toString().match(/.{1,6}/g);
   var team_id = "";
-  const aidOrdered: string[] = []
+  const aidOrdered: string[] = [];
   const a_ids: Record<string, string> = {};
   for (let cid of cids!) {
     const aid: string = cid.slice(0, 4);
     const calc: string = cid.slice(-2);
-    aidOrdered.push(aid)
+    aidOrdered.push(aid);
     a_ids[aid] = calc;
     team_id = team_id + aid;
   }
 
+  useEffect(() => {
+    document.title = "Leaderboards"
+  }, [])
   const generateURL = (avatar_id: string, calc: string) => {
-    var url = "/leaderboard/"
+    var url = "/leaderboard/";
     for (let aid of aidOrdered) {
-      url += aid
+      url += aid;
       if (aid == avatar_id) {
-        url += calc
-      }
-      else {
-        url += a_ids[aid]
+        url += calc;
+      } else {
+        url += a_ids[aid];
       }
     }
     // console.log(url)
-    return url
-  }
+    return url;
+  };
   const checkCategory = (category: AvatarCategory) => {
     for (let avatar_id in a_ids) {
       if (!category.calculations[avatar_id][a_ids[avatar_id]]) {
@@ -95,7 +97,10 @@ export default function Leaderboard({
       <>
         {Object.entries(category.calculations).map((calc) => {
           return (
-            <div key={`${calc[0]}-lightcones`} className="flex flex-row gap-1 min-h-20 items-center">
+            <div
+              key={`${calc[0]}-lightcones`}
+              className="flex flex-row gap-1 min-h-20 items-center"
+            >
               <Image
                 width={25}
                 height={25}
@@ -109,15 +114,17 @@ export default function Leaderboard({
                 return (
                   <div
                     key={`${combo_id}-cone`}
-                    className={`flex justify-center p-2 min-h-16 min-w-12  hover:bg-slate-600 ${a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""} `}
+                    className={`flex justify-center p-1 min-h-12 min-w-12  hover:bg-slate-600 ${
+                      a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""
+                    } `}
                   >
                     <Link href={generateURL(calc[0], cone[0])}>
                       <ConeDisplay
                         name={cone[1].name}
-                        icon={cone[1].icon}
+                        icon={`/icon/${cone[1].tid}.png`}
                         imposition={cone[1].rank}
-                        width={25}
-                        height={38}
+                        width={35}
+                        height={35}
                       />
                     </Link>
                   </div>
@@ -166,7 +173,7 @@ export default function Leaderboard({
       // },
       {
         header: () => {
-          return (<Translate str={'Trailblazer'} />)
+          return <Translate str={"Trailblazer"} />;
         },
         accessorKey: "nickname",
         cell: ({ row }) => (
@@ -180,7 +187,6 @@ export default function Leaderboard({
               >
                 {row.original.nickname}
               </span>
-
             </Link>
             <span className="text-sm text-gray-500">{row.original.region}</span>
           </React.Fragment>
@@ -208,7 +214,7 @@ export default function Leaderboard({
       },
       {
         header: () => {
-          return (<Translate str={'Relics'} />)
+          return <Translate str={"Relics"} />;
         },
         accessorKey: "set",
         cell: ({ row }) => <SetDisplay sets={row.original.sets} />,
@@ -253,7 +259,8 @@ export default function Leaderboard({
         accessorKey: "score",
         header: calcs.isLoading
           ? "??"
-          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]?.score_name,
+          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]
+              ?.score_name,
         cell: ({ row }) => {
           return <span>{row.original.score?.toFixed(0)}</span>;
         },
@@ -272,7 +279,9 @@ export default function Leaderboard({
             calcs.data.map((category: AvatarCategory) => {
               return (
                 <div key={category.name} className="min-w-1/2 mt-1 p-1 mr-1">
-                  <span className="whitespace-normal text-lg font-normal">{category.name}</span>
+                  <span className="whitespace-normal text-lg font-normal">
+                    {category.name}
+                  </span>
                   <div className="flex justify-start mt-1 whitespace-nowrap gap-2">
                     {displayCones(category)}
                   </div>

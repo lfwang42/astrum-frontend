@@ -104,7 +104,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
     const skillclass = "flex gap-1 items-center";
     const iconSize = 30;
     return (
-      <div className="flex justify-start gap-2 m-2">
+      <div className="flex justify-start gap-2 my-2">
         <div className={skillclass}>
           <Image
             src={
@@ -187,7 +187,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
           {displaySkills(row.skill_levels)}
           {displayAscension(row.skill_levels.ascensions)}
         </div>
-        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-2 px-2 overflow-auto">
+        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-1 overflow-auto">
           {!relics.isLoading ? (
             relics.data.map((relic: Relic) => {
               return (

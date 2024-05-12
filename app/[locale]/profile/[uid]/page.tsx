@@ -21,10 +21,15 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
   const { profiles, addTab } = useContext(ProfilesContext)
   const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
-  const fetchProfile = async (uid: string) => {
-    const res = await axios.get(getAPIURL(`/api/users/${params.uid}`))
-    setUserData(res.data)
-
+  const [error, setError] = useState<any>(false)
+  const fetchProfile = (uid: string, refresh: boolean) => {
+    const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
+    const res = axios.get(url)
+    .then((res) => res.data)
+    .then((data) => setUserData(data))
+    .catch((error) => {
+      setError(error.response.data)
+    })
     // var date = new Date(Date.parse(res.data.updated_at)).getTime()
   }
 
@@ -33,7 +38,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
   }, [profiles, userData])
 
   useEffect(() => {
-    fetchProfile(params.uid.toString())
+    fetchProfile(params.uid.toString(), false)
   }, []) 
 
   useEffect(() => {
@@ -66,11 +71,15 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const refreshData = async () => {
     if (!params.uid) return;
     setEnableRefresh(false);
-    const res = await axios.get(getAPIURL(`/api/users/${params.uid}/refresh`));
-    const now = new Date().getTime();
-    const cooldown = now + (res.data.ttl);
-    setRefreshTime(cooldown);
-    location.reload()
+    fetchProfile(params.uid.toString(), true)
+    if (!error) {
+      const now = new Date().getTime();
+      const cooldown = now + (userData!.ttl);
+      setRefreshTime(cooldown);
+    }
+    else {
+
+    }
   };
 
   const getTimestamp = () => {
@@ -116,6 +125,18 @@ export default function Profile({ params }: { params: { uid: number }}) {
       { value: 'critDmg', label: 'Crit DMG' }
     ]
 
+
+  if (error) {
+    return (
+      <div className="min-h-screen container flex items-center justify-center mx-auto ">
+        <div className='h-1/2 items-center justify-center flex flex-col mb-20'>
+          <div className="text-center text-4xl">An Error Occured</div>
+          <div className="text-center text-2xl text-gray-200">{error}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
       <div className="min-h-screen container mx-auto py-10">
         {refreshButton}
@@ -137,9 +158,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
             <div className="h-10 w-1/4">
             {'Loading...'}
             </div>}
-            
           </div>
-          
         </div>
         <ResultsDisplay user={userData}/>
         {userData && <CustomTable 

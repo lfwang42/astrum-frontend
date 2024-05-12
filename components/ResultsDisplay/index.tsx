@@ -18,10 +18,11 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
           for (let calcresult of result.results) {
             if (calcresult.rank > best.rank) best = calcresult;
           }
-          const topPercentage = Math.min(
+          var topPercentage = Math.min(
             100,
             Math.ceil((best.rank / best.outof) * 100)
           );
+          if (best.rank == 1) topPercentage = 1
           const avatar_ids = result.avatar_id.toString().match(/.{1,4}/g);
 
           return (
