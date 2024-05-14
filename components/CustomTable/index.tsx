@@ -192,9 +192,7 @@ export function CustomTable<TData, TValue>({
       return (
         <>
           {(rowExpand.length && rowExpand[rowIndex].expand) ?  (
-            <TableRow key={row.avatar_id + "expanded"}>
               <ExpandedProfileRow row={row} cols={columns.length}/>
-            </TableRow>
           ) : null}
         </>
       );
