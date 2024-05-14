@@ -34,18 +34,65 @@ export type EquipInfo = {
     icon: string
 }
 
-export interface AvatarCategory {
-    name: string,
-    avatar_id: number,
-    score_name: string,
-    element: string,
-    char_name: string,
-    add_date: string,
-    char_icon: string,
-    desc: string,
-    calculations: LeaderboardCone[],
-    count?: number,
-    team?: Teammate[]
+export type AvatarCategory = {
+  avatar_ids?: number[]
+  default_calc_id: number,
+  name: string,
+  avatar_id: number,
+  score_name: string,
+  element: string,
+  char_name: string,
+  add_date: string,
+  char_icon: string,
+  desc: string,
+  calculations: Record<string, Record<string, LeaderboardCone>>,
+  count: number,
+  team: Teammate[]
+}
+
+export interface SkillTreePoint {
+  pointId: number,
+  level: number
+}
+
+
+export interface WeaponInfo {
+  tid: number,
+  rank: number, 
+  level: number,
+  promotion: number, 
+  _flat?: Object //@TODO: maybe dont do this (make it optional lol)
+}
+export interface AvatarInfo {
+  skillTreeList: Array<SkillTreePoint>,
+  equipment: WeaponInfo,
+  avatarId: number,
+  rank?: number,
+  promotion: number,
+  relicList: Array<RelicInfo>,
+  level: number,
+  _assist?: boolean,
+  _flat?: Object
+  pos?: number,
+}
+
+export interface SubInfo {
+  affixId: number,
+  cnt: number, 
+  step?: number
+}
+
+export interface RelicInfo {
+  mainAffixId: number,
+  tid: number,
+  type: number,
+  subAffixList: SubInfo[],
+  level: number,
+  _flat: { 
+      props: any[], 
+      setName: number, 
+      setID: number
+  }
 }
 
 export interface Teammate {
@@ -57,23 +104,23 @@ export interface Teammate {
 }
 
 export interface LeaderboardCone {
-    calc: string,
-    calc_id: number,
-
-    // lightcone: WeaponInfo
-    name: string,
-    promotion: number, 
-    rank: number, 
-    level: number,
-    icon: string
+  calc_id: number
+  calc: string,
+  name: string,
+  promotion: number, 
+  rank: number, 
+  level: number,
+  icon: string
+  tid: number,
+  default_calc_id: number
 }
-
 interface CalcResult {
     calc_id: number, 
     rank: number, 
     outof: number,
     icon: string,
-    tid: number
+    tids: number[],
+    score_name: string;
 }
 
 export interface SkillResult {
@@ -138,7 +185,6 @@ interface Prop {
 interface LeaderboardResults {
     avatar_id: number,
     results: CalcResult[],
-    score_name: string,
 }
 export interface User {
     headicon: number;

@@ -24,6 +24,8 @@ import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import {}
 import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
+import { AvatarCategory } from "@/app/types";
+import { ExpandedProfileRow } from "../ProfileRow";
 
 interface tableParams {
   table: string;
@@ -75,8 +77,6 @@ export function CustomTable<TData, TValue>({
   const [rowExpand, setRowExpand] = useState<{ expand: boolean; row: any }[]>(
     []
   );
-  const router = useRouter();
-
   const fetchTableSize = async () => {
     setTableSizeLoading(true);
     const res = await axios.get(getAPIURL("/api/tablesize"), {
@@ -126,6 +126,10 @@ export function CustomTable<TData, TValue>({
       .get(fetchUrl, { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
       .then((res) => res.data)
       .then((data) => {
+
+        if (defaultSort=="count") {
+          data.sort((a: AvatarCategory,b: AvatarCategory) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0))
+        }
         setRows(data);
         setRowSpan(data[0].hasMultiRows ? data[0].bids.length : 1);
       })
@@ -158,28 +162,28 @@ export function CustomTable<TData, TValue>({
       if (rowSpan == 1) {
         return (
           <>
-            {rowExpand.length && rowExpand[rowIndex].expand && (
+            {(rowExpand.length && rowExpand[rowIndex].expand) ? (
               <ExpandedBuildRow
                 row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
                 cols={columns.length}
                 calc_id={calc_id}
               />
-            )}
+            ) : null}
           </>
         );
       } else {
         return (
           <>
-            {rowExpand.length &&
+            {(rowExpand.length &&
               rowExpand[Math.floor(rowIndex / rowSpan)].expand &&
               rowSpan > 1 &&
-              rowIndex % rowSpan == rowSpan - 1 && (
+              rowIndex % rowSpan == rowSpan - 1) ? (
                 <ExpandedBuildRow
                   row={rowExpand[Math.floor(rowIndex / rowSpan)].row}
                   cols={columns.length}
                   calc_id={calc_id}
                 />
-              )}
+              ) : null}
           </>
         );
       }
@@ -187,11 +191,9 @@ export function CustomTable<TData, TValue>({
     if (tableParams?.table && tableParams.table == "builds") {
       return (
         <>
-          {rowExpand.length && rowExpand[rowIndex].expand && (
-            <TableRow key={row.avatar_id + "expanded"}>
-              <td colSpan={100}>ADD STUFF HERE</td>
-            </TableRow>
-          )}
+          {(rowExpand.length && rowExpand[rowIndex].expand) ?  (
+              <ExpandedProfileRow row={row} cols={columns.length}/>
+          ) : null}
         </>
       );
     }
@@ -201,7 +203,7 @@ export function CustomTable<TData, TValue>({
     <div className="flex flex-col justify-center items-center w-full">
       {sortOptions && sortOptions!.length > 0 && rowSpan == 1 ? (
         <div className="mb-1">
-          <span>Sort By:</span>
+          <span>Sort By: </span>
           <select
             defaultValue={params?.sortStat ? params?.sortStat : defaultSort}
             className="text-black"
@@ -245,7 +247,7 @@ export function CustomTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {!isLoading && rows && table.getRowModel().rows?.length ? (
+            {(!isLoading && rows && table.getRowModel().rows?.length) ? (
               table.getRowModel().rows.map((row, rowIndex) => {
                 const buildrow: any = row.original;
                 return (
@@ -275,8 +277,7 @@ export function CustomTable<TData, TValue>({
                           });
                         }
                       }}
-                    >
-                      {row.original.hasMultiRows ? (
+                    >{row.original.hasMultiRows ? (
                         <>
                           {row.getVisibleCells().map((cell, indexForCell) => {
                             if (filterCellName(cell.column.id)) {
@@ -355,7 +356,7 @@ export function CustomTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  <span>No results.</span>
                 </TableCell>
               </TableRow>
             )}

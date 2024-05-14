@@ -33,6 +33,7 @@ const statIcons: {
   HPAddedRatio: HP,
   DefenceAddedRatio: Defence,
   StatusProbability: HitRate,
+  StatusProbabilityBase: HitRate,
   StatusResistance: StatusRes,
   HPDelta: HP,
   AttackDelta: Attack,

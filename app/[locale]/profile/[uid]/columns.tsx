@@ -1,7 +1,7 @@
 "use client"
 
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
-import { CoreStats, SetInfo } from '../../../types';
+import { AvatarInfo, CoreStats, SetInfo } from '../../../types';
 import { SetDisplay } from '../../../../components/SetDisplay/index';
 import { EquipmentDisplay } from '../../../../components/EquipmentDisplay/index';
 import {useTranslations} from 'next-intl';
@@ -10,9 +10,11 @@ import { getRelativeStats } from '../../../../lib/utils';
 import { StatIcon } from '../../../../components/StatIcon/index';
 import { StatFormat } from '../../../../lib/utils';
 import { Translate } from "@/components/Translate";
+import { ConeDisplay } from "@/components/ConeDisplay";
+import { SkillLevels } from "@/components/ExpandedBuildRow";
 
 export type BuildRow = {
-  avatar_id: number
+  avatar_id: number;
   eidolon: number
   promotion: number
   type: String
@@ -24,7 +26,10 @@ export type BuildRow = {
   lightcone: any[]
   sets: SetInfo[]
   cone_tid: number
-  cone_rank: number
+  cone_rank: number,
+  cone_promotion?: number;
+  avatar: AvatarInfo
+  skill_levels: SkillLevels;
 }
 
 const columnHelper = createColumnHelper<BuildRow>()
@@ -35,7 +40,10 @@ export const columns: ColumnDef<BuildRow>[] = [
     cell: ({ row } ) => (<div>{row.index+1}</div>)
   },
   {
-    header: "Name",
+    header: () => {
+      return (<Translate str={'Characters'} />)
+    },
+    accessorKey: "Name",
     cell: ({ row } ) => { 
       return (<div className="inline-flex gap-2 p-0">
       <div className="table-icon">
@@ -53,13 +61,18 @@ export const columns: ColumnDef<BuildRow>[] = [
     accessorKey: "eidolon",
   },
   {
-    header: "Lightcone",
-    cell: ({ row } ) => row.original.cone_tid? <EquipmentDisplay keyIndex={row.index} cones={[{ name: row.original.cone_tid, 
-      rank: row.original.cone_rank, icon: `/icon/${row.original.cone_tid}.png`}]}/>
+    header: () => {
+      return (<Translate str={'Lightcone'} />)
+    },
+    accessorKey: "Lightcone",
+    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank} icon={`/icon/${row.original.cone_tid}.png`} />
       : <></>
-  },//`https://enka.network/ui/hsr/SpriteOutput/LightConeFigures/${row.original.cone_tid}.jpg`
+  },
   {
-    header: "Sets",
+    header: () => {
+      return (<Translate str={'Relics'} />)
+    },
+    accessorKey: "Sets",
     cell: ({ row } ) => <SetDisplay sets={row.original.sets}/>
   },
   ...[0, 1, 2, 3, 4].map((i) => ({

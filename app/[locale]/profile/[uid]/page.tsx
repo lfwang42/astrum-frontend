@@ -1,38 +1,44 @@
 'use client'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import avatars from '../../../../honker_avatars.json'
 import axios from 'axios'
 import { columns } from './columns'
 import { CustomTable } from '../../../../components/CustomTable/index';
 import { getAPIURL, getRegion } from '../../../../lib/utils';
-import useSWR from 'swr'
 import { Timer } from '@/components/Timer'
 import { IoMdRefresh } from "react-icons/io";
 import { UpdatedDate } from '@/components/UpdatedDate'
 import { useRouter } from 'next/navigation'
 import { User } from '@/app/types'
 import { ResultsDisplay } from '@/components/ResultsDisplay'
+import { ProfilesContext } from '@/contexts/PinnedProfiles/ProfilesContext'
 
 export default function Profile({ params }: { params: { uid: number }}) {
   const [refreshTime, setRefreshTime] = useState<number>();
   const [enableRefresh, setEnableRefresh] = useState<boolean>(false);
   const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
-  const router = useRouter()
+  const { profiles, addTab } = useContext(ProfilesContext)
   const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
-  const fetchProfile = async (uid: string) => {
-    const res = await axios.get(getAPIURL(`/api/users/${params.uid}`))
-    setUserData(res.data)
-    var date = new Date(Date.parse(res.data.updated_at)).getTime()
+  const [error, setError] = useState<any>(false)
+  const fetchProfile = (uid: string, refresh: boolean) => {
+    const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
+    const res = axios.get(url)
+    .then((res) => res.data)
+    .then((data) => setUserData(data))
+    .catch((error) => {
+      setError(error.response.data)
+    })
+    // var date = new Date(Date.parse(res.data.updated_at)).getTime()
   }
 
-  // useEffect(() => {
-  //   console.log('changed')
-  // }, [params.uid])
+  useEffect(() => {
+    handleNewTab(userData)
+  }, [profiles, userData])
 
   useEffect(() => {
-    fetchProfile(params.uid.toString())
+    fetchProfile(params.uid.toString(), false)
   }, []) 
 
   useEffect(() => {
@@ -46,34 +52,14 @@ export default function Profile({ params }: { params: { uid: number }}) {
     }
   }, [userData])
   
-  function fetcher(params: any) {
-    const [url, query] = params;
-    const res = axios.get(url, query).then(res => {
-      return res.data
-    })
-    res.catch((error) => {
-      console.log(error)
-      throw(error)
-    })
-    return res
-  }
+  const handleNewTab = (userData: User | undefined) => {
+    if (!params.uid || !userData) return;
+    console.log(userData)
+    const nickname = userData?.nickname || "???";
+    addTab(params.uid.toString(), nickname);
+    document.title = `${nickname}'s Profile - Astrum`;
+  };
 
-  function profileFetcher(params: any) {
-    const [url, query] = params;
-    const res = axios.get(url, query).then(res => {
-      if (res.data.ttl !== undefined) {
-        console.log(res.data.ttl)
-        setRefreshTime(res.data.ttl)
-      }
-      console.log('ttl: ' + refreshTime)
-      return res.data
-    })
-    res.catch((error) => {
-      console.log(error)
-      throw(error)
-    })
-    return res
-  }
 
   const enableRefreshButton = () => {
     setEnableRefresh(true);
@@ -85,11 +71,15 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const refreshData = async () => {
     if (!params.uid) return;
     setEnableRefresh(false);
-    const res = await axios.get(getAPIURL(`/api/users/${params.uid}/refresh`));
-    const now = new Date().getTime();
-    const cooldown = now + (res.data.ttl);
-    setRefreshTime(cooldown);
-    location.reload()
+    fetchProfile(params.uid.toString(), true)
+    if (!error) {
+      const now = new Date().getTime();
+      const cooldown = now + (userData!.ttl);
+      setRefreshTime(cooldown);
+    }
+    else {
+
+    }
   };
 
   const getTimestamp = () => {
@@ -122,12 +112,6 @@ export default function Profile({ params }: { params: { uid: number }}) {
        
     </div>
   );
-
-    // const profileData = useSWR([getAPIURL(`/api/builds/${params.uid}`), {}] , fetcher, {
-    //   onErrorRetry: (error) => {
-    //     return
-    //   }
-    // })
     const sortOptions = [
       { value: 'spd', label: 'Speed' },
       { value: 'atk', label: 'Attack' },
@@ -141,11 +125,23 @@ export default function Profile({ params }: { params: { uid: number }}) {
       { value: 'critDmg', label: 'Crit DMG' }
     ]
 
+
+  if (error) {
+    return (
+      <div className="min-h-screen container flex items-center justify-center mx-auto ">
+        <div className='h-1/2 items-center justify-center flex flex-col mb-20'>
+          <div className="text-center text-4xl">An Error Occured</div>
+          <div className="text-center text-2xl text-gray-200">{error}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
       <div className="min-h-screen container mx-auto py-10">
         {refreshButton}
         <div style={{backgroundImage: `url('/Palace.png')`}} className="min-h-20 w-50 p-1 border-solid rounded-sm gap-2 m-2 bg-origin-border bg-fixed">
-          <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/4'>
+          <div className='flex flex-grow-1 flex-shrink-0 p-1 gap-2 border-solid border-4 border-gray-800 rounded-sm w-1/3'>
             <Image src={profilePic} height={30} width={30} unoptimized className="mt-1 h-16 w-auto" alt="profile picture"/>
             {userData ? 
             <div className='flex w-full flex-col'>   
@@ -162,9 +158,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
             <div className="h-10 w-1/4">
             {'Loading...'}
             </div>}
-            
           </div>
-          
         </div>
         <ResultsDisplay user={userData}/>
         {userData && <CustomTable 
