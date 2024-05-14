@@ -11,9 +11,10 @@ import { StatIcon } from '../../../../components/StatIcon/index';
 import { StatFormat } from '../../../../lib/utils';
 import { Translate } from "@/components/Translate";
 import { ConeDisplay } from "@/components/ConeDisplay";
+import { SkillLevels } from "@/components/ExpandedBuildRow";
 
 export type BuildRow = {
-  avatar_id: number
+  avatar_id: number;
   eidolon: number
   promotion: number
   type: String
@@ -26,7 +27,9 @@ export type BuildRow = {
   sets: SetInfo[]
   cone_tid: number
   cone_rank: number,
+  cone_promotion?: number;
   avatar: AvatarInfo
+  skill_levels: SkillLevels;
 }
 
 const columnHelper = createColumnHelper<BuildRow>()
