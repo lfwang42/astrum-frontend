@@ -24,6 +24,7 @@ import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
 import { AvatarCategory } from "@/app/types";
+import { ExpandedProfileRow } from "../ProfileRow";
 
 interface tableParams {
   table: string;
@@ -192,7 +193,7 @@ export function CustomTable<TData, TValue>({
         <>
           {(rowExpand.length && rowExpand[rowIndex].expand) ?  (
             <TableRow key={row.avatar_id + "expanded"}>
-              <td colSpan={100}><span>ADD STUFF HERE</span></td>
+              <ExpandedProfileRow row={row} cols={columns.length}/>
             </TableRow>
           ) : null}
         </>
