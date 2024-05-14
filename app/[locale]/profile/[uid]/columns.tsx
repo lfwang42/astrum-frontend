@@ -1,7 +1,7 @@
 "use client"
 
 import { createColumnHelper, ColumnDef } from "@tanstack/react-table"
-import { CoreStats, SetInfo } from '../../../types';
+import { AvatarInfo, CoreStats, SetInfo } from '../../../types';
 import { SetDisplay } from '../../../../components/SetDisplay/index';
 import { EquipmentDisplay } from '../../../../components/EquipmentDisplay/index';
 import {useTranslations} from 'next-intl';
@@ -25,7 +25,8 @@ export type BuildRow = {
   lightcone: any[]
   sets: SetInfo[]
   cone_tid: number
-  cone_rank: number
+  cone_rank: number,
+  avatar: AvatarInfo
 }
 
 const columnHelper = createColumnHelper<BuildRow>()

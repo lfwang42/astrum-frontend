@@ -50,6 +50,50 @@ export type AvatarCategory = {
   team: Teammate[]
 }
 
+export interface SkillTreePoint {
+  pointId: number,
+  level: number
+}
+
+
+export interface WeaponInfo {
+  tid: number,
+  rank: number, 
+  level: number,
+  promotion: number, 
+  _flat?: Object //@TODO: maybe dont do this (make it optional lol)
+}
+export interface AvatarInfo {
+  skillTreeList: Array<SkillTreePoint>,
+  equipment: WeaponInfo,
+  avatarId: number,
+  rank?: number,
+  promotion: number,
+  relicList: Array<RelicInfo>,
+  level: number,
+  _assist?: boolean,
+  _flat?: Object
+  pos?: number,
+}
+
+export interface SubInfo {
+  affixId: number,
+  cnt: number, 
+  step?: number
+}
+
+export interface RelicInfo {
+  mainAffixId: number,
+  tid: number,
+  type: number,
+  subAffixList: SubInfo[],
+  level: number,
+  _flat: { 
+      props: any[], 
+      setName: number, 
+      setID: number
+  }
+}
 
 export interface Teammate {
   avatar: string,
