@@ -8,14 +8,14 @@ type SimResultRoundProps = {
   trackedStat: string;
   prekey: string;
   log: SimLog;
-  avatar_id: number;
+  avatar_ids: Set<number>;
 };
 
 export const SimResultRound: React.FC<SimResultRoundProps> = ({
   trackedStat,
   prekey,
   log,
-  avatar_id,
+  avatar_ids,
 }) => {
   const [expand, setExpand] = useState<Boolean>(false);
   const tempMap: Record<string, string> = {
@@ -34,7 +34,6 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
 
   const roundAvatarId = log.avatarId;
   var src = getImgURL(roundAvatarId);
-
   const roundResult = (res: SkillResult, prepend: boolean) => {
     if (res.type == "damage") {
       return (
@@ -43,7 +42,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
           <Translate str="DamageDealt" />:{" "}
           <span
             className={`${
-              res.avatarId == avatar_id && res.type == trackedStat
+              avatar_ids.has(res.avatarId) && res.type == trackedStat
                 ? "text-orange-400"
                 : ""
             }`}
@@ -53,14 +52,14 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
         </span>
       );
     }
-    if (res.type == "shield") {
+    else if (res.type == "shield") {
       return (
         <span>
           {prepend ? " || " : ""}
           <Translate str="Shield" />:{" "}
           <span
             className={`${
-              res.avatarId == avatar_id && res.type == trackedStat
+              avatar_ids.has(res.avatarId) && res.type == trackedStat
                 ? "text-orange-400"
                 : ""
             }`}
@@ -112,7 +111,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
         ) : (
           <></>
         )}
-        {expand ? <SlArrowUp /> : <SlArrowDown />}
+        {(log.energyGain.length || log.children.length) ? expand ? <SlArrowUp /> : <SlArrowDown /> : null}
       </span>
       {expand ? (
         <div>
