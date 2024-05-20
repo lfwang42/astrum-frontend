@@ -25,6 +25,7 @@ import axios from "axios";
 import { getAPIURL } from "@/lib/utils";
 import { AvatarCategory } from "@/app/types";
 import { ExpandedProfileRow } from "../ProfileRow";
+import { Translate } from "../Translate";
 
 interface tableParams {
   table: string;
@@ -203,7 +204,7 @@ export function CustomTable<TData, TValue>({
     <div className="flex flex-col justify-center items-center w-full">
       {sortOptions && sortOptions!.length > 0 && rowSpan == 1 ? (
         <div className="mb-1">
-          <span>Sort By: </span>
+          <Translate str='SortOrder' />{": "}
           <select
             defaultValue={params?.sortStat ? params?.sortStat : defaultSort}
             className="text-black"
@@ -217,7 +218,8 @@ export function CustomTable<TData, TValue>({
             {sortOptions?.map((option) => {
               return (
                 <option key={option.value} value={option.value}>
-                  {option.label}
+                  {/* {option.label} */}
+                  <Translate str={option.label} />
                 </option>
               );
             })}
