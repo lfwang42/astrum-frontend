@@ -153,13 +153,13 @@ export default function Leaderboard({
     { value: "spd", label: "Speed" },
     { value: "atk", label: "Attack" },
     { value: "def", label: "Defence" },
-    { value: "maxHP", label: "HP" },
-    { value: "breakEffect", label: "Break Effect" },
-    { value: "StatusResistance", label: "Effect Res" },
-    { value: "effectHitRate", label: "Effect Hit Rate" },
-    { value: "energyRecharge", label: "Energy Regen Rate" },
-    { value: "critRate", label: "Crit Chance" },
-    { value: "critDmg", label: "Crit DMG" },
+    { value: "maxHP", label: "MaxHP" },
+    { value: "breakEffect", label: "BreakDamageAddedRatio" },
+    { value: "StatusResistance", label: "StatusResistance" },
+    { value: "effectHitRate", label: "StatusProbability" },
+    // { value: "energyRecharge", label: "SPRatio" },
+    { value: "critRate", label: "CriticalChance" },
+    { value: "critDmg", label: "CriticalDamage" },
   ];
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(
     () => [

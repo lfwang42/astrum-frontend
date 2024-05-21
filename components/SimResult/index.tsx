@@ -20,6 +20,7 @@ export const SimResultDisplay: React.FC<SimResultProps> = ({
   calc_id,
 }) => {
   const [trackedStat, setTrackedStat] = useState<string>("");
+  const [trackedAvatars, setTrackedAvatars] = useState<Set<number>>(new Set())
   const [logs, setLogs] = useState<SimLog[][]>([]);
   const [expand, setExpand] = useState<Boolean>(false);
   const [roundExpand, setRoundExpand] = useState<Boolean[]>([]);
@@ -43,6 +44,8 @@ export const SimResultDisplay: React.FC<SimResultProps> = ({
       });
       setLogs(res.data.logs);
       setTrackedStat(res.data.trackedStat);
+      console.log(res.data.trackedAvatars)
+      setTrackedAvatars(new Set(res.data.trackedAvatars))
     }
     setExpand((prev) => {
       return !prev;
@@ -91,7 +94,7 @@ export const SimResultDisplay: React.FC<SimResultProps> = ({
                           log={log}
                           key={`${cbid}-${calc_id}-sim-round-${index}-${logind}`}
                           prekey={`${cbid}-${calc_id}-${avatar_id}-sim-round-${index}`}
-                          avatar_id={avatar_id}
+                          avatar_ids={trackedAvatars}
                         />
                       );
                     })
