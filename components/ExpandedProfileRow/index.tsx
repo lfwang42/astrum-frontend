@@ -1,8 +1,9 @@
 import { TableRow } from "../ui/table";
+import { Translate } from "../Translate";
 import { SkillTree, Point, Ascensions, Ascension } from "./skill_tree";
 import { BuildRow } from "@/app/[locale]/profile/[uid]/columns";
-import skilltree from "../../honker_skilltree.json";
-import { Translate } from "../Translate";
+import skillTree from "../../honker_skilltree.json";
+import { Eidolons } from "./eidolons";
 import { StatIcon } from "../StatIcon";
 // import * as Constants from "../constants";
 
@@ -48,7 +49,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
   const createStatBonusesArray = () => {
     let statBonusPoints = [] as Point[];
     const ids =
-      skilltree[row.avatar_id.toString() as keyof typeof skilltree]["1"];
+      skillTree[row.avatar_id.toString() as keyof typeof skillTree]["1"];
     for (let i = 0; i < ids[3].length; ++i) {
       const level = skillTreeMap.get(ids[3][i]);
       if (level !== undefined)
@@ -63,7 +64,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
   const createAscObjects = () => {
     let ascensions = {} as Ascensions;
     const ids =
-      skilltree[row.avatar_id.toString() as keyof typeof skilltree]["1"];
+      skillTree[row.avatar_id.toString() as keyof typeof skillTree]["1"];
     for (let i = 0; i < 3; ++i) {
       let statBonusPoints = [];
       for (let j = 1; j < ids[i].length; ++j) {
@@ -111,7 +112,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
       <td colSpan={100}>
         <div className="flex bg-slate-800">
           <div
-            className="bg-no-repeat bg-contain w-80"
+            className="relative bg-no-repeat bg-contain w-80"
             style={{
               backgroundImage: `linear-gradient(to bottom, transparent, #1E293B),
               url(${
@@ -129,6 +130,9 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
               <span>
                 {row.avatar.level} / {row.avatar.promotion * 10 + 20}
               </span>
+            </div>
+            <div className="absolute bottom-0 pl-5 pb-5">
+              <Eidolons avatarId={row.avatar_id} eidolonLevel={row.eidolon} />
             </div>
           </div>
           <SkillTree
