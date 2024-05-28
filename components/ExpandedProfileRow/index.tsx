@@ -4,7 +4,7 @@ import { SkillTree, Point, Ascensions, Ascension } from "./skill_tree";
 import { BuildRow } from "@/app/[locale]/profile/[uid]/columns";
 import skillTree from "../../honker_skilltree.json";
 import { Eidolons } from "./eidolons";
-import { StatIcon } from "../StatIcon";
+import { Stats } from "./stats";
 // import * as Constants from "../constants";
 
 const SPRITE_URL = `https://enka.network/ui/hsr/`;
@@ -143,6 +143,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             talent={row.skill_levels.talent}
             asc={createAscObjects()}
           />
+          <Stats stats={row.stats} />
         </div>
       </td>
     </TableRow>
