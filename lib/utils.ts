@@ -31,7 +31,7 @@ export function getParamsFromUrl(searchParams: ReadonlyURLSearchParams, defaultS
   }
 
 export const StatFormat: Record<string, Function> = {
-    "maxHP": formatFlat,
+    "MaxHP": formatFlat,
     "Attack": formatFlat,
     "Defence":formatFlat,
     "Speed":formatFlat,
@@ -41,6 +41,7 @@ export const StatFormat: Record<string, Function> = {
     "CriticalDamageBase":formatPercent,
     "BreakDamageAddedRatioBase":formatPercent,
     'BreakDamageAddedRatio':formatPercent,
+    'BreakDamage':formatPercent,
     "HealRatioBase":formatPercent,
     "HealRatio":formatPercent,
     "SPRatio":formatPercent,
@@ -62,11 +63,11 @@ export const StatFormat: Record<string, Function> = {
     "DefenceDelta":formatFlat,
     "DefenceAddedRatio":formatPercent,
     "SpeedDelta":formatFlat,
-    "atk": formatFlat,
-    "def": formatFlat,
     "spd": formatFlat,
     "critDmg": formatPercent,
     "critRate": formatPercent,
+    "atk": formatFlat,
+    "def": formatFlat,
     "breakEffect": formatPercent,
     "effectHitRate": formatPercent,
     'iceDamageBonus': formatPercent,
@@ -76,6 +77,7 @@ export const StatFormat: Record<string, Function> = {
    'imaginaryDamageBonus': formatPercent,
     'physicalDamageBonus': formatPercent,
     'lightningDamageBonus': formatPercent,
+    'thunderDamageBonus': formatPercent,
     'healingBonus': formatPercent,
     'energyRecharge': formatPercent
 }
@@ -118,13 +120,13 @@ export function getAPIURL(route: string): string {
 const bonuses: {
     [key: string]: string;
   } = {
-    "Ice": 'iceDamageBonus',
-    "Quantum": 'quantumDamageBonus',
-    'Fire': 'fireDamageBonus',
-    'Wind': 'windDamageBonus',
-    'Imaginary': 'imaginaryDamageBonus',
-    'Physical': 'physicalDamageBonus',
-    'Lightning': 'lightningDamageBonus'
+    "Ice": 'IceAddedRatio',
+    "Quantum": 'QuantumAddedRatio',
+    'Fire': 'FireAddedRatio',
+    'Wind': 'WindAddedRatio',
+    'Imaginary': 'ImaginaryAddedRatio',
+    'Physical': 'PhysicalAddedRatio',
+    'Lightning': 'ThunderAddedRatio'
   }
 
 
@@ -144,16 +146,16 @@ const rv: {
 const threshold: {
     [key: string]: number;
   } = {
-    atk: 1600,
-    def: 1500,
-    spd: 0,
-    maxHP: 3500,
-    // critDmg: 1,
-    // critRate: 0.3,
-    breakEffect: 0.5,
-    effectHitRate: 0.3,
-    healingBonus: 0.2,
-    energyRecharge: 1.05
+    Attack: 1600,
+    Defence: 1500,
+    Speed: 0,
+    MaxHP: 3500,
+    CriticalDamage: 1,
+    CriticalChance: 0.3,
+    BreakDamage: 0.5,
+    StatusProbability: 0.3,
+    HealRatioBase: 0.2,
+    SPRatio: 1.05
 }
 
 const sortOrder = [
@@ -161,7 +163,7 @@ const sortOrder = [
 ]
 
 const padOrder = [ 
-    "spd", "atk", "maxHP", "def", "energyRecharge", "critDmg", "critRate", "healingBonus"
+    "Speed", "Attack", "MaxHP", "Defence", "SPRatio", "CriticalDamage", "CriticalChance", "HealRatioBase"
 ]
 
 
@@ -177,7 +179,7 @@ function padStats(stats: string[], buildRow: any) {
 }
 
 //just need 4 stats.  can ignore work for the rest.
-export function getRelativeStats(buildRow: any, type: string) {
+export function getRelativeStats(buildRow: any, type: string, includeCrit: boolean) {
 
     const stats = buildRow.stats;
     const res = []
@@ -188,7 +190,16 @@ export function getRelativeStats(buildRow: any, type: string) {
     }
 
     for (let stat in threshold) {
-        if (stats[stat] > threshold[stat] && res.length <= 5) res.push(stat) 
+        if (stats[stat] > threshold[stat] && res.length <= 5) {
+          if ((stat == 'CriticalChance' || stat == 'CriticalDamage')) {
+            if (includeCrit) res.push(stat) 
+          }
+        else {
+          res.push(stat) 
+        }
+
+
+        }
     }
     if (res.length < 5) padStats(res, buildRow);
     // function compare( a: any, b: any ) {

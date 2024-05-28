@@ -150,14 +150,13 @@ export default function Leaderboard({
   );
   const sortOptions = [
     { value: "score", label: "Score" },
-    { value: "spd", label: "Speed" },
-    { value: "atk", label: "Attack" },
-    { value: "def", label: "Defence" },
-    { value: "maxHP", label: "MaxHP" },
-    { value: "breakEffect", label: "BreakDamageAddedRatio" },
+    { value: "Speed", label: "Speed" },
+    { value: "Attack", label: "Attack" },
+    { value: "Defence", label: "Defence" },
+    { value: "HP", label: "MaxHP" },
+    { value: "breakEffect", label: "BreakDamage" },
     { value: "StatusResistance", label: "StatusResistance" },
     { value: "effectHitRate", label: "StatusProbability" },
-    // { value: "energyRecharge", label: "SPRatio" },
     { value: "critRate", label: "CriticalChance" },
     { value: "critDmg", label: "CriticalDamage" },
   ];
@@ -225,8 +224,8 @@ export default function Leaderboard({
           <span>
             {(row.original?.crit_value * 100).toFixed(1)}
             <span className="text-sm text-gray-400">{` (${(
-              row.original?.stats.critRate * 100
-            ).toFixed(1)}:${(row.original?.stats.critDmg * 100).toFixed(
+              row.original?.stats.CriticalChance * 100
+            ).toFixed(1)}:${(row.original?.stats.CriticalDamage * 100).toFixed(
               1
             )})`}</span>
           </span>
@@ -238,9 +237,11 @@ export default function Leaderboard({
         cell: ({ row }: any) => {
           const ordered = getRelativeStats(
             row?.original,
-            !calcs.isLoading ? calcs.data[0].element : ""
+            !calcs.isLoading ? calcs.data[0].element : "",
+            false
           );
           const key = ordered?.[i];
+          console.log(key)
           if (key)
             return (
               <div className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">

@@ -55,14 +55,20 @@ const statIcons: {
   healingBonus: HealBoost,
   HealRatioBase: HealBoost,
   effectHitRate: HitRate,
-  maxHP: HP,
-  spd: Speed,
-  atk: Attack,
+
+  MaxHP: HP,
+  Speed: Speed,
+  Attack: Attack,
   def: Defence,
+  Defence: Defence,
   energyRecharge: EnergyRecharge,
+  SPRatio: EnergyRecharge,
+
   critDmg: CritDmg,
   critRate: CritRate,
   breakEffect: BreakEffect,
+  BreakDamage: BreakEffect,
+
   SPRatioBase: EnergyRecharge,
 };
 

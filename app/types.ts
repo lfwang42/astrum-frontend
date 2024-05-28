@@ -1,21 +1,22 @@
 export interface CoreStats {
-  maxHP: number;
-  atk: number;
-  def: number;
-  spd: number;
-  critRate: number;
-  critDmg: number;
-  energyRecharge: number;
-  healingBonus: number;
-  breakEffect: number;
-  effectHitRate: number;
-  quantumDamageBonus: number;
-  physicalDamageBonus: number;
-  windDamageBonus: number;
-  iceDamageBonus: number;
-  imaginaryDamageBonus: number;
-  lightningDamageBonus: number;
-  fireDamageBonus: number;
+  MaxHP: number, 
+  Attack: number, 
+  Defence: number,
+  Speed: number,
+  CriticalChance: number, 
+  CriticalDamage: number, 
+  SPRatio: number, 
+  BreakDamage: number,
+  StatusProbability: number,
+  StatusResistance: number,
+  HealRatioBase?: number, 
+  QuantumAddedRatio?: number,
+  PhysicalAddedRatio?: number, 
+  WindAddedRatio?: number, 
+  IceAddedRatio?: number,
+  ImaginaryAddedRatio?: number, 
+  ThunderAddedRatio?: number, 
+  FireAddedRatio?: number,
 }
 
 export type Element =

@@ -113,16 +113,16 @@ export default function Profile({ params }: { params: { uid: number }}) {
     </div>
   );
     const sortOptions = [
-      { value: 'spd', label: 'Speed' },
-      { value: 'atk', label: 'Attack' },
-      { value: 'def', label: 'Defence' },
-      { value: 'maxHP', label: 'HP' },
-      { value: 'breakEffect', label: 'Break Effect' },
+      { value: 'Speed', label: 'Speed' },
+      { value: 'Attack', label: 'Attack' },
+      { value: 'Defence', label: 'Defence' },
+      { value: 'MaxHP', label: 'HP' },
+      { value: 'BreakDamage', label: 'Break Effect' },
       { value: 'StatusResistance', label: 'Effect Res' },
-      { value: 'effectHitRate', label: 'Effect Hit Rate' },
-      { value: 'energyRecharge', label: 'Energy Regen Rate' },
-      { value: 'critRate', label: 'Crit Chance' },
-      { value: 'critDmg', label: 'Crit DMG' }
+      { value: 'StatusProbability', label: 'Effect Hit Rate' },
+      // { value: 'SPRatio', label: 'Energy Regen Rate' },
+      { value: 'CriticalChance', label: 'Crit Chance' },
+      { value: 'CriticalDamage', label: 'Crit DMG' }
     ]
 
 
@@ -170,7 +170,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
         }
         fetchUrl={fetchURL}
         columns={columns} 
-        defaultSort={'spd'} 
+        defaultSort={'Speed'} 
         sortOptions={sortOptions}
         params={p}
         pagination

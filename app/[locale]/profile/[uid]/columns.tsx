@@ -79,9 +79,10 @@ export const columns: ColumnDef<BuildRow>[] = [
     header: "-",
     id: `${i}`,
     cell: ({ row}: any ) => {
-      const ordered = getRelativeStats(row?.original, row?.original.type)
+      const ordered = getRelativeStats(row?.original, row?.original.type, true)
       // console.log(ordered)
       const key = ordered?.[i]
+      console.log(key)
       if (key) return  (
       <div key={`${row.index}` + `${i}`} className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
           <StatIcon stat={key}/>

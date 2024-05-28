@@ -1,12 +1,14 @@
 import { CoreStats } from "@/app/types";
 import { StatFormat } from "@/lib/utils";
 import { StatIcon } from "../StatIcon";
+import { Translate } from "../Translate";
 
 type StatsProps = {
   stats: CoreStats;
 };
 
 // TODO: Does this already exist somewhere? Because these need to be translated...
+//answer: yes you can use the translation component
 export const StatDisplayNames = {
   maxHP: "HP",
   atk: "ATK",
@@ -38,7 +40,7 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
       <div className="flex">
         <StatIcon stat={key} />
         <span className="pl-2 pb-2">
-          {StatDisplayNames[key as keyof typeof StatDisplayNames]}
+          <Translate str={key} />
         </span>
       </div>
     );
@@ -52,9 +54,22 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
   });
 
   return (
-    <div className="flex">
-      <div className="flex-col pl-5 pt-5 pb-5">{statsKeysDivs}</div>
-      <div className="flex-col pl-5 pt-5 pb-5">{statsValuesDivs}</div>
+    <div className="flex flex-col">
+      {/* <div className="flex-col pl-5 pt-5 pb-5">{statsKeysDivs}</div>
+      <div className="flex-col pl-5 pt-5 pb-5">{statsValuesDivs}</div> */}
+      {Object.keys(stats).map((key) => {
+        return (
+          <div key={key} className="flex justify-between items-center text-center">
+            <div className="flex justify-start flex-row items-center">
+              <StatIcon stat={key} />
+              <Translate str={key} />
+            </div>
+            <span className="pl-2">
+            {StatFormat[key](stats[key as keyof typeof stats])}
+          </span>
+          </div>
+        );
+      })}
     </div>
   );
 };
