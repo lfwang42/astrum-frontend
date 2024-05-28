@@ -13,7 +13,7 @@ interface Relic {
   type: number;
   tid: number;
   stats: Record<string, number>;
-  icon: string;
+  set_id: number;
   main_stat_value: number;
   main_stat_name: string;
 }
@@ -190,13 +190,15 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
         <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-1 overflow-auto">
           {!relics.isLoading ? (
             relics.data.map((relic: Relic) => {
+              const img_url = `https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_${relic.set_id}_${relic.tid.toString().slice(-1)}.png`
+
               return (
                 <div
                   key={row.id + relic.tid.toString()}
                   className="flex justify-center items-center border-slate-400 border-2 p-1 min-w-44"
                 >
                   <div className="justify-center">
-                    <RelicCanvas backgroundImage={relic.icon} />
+                    <RelicCanvas backgroundImage={img_url} />
                     {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
                     <div className="bg-slate-800 flex justify-start items-center text-sm">
                       <StatIcon stat={relic.main_stat_name} scale={0.9} />

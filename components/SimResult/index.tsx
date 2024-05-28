@@ -61,7 +61,7 @@ export const SimResultDisplay: React.FC<SimResultProps> = ({
           className="flex items-center gap-1 mx-auto hover:text-orange-300"
           onClick={onExpand}
         >
-          {expand ? "Hide" : "Show"} Simulation result{" "}
+          {expand ? <Translate str="Hide" /> : <Translate str="Show" />} <Translate str="Result" />{" "}
           {expand ? <SlArrowUp /> : <SlArrowDown />}
         </div>
         {expand ? (

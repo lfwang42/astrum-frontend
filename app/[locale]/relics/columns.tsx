@@ -19,7 +19,7 @@ export type RelicRow = {
   main_stat_value: number
   main_stat_name: string
   hash: string
-  icon: string
+  set_id: number
   type: number
   tid: number //can localize locally later
 }
@@ -93,7 +93,7 @@ export const columns: ColumnDef<RelicRow>[] = [
     accessorKey: "Relic",
     cell: ({ row } ) => {
       return (
-        <RelicDisplay icon={row.original.icon} tid={row.original.tid} />
+        <RelicDisplay set_id={row.original.set_id} tid={row.original.tid} />
     )}
   },
   {
