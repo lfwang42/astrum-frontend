@@ -23,7 +23,7 @@
     "i18next-resources-to-backend": "^1.1.4",
     "lucide-react": "^0.289.0",
     "negotiator": "^0.6.3",
-    "next": "^13.5.5",
+    "next": "^14.3.0-canary.44",
     "next-images": "^1.8.5",
     "next-intl": "^2.22.1",
     "ni18n": "^1.1.0",
