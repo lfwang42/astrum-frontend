@@ -232,7 +232,7 @@ export default function Leaderboard({
           </span>
         ),
       },
-      ...[0, 1, 2, 3, 4].map((i) => ({
+      ...[0, 1, 2, 3].map((i) => ({
         header: "-",
         id: `${i}`,
         cell: ({ row }: any) => {

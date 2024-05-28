@@ -16,6 +16,8 @@ export const RelicCanvas: React.FC<CanvasProps> = ({ backgroundImage }) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = backgroundImage;
+    img.width = 115
+    img.height = 115
     img.onload = () => {
       //Our first draw
       context!.drawImage(img, -10, 0, img.width * 0.8, img.height * 0.8);

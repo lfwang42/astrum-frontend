@@ -18,6 +18,7 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
               key={`${aid[0]}-conedisplay`}
               className="flex flex-row items-center"
             >
+              {/* if its a team laderabord display the avatar picture*/ }
               {Object.keys(cones).length > 1 ? (
                 <Image
                   width={40}

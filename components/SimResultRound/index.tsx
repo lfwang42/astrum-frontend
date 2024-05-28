@@ -34,6 +34,20 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
 
   const roundAvatarId = log.avatarId;
   var src = getImgURL(roundAvatarId);
+
+  const roundMessage = (message: string) => {
+    const arr = message.split('|')
+    return (
+      arr.map((str, index) => {
+        if (str[0] == '@') {
+          return <span key={index}>{str.slice(1)}</span>
+        }
+        else {
+          return <Translate key={index} str={str}/>
+        }
+      })
+    )
+  }
   const roundResult = (res: SkillResult, prepend: boolean) => {
     if (res.type == "damage") {
       return (
@@ -117,6 +131,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
         <div>
           <span className="text-center">
             {log.energyGain.map((epgain) => {
+              if (!epgain) return null
               return (
                 <span
                   key={`${prekey}-${log.id}-${epgain.avatar_id}-energy`}
@@ -155,8 +170,8 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
                     unoptimized
                     alt="character image"
                   />
-                  <Translate str={child.avatarId.toString()} />{" "}
-                  <Translate str={child.type} />
+                  <Translate str={child.avatarId.toString()} />
+                  {child.type != 'Message' ? <Translate str={child.type} /> : null}
                   {child.results.map((res, index) => {
                     return (
                       <span
@@ -166,7 +181,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
                       </span>
                     );
                   })}
-                  {child.message ? ": " + child.message : ""}
+                  {child.message ? roundMessage(child.message) : null}
                 </span>
                 // </div>
               );
