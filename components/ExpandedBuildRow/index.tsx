@@ -55,7 +55,9 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
 }) => {
   function fetcher(params: any) {
     const [url, query] = params;
-    const res = axios.get(url, query).then((res) => res.data);
+    const res = axios.get(url, query).then((res) => res.data)
+    .then((data) =>  data.sort((a: number, b: number) => (a % 10 > b % 10 ? -1 : 1))
+  );
     res.catch((error) => {
       console.log(error);
       throw error;
