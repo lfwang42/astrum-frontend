@@ -5,7 +5,6 @@ import { BuildRow } from "@/app/[locale]/profile/[uid]/columns";
 import skillTree from "../../honker_skilltree.json";
 import { Eidolons } from "./eidolons";
 import { Stats } from "./stats";
-// import * as Constants from "../constants";
 
 const SPRITE_URL = `https://enka.network/ui/hsr/`;
 
@@ -109,7 +108,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
 
   return (
     <TableRow key={row.avatar_id + "expanded"} data-state={"selected"}>
-      <td colSpan={100}>
+      <td colSpan={150}>
         <div className="flex bg-slate-800">
           <div
             className="relative bg-no-repeat bg-contain w-80"

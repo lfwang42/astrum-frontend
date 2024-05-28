@@ -29,16 +29,21 @@ export const StatDisplayNames = {
 };
 
 export const Stats: React.FC<StatsProps> = ({ stats }) => {
-  const statsDivs: JSX.Element[] = [];
+  const statsKeysDivs: JSX.Element[] = [];
+  const statsValuesDivs: JSX.Element[] = [];
   // TODO: This is executed during compile time... not sure if that's desired
   Object.keys(stats).forEach((key) => {
     console.log(key);
-    statsDivs.push(
+    statsKeysDivs.push(
       <div className="flex">
         <StatIcon stat={key} />
         <span className="pl-2 pb-2">
           {StatDisplayNames[key as keyof typeof StatDisplayNames]}
         </span>
+      </div>
+    );
+    statsValuesDivs.push(
+      <div className="flex justify-end">
         <span className="pl-2 pb-2">
           {StatFormat[key](stats[key as keyof typeof stats])}
         </span>
@@ -46,5 +51,10 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
     );
   });
 
-  return <div className="flex-col p-5">{statsDivs}</div>;
+  return (
+    <div className="flex">
+      <div className="flex-col pl-5 pt-5 pb-5">{statsKeysDivs}</div>
+      <div className="flex-col pl-5 pt-5 pb-5">{statsValuesDivs}</div>
+    </div>
+  );
 };
