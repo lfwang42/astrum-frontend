@@ -16,12 +16,12 @@ export const RelicCanvas: React.FC<CanvasProps> = ({ backgroundImage }) => {
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = backgroundImage;
-    img.width = 115
-    img.height = 115
+    img.width = 100
+    img.height = 100
     img.onload = () => {
       //Our first draw
-      context!.drawImage(img, -10, 0, img.width * 0.8, img.height * 0.8);
+      context!.drawImage(img, -5, 0, img.width * 0.8, img.height * 0.8);
     };
   }, [canvasRef, backgroundImage]);
-  return <canvas className="" width={90} height={90} ref={canvasRef}></canvas>;
+  return <canvas className="" width={75} height={75} ref={canvasRef}></canvas>;
 };

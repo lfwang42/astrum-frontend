@@ -19,30 +19,27 @@ export default function Relics() {
     document.title = str
   }, [])
   
+
 const sortOptions =
 [
-  { value: 'SpeedDelta', label: 'Speed' },
-  { value: 'AttackDelta', label: 'Flat Attack' },
-  { value: 'DefenceDelta', label: 'Flat Defence' },
-  { value: 'HPDelta', label: 'Flat HP' },
-  { value: 'AttackAddedRatio', label: 'Attack%' },
-  { value: 'DefenceAddedRatio', label: 'Defence%' },
-  { value: 'HPAddedRatio', label: 'HP%' },
-  { value: 'BreakDamageAddedRatio', label: 'Break Effect' },
-  { value: 'StatusResistance', label: 'Effect Res' },
-  { value: 'StatusProbability', label: 'Effect Hit Rate' },
-  { value: 'SPRatio', label: 'Energy Regen' },
-  { value: 'CriticalChance', label: 'Crit Chance' },
-  { value: 'CriticalDamage', label: 'Crit DMG' }
+  { value: 'SpeedDelta', label: 'SpeedDelta' },
+  { value: 'AttackDelta', label: 'AttackDelta' },
+  { value: 'DefenceDelta', label: 'DefenceDelta' },
+  { value: 'HPDelta', label: 'HPDelta' },
+  { value: 'AttackAddedRatio', label: 'AttackAddedRatio' },
+  { value: 'DefenceAddedRatio', label: 'DefenceAddedRatio' },
+  { value: 'HPAddedRatio', label: 'HPAddedRatio' },
+  { value: 'BreakDamageAddedRatio', label: 'BreakDamage' },
+  { value: 'StatusResistance', label: 'StatusResistance' },
+  { value: 'StatusProbability', label: 'StatusProbability' },
+  { value: 'CriticalChance', label: 'CriticalChance' },
+  { value: 'CriticalDamage', label: 'CriticalDamage' }
 ]
     return (
       <>
         <div className="container mx-auto py-10">
            <CustomTable
-           tableParams={
-              {table: 'relics'}
-           }
-           fetchUrl={getAPIURL('/api/relics')}
+           fetchUrl={'/api/relics'}
            columns={columns} 
            params={p} 
            sortOptions={sortOptions}

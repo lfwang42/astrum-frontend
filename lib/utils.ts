@@ -82,6 +82,13 @@ export const StatFormat: Record<string, Function> = {
     'energyRecharge': formatPercent
 }
 
+export const percents: Record<string, string> = {
+  HPAddedRatio: '%',
+  AttackAddedRatio: '%',
+  DefenceAddedRatio: '%',
+}
+
+
 function formatPercent(val: number): string {
     return (val * 100).toFixed(1) + "%"
 }

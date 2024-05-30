@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { formatRankNumber } from "../../lib/utils";
 import { Router } from "next/router";
 import Link from "next/link";
+import NoPrefetchLink from "../NoFetchLink";
 
 type ResultsProps = {
   user?: User;
@@ -26,7 +27,7 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
           const avatar_ids = result.avatar_id.toString().match(/.{1,4}/g);
 
           return (
-            <Link
+            <NoPrefetchLink
               key={`result-${user.uid}-${result.avatar_id}`}
               href={`/leaderboard/${best.calc_id}/`}
             >
@@ -77,7 +78,7 @@ export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
                   {best.rank}/{formatRankNumber(best.outof)}
                 </span>
               </div>
-            </Link>
+            </NoPrefetchLink>
           );
         })
       ) : (

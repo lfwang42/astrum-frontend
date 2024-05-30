@@ -22,14 +22,14 @@ import Pagination from "../Pagination";
 import { useRouter } from "next/navigation";
 import { ExpandedBuildRow } from "../ExpandedBuildRow";
 import axios from "axios";
-import { getAPIURL } from "@/lib/utils";
+import { getAPIURL, percents } from "@/lib/utils";
 import { AvatarCategory } from "@/app/types";
 import { ExpandedProfileRow } from "../ExpandedProfileRow";
 import { Translate } from "../Translate";
 
 interface tableParams {
   table: string;
-  query?: number;
+  query?: number | string;
 }
 
 interface CustomTableProps<TData, TValue> {
@@ -37,7 +37,8 @@ interface CustomTableProps<TData, TValue> {
   columns: ColumnDef<any, TValue>[];
   params?: Params;
   // sortOptions?: Record<string, string>
-  tableParams?: tableParams;
+  // tableParams?: tableParams;
+  tableParams?: string | number;
   sortOptions?: any[];
   defaultSort: string;
   calc_id?: number;
@@ -77,10 +78,25 @@ export function CustomTable<TData, TValue>({
   const [rowExpand, setRowExpand] = useState<{ expand: boolean; row: any }[]>(
     []
   );
+
+  const t = useTranslations();
+
+  const collections: Record<string, string> = {
+    '/api/profiles': "profiles",
+    '/api/relics': "relics",
+    '/api/builds': "builds",
+    '/api/leaderboard': "leaderboard",
+  }
+  const tableName = fetchUrl.startsWith('/api/builds') ? 'builds' :  collections[fetchUrl]
+  
   const fetchTableSize = async () => {
+    if (fetchUrl == '/api/categories') return
     setTableSizeLoading(true);
+    const p: any = {table: tableName}
+    // console.log(tableParams)
+    if (tableParams) p.query = tableParams
     const res = await axios.get(getAPIURL("/api/tablesize"), {
-      params: tableParams,
+      params: p,
     });
     setTableSize(res.data);
     // console.log(tableSize)
@@ -100,8 +116,8 @@ export function CustomTable<TData, TValue>({
   };
 
   useEffect(() => {
-    if (tableParams) fetchTableSize();
-  }, []);
+    fetchTableSize();
+  }, [tableParams]);
 
   const table = useReactTable({
     columns,
@@ -113,6 +129,7 @@ export function CustomTable<TData, TValue>({
   const defaultParams: Params = {
     sortStat: defaultSort,
     order: "desc",
+    uids: "",
     size: pageSize,
     page: 1,
   };
@@ -121,9 +138,13 @@ export function CustomTable<TData, TValue>({
   }
   const [searchParams, setParams] = useState<Params>(defaultParams);
   useEffect(() => {
+    // console.log(getAPIURL(fetchUrl))
+    if (fetchUrl == "/api/profiles" && params && !params.uids?.length) {
+      return
+    }
     setLoading(true);
     const res = axios
-      .get(fetchUrl, { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
+      .get(getAPIURL(fetchUrl), { params: {...searchParams, ...params} }) // Use the correct URL, it can be an API Route URL, an external URL...
       .then((res) => res.data)
       .then((data) => {
         if (defaultSort == "count") {
@@ -138,7 +159,7 @@ export function CustomTable<TData, TValue>({
       .catch((error) => {
         console.log(error);
       });
-  }, [JSON.stringify(searchParams), fetchUrl]);
+  }, [JSON.stringify(searchParams), fetchUrl, params?.uids]);
 
   useEffect(() => {
     const arr = [];
@@ -147,7 +168,7 @@ export function CustomTable<TData, TValue>({
     }
     setRowExpand(arr);
   }, [rowSpan]);
-  const t = useTranslations();
+
   function navigateNext(newParams: Params) {
     const stringParams: any = {};
     for (const key in newParams) {
@@ -189,7 +210,7 @@ export function CustomTable<TData, TValue>({
         );
       }
     }
-    if (tableParams?.table && tableParams.table == "builds") {
+    if (tableName == 'builds') {
       return (
         <>
           {rowExpand.length && rowExpand[rowIndex].expand ? (
@@ -219,8 +240,7 @@ export function CustomTable<TData, TValue>({
             {sortOptions?.map((option) => {
               return (
                 <option key={option.value} value={option.value}>
-                  {/* {option.label} */}
-                  <Translate str={option.label} />
+                  {`${t(option.label)}${percents[option.label] ? percents[option.label] : ""}`}
                 </option>
               );
             })}
@@ -229,14 +249,14 @@ export function CustomTable<TData, TValue>({
       ) : (
         <div className="mb-2"></div>
       )}
-      <div className="rounded-md border">
+      <div className="rounded-md border w-[70%] min-w-[800px]">
         <Table>
-          <TableHeader>
+          <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="p-3">
+                    <TableHead key={header.id} className="p-3 text-gray-200">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

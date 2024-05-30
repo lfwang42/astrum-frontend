@@ -5,7 +5,7 @@ import { AvatarCategory, Element, LeaderboardCone, Teammate } from '../../types'
 import { EquipmentDisplay } from '../../../components/EquipmentDisplay/index';
 import { Translate } from "@/components/Translate";
 import { TeamDisplay } from "@/components/TeamDisplay";
-
+import NoPrefetchLink from "@/components/NoFetchLink";
 
 export const columns: ColumnDef<AvatarCategory>[] = [
   {
@@ -17,10 +17,10 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     cell: ({ row } ) => (
       <div className="w-auto inline-flex items-center justify-start gap-1">
         <TeamDisplay team={row.original.team} short={true} />
-        <a href={`/leaderboard/${row.original.default_calc_id}`} className="gap-4 hover:text-orange-300">
+        <NoPrefetchLink href={`/leaderboard/${row.original.default_calc_id}`} className="gap-4 hover:text-orange-300">
           <span className="inline-block align-middle mr-2"> {row.original.name}</span>
           <span className="inline-block align-middle "><Translate str={row.original.avatar_id}/></span>
-       </a>
+       </NoPrefetchLink>
       </div>
     )
   },

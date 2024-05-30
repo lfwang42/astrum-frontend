@@ -7,6 +7,7 @@ import {
   StatFormat,
   getAPIURL,
   getParamsFromUrl,
+  getRegion,
   getRelativeStats,
 } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
@@ -23,6 +24,7 @@ import { TeamDisplay } from "@/components/TeamDisplay";
 import avatar from "../../../assets/icon/AvatarIconGray.png";
 import calcdetails from "../../../calcdetails.json";
 import Link from "next/link";
+import NoPrefetchLink from "@/components/NoFetchLink";
 export type LeaderboardRow = {
   avatar_id: number;
   region: string;
@@ -118,7 +120,7 @@ export default function Leaderboard({
                       a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""
                     } `}
                   >
-                    <Link href={generateURL(calc[0], cone[0])}>
+                    <NoPrefetchLink href={generateURL(calc[0], cone[0])}>
                       <ConeDisplay
                         name={cone[1].name}
                         icon={`/icon/${cone[1].tid}.png`}
@@ -126,7 +128,7 @@ export default function Leaderboard({
                         width={35}
                         height={35}
                       />
-                    </Link>
+                    </NoPrefetchLink>
                   </div>
                 );
               })}
@@ -160,6 +162,7 @@ export default function Leaderboard({
     { value: "critRate", label: "CriticalChance" },
     { value: "critDmg", label: "CriticalDamage" },
   ];
+
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(
     () => [
       {
@@ -187,7 +190,7 @@ export default function Leaderboard({
                 {row.original.nickname}
               </span>
             </Link>
-            <span className="text-sm text-gray-500">{row.original.region}</span>
+            <span className="text-sm text-gray-500">{getRegion(row.original.uid)}</span>
           </React.Fragment>
         ),
       },
@@ -195,10 +198,11 @@ export default function Leaderboard({
         header: () => (
           <Image
             alt={"character"}
-            className=""
+            className="h-auto min-w-5"
             src={avatar}
             width={22}
             height={22}
+
           />
         ),
         accessorKey: "avatar_id",
@@ -208,6 +212,7 @@ export default function Leaderboard({
             src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`}
             width={25}
             height={25}
+            className="h-auto min-w-5"
           />
         ),
       },
@@ -241,7 +246,7 @@ export default function Leaderboard({
             false
           );
           const key = ordered?.[i];
-          console.log(key)
+          // console.log(key)
           if (key)
             return (
               <div className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
@@ -272,8 +277,8 @@ export default function Leaderboard({
 
   return (
     <div className="min-h-screen flex flex-col container items-center mx-auto py-1">
-      <div className="flex flex-row justify-between min-w-1/3 max-w-[60%] mb-2">
-        <div className="flex w-1/2 justify-start mt-2">
+      <div className="flex flex-wrap justify-between min-w-1/3 max-w-[60%] mb-2">
+        <div className="flex flex-wrap w-1/2 justify-start mt-2">
           {calcs.isLoading ? (
             <></>
           ) : (
@@ -315,15 +320,12 @@ export default function Leaderboard({
         )}
       </div>
       <CustomTable
-        fetchUrl={getAPIURL("/api/leaderboard")}
+        fetchUrl={"/api/leaderboard"}
         columns={columns}
         params={p}
         defaultSort="score"
         sortOptions={sortOptions}
-        tableParams={{
-          table: "leaderboard",
-          query: params.calc_id,
-        }}
+        tableParams={params.calc_id}
         calc_id={params.calc_id}
         pagination
       />

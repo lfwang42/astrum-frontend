@@ -1,10 +1,13 @@
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import Navbar from "../../components/Navbar";
+
+import React from "react";
 import SearchField from "../../components/SearchField/index";
 import { NewsDisplay } from "@/components/NewsDisplay";
-
+import { getAPIURL } from "@/lib/utils";
+import { columns } from './profileColumns'
+import { ProfileTable } from "@/components/ProfilesTable";
 export default function Home() {
+  
+
   return (
     <main className="min-h-screen">
       {/* <img src={icon} /> */}
@@ -14,9 +17,10 @@ export default function Home() {
           first, and wait a few minutes.
         </p>
         <SearchField />
+        <ProfileTable />
       </div>
       <div className="mx-auto mt-5 w-2/3 flex justify-center items-center">
-        <NewsDisplay />
+      <NewsDisplay />
       </div>
     </main>
   );

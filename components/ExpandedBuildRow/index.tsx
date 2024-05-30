@@ -189,7 +189,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
           {displaySkills(row.skill_levels)}
           {displayAscension(row.skill_levels.ascensions)}
         </div>
-        <div className="bg-slate-800 flex justify-between whitespace-nowrap gap-1 overflow-auto">
+        <div className="bg-slate-800 flex flex-wrap whitespace-normal gap-[1px] overflow-auto">
           {!relics.isLoading ? (
             relics.data.map((relic: Relic) => {
               const img_url = `https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_${relic.set_id}_${relic.tid.toString().slice(-1)}.png`
@@ -197,13 +197,13 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
               return (
                 <div
                   key={row.id + relic.tid.toString()}
-                  className="flex justify-center items-center border-slate-400 border-2 p-1 min-w-44"
+                  className="flex justify-center items-center border-slate-400 border-2 p-[2px] min-w-[155px]"
                 >
                   <div className="justify-center">
                     <RelicCanvas backgroundImage={img_url} />
                     {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
                     <div className="bg-slate-800 flex justify-start items-center text-sm">
-                      <StatIcon stat={relic.main_stat_name} scale={0.9} />
+                      <StatIcon stat={relic.main_stat_name} scale={1} />
                       <span>
                         {" "}
                         {StatFormat[relic.main_stat_name](
@@ -217,7 +217,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
                       return (
                         <div
                           key={row.id + relic.tid + stat}
-                          className="bg-slate-800 flex justify-start items-center text-sm gap-0"
+                          className="bg-slate-800 flex justify-start items-center text-[13px] gap-0"
                         >
                           <StatIcon stat={stat} scale={0.9} />
                           <span> {StatFormat[stat](relic.stats[stat])}</span>

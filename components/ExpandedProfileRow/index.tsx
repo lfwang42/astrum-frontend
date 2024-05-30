@@ -104,7 +104,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
     return ascensions;
   };
 
-  console.log(row);
+  // console.log(row);
 
   return (
     <TableRow key={row.avatar_id + "expanded"} data-state={"selected"}>

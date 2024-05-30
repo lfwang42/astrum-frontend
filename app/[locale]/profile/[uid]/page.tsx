@@ -20,7 +20,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
   const { profiles, addTab } = useContext(ProfilesContext)
-  const fetchURL = getAPIURL(`/api/builds/${params.uid}`)
+  const fetchURL =`/api/builds/${params.uid}`
   const [error, setError] = useState<any>(false)
   const fetchProfile = (uid: string, refresh: boolean) => {
     const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
@@ -162,12 +162,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
         </div>
         <ResultsDisplay user={userData}/>
         {userData && <CustomTable 
-        tableParams={
-          {
-            table: 'builds',
-            query: params.uid
-          }
-        }
+        tableParams={params.uid}
         fetchUrl={fetchURL}
         columns={columns} 
         defaultSort={'Speed'} 

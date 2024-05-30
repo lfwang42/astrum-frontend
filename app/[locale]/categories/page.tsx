@@ -13,7 +13,7 @@ export default async function Leaderboard() {
               Your lightcone is overwritten and your character is capped at E0 (including skill levels).  You can view a simulations result for a build in its spot on the leaderboard.  
               Uncapped (e.g. no limits on Eidolons) leaderboards will be available at a later date.</span>
             </div>
-          <CustomTable columns={columns} fetchUrl={getAPIURL('/api/categories')} defaultSort="count" pagination={false}/>
+          <CustomTable columns={columns} fetchUrl={'/api/categories'} defaultSort="count" pagination={false}/>
         </div>
     );
   }
