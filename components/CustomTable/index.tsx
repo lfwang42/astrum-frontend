@@ -90,7 +90,7 @@ export function CustomTable<TData, TValue>({
   const tableName = fetchUrl.startsWith('/api/builds') ? 'builds' :  collections[fetchUrl]
   
   const fetchTableSize = async () => {
-    if (fetchUrl == '/api/categories') return
+    if (fetchUrl == '/api/categories' || (fetchUrl == '/api/profiles' && !tableParams)) return
     setTableSizeLoading(true);
     const p: any = {table: tableName}
     // console.log(tableParams)
@@ -249,7 +249,7 @@ export function CustomTable<TData, TValue>({
       ) : (
         <div className="mb-2"></div>
       )}
-      <div className="rounded-md border w-[70%] min-w-[800px]">
+      <div className="border border-gray-200 w-[80%] min-w-[800px]">
         <Table>
           <TableHeader >
             {table.getHeaderGroups().map((headerGroup) => (

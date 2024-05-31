@@ -70,7 +70,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "updated_at",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return <TranslateDate str={row.original.updated_at} />
+      return <TranslateDate str={row.original.updated_at} relative/>
     }
   },
 ]

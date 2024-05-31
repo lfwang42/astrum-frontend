@@ -117,12 +117,12 @@ export default function Profile({ params }: { params: { uid: number }}) {
       { value: 'Attack', label: 'Attack' },
       { value: 'Defence', label: 'Defence' },
       { value: 'MaxHP', label: 'HP' },
-      { value: 'BreakDamage', label: 'Break Effect' },
-      { value: 'StatusResistance', label: 'Effect Res' },
-      { value: 'StatusProbability', label: 'Effect Hit Rate' },
+      { value: 'BreakDamage', label: 'BreakDamageAddedRatio' },
+      { value: 'StatusResistance', label: 'StatusResistance' },
+      { value: 'StatusProbability', label: 'StatusProbability' },
       // { value: 'SPRatio', label: 'Energy Regen Rate' },
-      { value: 'CriticalChance', label: 'Crit Chance' },
-      { value: 'CriticalDamage', label: 'Crit DMG' }
+      { value: 'CriticalChance', label: 'CriticalChance' },
+      { value: 'CriticalDamage', label: 'CriticalDamage' }
     ]
 
 

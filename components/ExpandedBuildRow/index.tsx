@@ -178,7 +178,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
   return (
     <TableRow key={row.id + "expanded"} data-state={"selected"}>
       <td colSpan={100}>
-        <div className="bg-slate-800 flex justify-start items-center pl-3 pt-[2px] whitespace-nowrap gap-2">
+        <div className="bg-slate-800 flex justify-center items-center pl-3 pt-[2px] whitespace-nowrap gap-2">
           <Image
             alt={/*t*/ row.avatar_id.toString()}
             src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.avatar_id}.png`}
@@ -189,7 +189,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
           {displaySkills(row.skill_levels)}
           {displayAscension(row.skill_levels.ascensions)}
         </div>
-        <div className="bg-slate-800 flex flex-wrap whitespace-normal gap-[1px] overflow-auto">
+        <div className="bg-slate-800 flex flex-wrap justify-center whitespace-normal gap-[1px] overflow-auto">
           {!relics.isLoading ? (
             relics.data.map((relic: Relic) => {
               const img_url = `https://enka.network/ui/hsr/SpriteOutput/ItemIcon/RelicIcons/IconRelic_${relic.set_id}_${relic.tid.toString().slice(-1)}.png`
@@ -197,7 +197,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
               return (
                 <div
                   key={row.id + relic.tid.toString()}
-                  className="flex justify-center items-center border-slate-400 border-2 p-[2px] min-w-[155px]"
+                  className="flex justify-center items-center border-slate-400 border-2 p-[2px] min-w-[155px] w-[15%]"
                 >
                   <div className="justify-center">
                     <RelicCanvas backgroundImage={img_url} />

@@ -39,7 +39,7 @@ export const NewsDisplay: React.FC = () => {
     return (
       <div
         key={message.id}
-        className="p-3 border-black bg-slate-850 min-w-96 text-slate-150 hover:bg-slate-900"
+        className="p-3 border-black bg-slate-850 w-full min-w-96 text-slate-150 hover:bg-slate-900"
       >
         <div className="flex justify-start gap-3 mb-2 items-center">
           <Link href={profileLink}>
@@ -71,7 +71,7 @@ export const NewsDisplay: React.FC = () => {
   };
 
   return (
-    <div className="h-1/2 w-3/4 border-gray-600 border-8 mb-1 rounded-sm">
+    <div className="h-1/2 w-full border-gray-600 border-8 mb-1 rounded-sm">
       {newsData ? newsData.map(displayNewsMessage) : <div>{"Loading..."}</div>}
     </div>
   );

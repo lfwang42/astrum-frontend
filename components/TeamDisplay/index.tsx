@@ -54,7 +54,7 @@ export const TeamDisplay: React.FC<TeamProps> = ({ team, short }) => {
                 <Image
                   width="25"
                   height="25"
-                  className="w-7 h-auto "
+                  className="min-w-7 w-7 h-auto "
                   src={"/avatar/anon.png"}
                   alt={teammate.desc}
                   title={teammate.desc}
@@ -73,7 +73,7 @@ export const TeamDisplay: React.FC<TeamProps> = ({ team, short }) => {
                 <Image
                   width="25"
                   height="25"
-                  className="w-7 h-auto "
+                  className="min-w-7 w-7 h-auto "
                   src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${teammate.avatar}.png`}
                   alt={teammate.desc}
                   title={teammate.desc}

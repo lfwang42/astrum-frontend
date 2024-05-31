@@ -47,7 +47,7 @@ export default async function RootLayout({
           crossOrigin="anonymous"
         ></script>
       </head>
-      <body className="min-h-screen items-center bg-slate-800 text-slate-50 mb-5">
+      <body className="min-h-screen min-w-screen w-full items-center bg-slate-800 text-slate-50 mb-5">
         <NextIntlClientProvider locale={locale} messages={messages}>
         <ProfilesContextProvider>
             <Navbar locale={locale} />

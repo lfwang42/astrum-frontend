@@ -96,7 +96,7 @@ export default function Leaderboard({
 
   const displayCones = (category: AvatarCategory) => {
     return (
-      <>
+      <div className="flex-wrap flex gap-2">
         {Object.entries(category.calculations).map((calc) => {
           return (
             <div
@@ -135,7 +135,7 @@ export default function Leaderboard({
             </div>
           );
         })}
-      </>
+      </div>
     );
   };
   const searchParams = useSearchParams();
@@ -276,9 +276,9 @@ export default function Leaderboard({
   );
 
   return (
-    <div className="min-h-screen flex flex-col container items-center mx-auto py-1">
-      <div className="flex flex-wrap justify-between min-w-1/3 max-w-[60%] mb-2">
-        <div className="flex flex-wrap w-1/2 justify-start mt-2">
+    <div className="min-h-screen flex flex-col container items-center overflow-auto mx-auto py-1">
+      <div className="flex flex-wrap justify-between min-w-1/3 max-w-[70%] mb-2">
+        <div className="flex flex-row w-1/2 min-w-[200px] justify-start mt-2">
           {calcs.isLoading ? (
             <></>
           ) : (
@@ -304,7 +304,7 @@ export default function Leaderboard({
               return (
                 <div
                   key={`category-${category.name}-team`}
-                  className="flex flex-col p-2 mt-2 max-w-1/2 w-1/2"
+                  className="flex flex-col p-2 mt-2 min-w-[200px] max-w-1/2 w-1/2"
                 >
                   <span className="mb-3 whitespace-normal">
                     {category.desc}
