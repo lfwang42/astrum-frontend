@@ -10,6 +10,7 @@ import { LanguageSelector } from "../LanguageSelector";
 import { FaDiscord } from "react-icons/fa";
 import { Translate } from "../Translate";
 import { IoIosPodium } from "react-icons/io";
+import { SiKofi } from "react-icons/si";
 
 interface NavProps {
   locale: string;
@@ -134,7 +135,18 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
                   </span>
                 </div>
               </Link>
+              <Link href={'https://ko-fi.com/akodako'}>
+                <div className="flex flex-row gap-1 ">
+                  <div>
+                    <SiKofi size={25} />
+                  </div>
+                  <span className="hover:text-orange-300 text-base text-white font-medium">
+                    Ko-fi
+                  </span>
+                </div>
+              </Link>
             </li>
+            
           </ul>
         </nav>
       ) : (
@@ -151,25 +163,25 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
               </Link>
             </li>
             <li>
-              <Link href={discordURL}>
+              <Link href={'https://ko-fi.com/akodako'}>
                 <div className="flex flex-row justify-end gap-1 xl:px-5 py-2 text-right ml-auto">
                   <div>
-                    <FaDiscord size={25} />
+                    <SiKofi size={25} />
                   </div>
                   <span className="hover:text-orange-300 text-base text-white font-medium">
-                    Discord
+                    KoFi
                   </span>
                 </div>
               </Link>
             </li>
             <li>
               <select
-                className="block xl:px-5 py-2 appearance-none bg-sky-900 ml-auto text-right"
+                className="block xl:px-5 py-3 appearance-none bg-sky-800 ml-auto text-right p-3"
                 defaultValue={locale}
                 onChange={onSelect}
               >
                 {langs.map((lang) => (
-                  <option key={lang.locale} value={lang.value}>
+                  <option key={lang.locale} value={lang.value} >
                     {lang.locale}
                   </option>
                 ))}

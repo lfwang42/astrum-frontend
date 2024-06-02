@@ -50,7 +50,17 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "signature",
     cell: ({ row } ) => {
       return (
-        <span className="w-32 min-w-32">{row.original.signature}</span>
+        <span className="w-32 min-w-32 whitespace-nowrap">{row.original.signature}</span>
+    )}
+  },
+  {
+    header: () => {
+      return (<span className="whitespace-nowrap"><Translate str={'TLevel'} /></span>)
+    },
+    accessorKey: "level",
+    cell: ({ row } ) => {
+      return (
+        <span className="">{row.original.level}</span>
     )}
   },
   {
@@ -70,7 +80,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "updated_at",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return <TranslateDate str={row.original.updated_at} relative/>
+      return (<span className="whitespace-nowrap"><TranslateDate str={row.original.updated_at} relative/></span>)
     }
   },
 ]

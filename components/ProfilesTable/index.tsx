@@ -10,7 +10,7 @@ type ProfileProps = {
 
 export const ProfileTable: React.FC<ProfileProps> = () => {
   const { profiles } = useContext(ProfilesContext);
-  console.log(profiles)
+  // console.log(profiles)
   const uidsQuery = useMemo(() => {
     const uids = profiles.map((p) => p.uid)
     let ret = ""
@@ -29,7 +29,7 @@ export const ProfileTable: React.FC<ProfileProps> = () => {
   }
   return (
     
-    <div className="justify-start min-w-[500px]">
+    <div className="justify-start w-full min-w-[525px]">
       <CustomTable
       fetchUrl={"/api/profiles"}
       columns={columns}

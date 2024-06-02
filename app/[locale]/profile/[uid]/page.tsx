@@ -20,7 +20,10 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [userData, setUserData] = useState<User>()
   const [profilePic, setProfilePic] = useState<string>(`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/UI_Message_Contacts_Anonymous.png`)
   const { profiles, addTab } = useContext(ProfilesContext)
+  const uid = params.uid
+  // const [uid, setUID] = useState<number>(params.uid)
   const fetchURL =`/api/builds/${params.uid}`
+
   const [error, setError] = useState<any>(false)
   const fetchProfile = (uid: string, refresh: boolean) => {
     const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
@@ -40,6 +43,18 @@ export default function Profile({ params }: { params: { uid: number }}) {
   useEffect(() => {
     fetchProfile(params.uid.toString(), false)
   }, []) 
+
+  useEffect(()=> {
+
+  }, [params.uid]) 
+
+  // useEffect(() => {
+  //   // setUID((prev) => {
+  //   //   console.log('uid prev: ')
+  //   //   console.log(prev)
+  //   //   return params.uid
+  //   // })
+  // }, [uid]) 
 
   useEffect(() => {
     if (!userData) return
@@ -116,7 +131,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
       { value: 'Speed', label: 'Speed' },
       { value: 'Attack', label: 'Attack' },
       { value: 'Defence', label: 'Defence' },
-      { value: 'MaxHP', label: 'HP' },
+      { value: 'MaxHP', label: 'MaxHP' },
       { value: 'BreakDamage', label: 'BreakDamageAddedRatio' },
       { value: 'StatusResistance', label: 'StatusResistance' },
       { value: 'StatusProbability', label: 'StatusProbability' },
@@ -161,15 +176,15 @@ export default function Profile({ params }: { params: { uid: number }}) {
           </div>
         </div>
         <ResultsDisplay user={userData}/>
-        {userData && <CustomTable 
-        tableParams={params.uid}
+        <CustomTable 
+        tableParams={uid}
         fetchUrl={fetchURL}
         columns={columns} 
         defaultSort={'Speed'} 
         sortOptions={sortOptions}
         params={p}
         pagination
-        />}
+        />
       </div>
   )
 }

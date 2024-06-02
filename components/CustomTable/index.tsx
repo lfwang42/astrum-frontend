@@ -91,6 +91,7 @@ export function CustomTable<TData, TValue>({
   
   const fetchTableSize = async () => {
     if (fetchUrl == '/api/categories' || (fetchUrl == '/api/profiles' && !tableParams)) return
+    console.log('fetching tablesizxe')
     setTableSizeLoading(true);
     const p: any = {table: tableName}
     // console.log(tableParams)
@@ -256,7 +257,7 @@ export function CustomTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="p-3 text-gray-200">
+                    <TableHead key={header.id} className="pl-3 pr-2 py-2 text-gray-200">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

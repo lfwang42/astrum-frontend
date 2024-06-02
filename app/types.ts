@@ -1,22 +1,22 @@
 export interface CoreStats {
-  MaxHP: number, 
-  Attack: number, 
-  Defence: number,
-  Speed: number,
-  CriticalChance: number, 
-  CriticalDamage: number, 
-  SPRatio: number, 
-  BreakDamage: number,
-  StatusProbability: number,
-  StatusResistance: number,
-  HealRatioBase?: number, 
-  QuantumAddedRatio?: number,
-  PhysicalAddedRatio?: number, 
-  WindAddedRatio?: number, 
-  IceAddedRatio?: number,
-  ImaginaryAddedRatio?: number, 
-  ThunderAddedRatio?: number, 
-  FireAddedRatio?: number,
+  MaxHP: number;
+  Attack: number;
+  Defence: number;
+  Speed: number;
+  CriticalChance: number;
+  CriticalDamage: number;
+  SPRatio: number;
+  BreakDamage: number;
+  StatusProbability: number;
+  StatusResistance: number;
+  HealRatioBase?: number;
+  QuantumAddedRatio?: number;
+  PhysicalAddedRatio?: number;
+  WindAddedRatio?: number;
+  IceAddedRatio?: number;
+  ImaginaryAddedRatio?: number;
+  ThunderAddedRatio?: number;
+  FireAddedRatio?: number;
 }
 
 export type Element =
@@ -144,11 +144,17 @@ interface EPGain {
   energyGained: number;
 }
 
+interface ActionAdvance {
+  avatar_id: number;
+  value: number;
+}
+
 export interface SimLog {
+  actionAdvance?: ActionAdvance[];
   avatarId: number;
+  av: number;
   id: number;
   type: string;
-  av: number;
   results: SkillResult[];
   children: SimLog[];
   childDamage: number;

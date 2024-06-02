@@ -29,7 +29,7 @@ export default function SearchField() {
         else {
             axios.get(getAPIURL(`/api/users/${uid}`), { params: {check: "exists" } })
             .then((response: AxiosResponse) => {
-                console.log(response.data.uid)
+                // console.log(response.data.uid)
                 try { 
                     router.push(`/profile/${response.data.uid}`)
                 } 

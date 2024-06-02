@@ -125,7 +125,7 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
         ) : (
           <></>
         )}
-        {(log.energyGain.length || log.children.length) ? expand ? <SlArrowUp /> : <SlArrowDown /> : null}
+        {(log.energyGain.length || log.children.length || log.actionAdvance) ? expand ? <SlArrowUp /> : <SlArrowDown /> : null}
       </span>
       {expand ? (
         <div>
@@ -151,6 +151,28 @@ export const SimResultRound: React.FC<SimResultRoundProps> = ({
                   <Translate str={"Energy"} />
                   {": "}
                   {epgain.energy.toFixed(0)}
+                </span>
+              );
+            })}
+          </span>
+          <span className="text-center">
+            {log.actionAdvance?.map((advance) => {
+              if (!advance) return null
+              return (
+                <span
+                  key={`${prekey}-${log.id}-${advance.avatar_id}-advance`}
+                  className="flex gap-1 justify-center items-center text-center"
+                >
+                  <Image
+                    src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${advance.avatar_id}.png`}
+                    width={20}
+                    height={20}
+                    unoptimized
+                    alt="character image"
+                  />
+                  <Translate str={"ActionAdvance"} />
+                  {": "}
+                  {(advance.value * 100).toFixed(0) + "%"}
                 </span>
               );
             })}
