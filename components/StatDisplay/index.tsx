@@ -11,10 +11,10 @@ export const StatDisplay: React.FC<StatProps> = ({ type, value }) => {
   const t = useTranslations();
   return (
     <div className="flex justify-start whitespace-nowrap gap-5">
-      <div className="relative">
+      <div className="relative text-[12px]">
         {/* <img className="h-auto w-8 m-1" src={SPRITE_URL + set.icon} /> */}
         <span>{StatFormat[type](value)}</span>
-        <span>{` ${t(type)}`}</span>
+        <span className=''>{` ${t(type)}`}</span>
       </div>
     </div>
   );

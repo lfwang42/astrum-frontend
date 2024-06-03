@@ -203,7 +203,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
                     <RelicCanvas backgroundImage={img_url} />
                     {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
                     <div className="bg-slate-800 flex justify-start items-center text-sm">
-                      <StatIcon stat={relic.main_stat_name} scale={1} />
+                      <StatIcon stat={relic.main_stat_name}/>
                       <span>
                         {" "}
                         {StatFormat[relic.main_stat_name](
@@ -219,7 +219,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
                           key={row.id + relic.tid + stat}
                           className="bg-slate-800 flex justify-start items-center text-[13px] gap-0"
                         >
-                          <StatIcon stat={stat} scale={0.9} />
+                          <StatIcon stat={stat} size={6} />
                           <span> {StatFormat[stat](relic.stats[stat])}</span>
                         </div>
                       );

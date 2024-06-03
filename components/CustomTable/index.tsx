@@ -257,7 +257,7 @@ export function CustomTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="pl-3 pr-2 py-2 text-gray-200">
+                    <TableHead key={header.id} className="pl-3 pr-1 py-2 text-gray-200">
                       {header.isPlaceholder
                         ? null
                         : flexRender(

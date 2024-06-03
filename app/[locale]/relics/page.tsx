@@ -11,7 +11,6 @@ export default function Relics() {
 
   const p: Params = {
     pageSize: 20,
-    sortStat: 'SpeedDelta'
   }
   
   useEffect(() => {

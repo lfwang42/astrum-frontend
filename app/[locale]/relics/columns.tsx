@@ -103,7 +103,9 @@ export const columns: ColumnDef<RelicRow>[] = [
     accessorKey: "Main Stat",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return <span><StatDisplay type={row.original.main_stat_name} value={row.original.main_stat_value} /></span>
+      return (<span className='flex flex-row align-middle items-center'><StatIcon stat={row.original.main_stat_name} size={8}/>
+          <span className="pt-[2px] align-middle text-[14px] text-orange-400">{StatFormat[row.original.main_stat_name](row.original.main_stat_value)}</span></span>)
+      // return <span><StatDisplay type={row.original.main_stat_name} value={row.original.main_stat_value} /></span>
     }
   },
   ...[0, 1, 2, 3].map((i) => ({
@@ -116,9 +118,9 @@ export const columns: ColumnDef<RelicRow>[] = [
       const ordered = orderSubstats(row?.original?.stats)
       const key = ordered?.[i]
       if (key) return  (
-      <div key={`${row.index}` + `${i}`} className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
-          <StatIcon stat={key}/>
-          <span className="mt-2">{StatFormat[key](row.original.stats[key])}</span>
+      <div key={`${row.index}` + `${i}`} className="flex justify-start w-300 whitespace-nowrap gap-[2px] text-sm">
+          <StatIcon stat={key} size={6}/>
+          <span className="pt-[2px] align-middle">{StatFormat[key](row.original.stats[key])}</span>
       </div>
       )
       else {
