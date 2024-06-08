@@ -77,7 +77,7 @@ type StatProps = {
   size?: number;
 };
 
-export const StatIcon: React.FC<StatProps> = ({ stat, size }) => {
+export const StatIcon: React.FC<StatProps> = ({ stat, size = 8 }) => {
   return (
     <Image
       className={`w-${size} h-auto`}

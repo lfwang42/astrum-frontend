@@ -160,7 +160,7 @@ export interface SimLog {
   childDamage: number;
   message?: string;
   energyGain: EPGain[];
-  skillId: number | null;
+  // skillId: number | null;
   target?: number | null;
   effect?: Debuff;
   // spGain: SPGain[],

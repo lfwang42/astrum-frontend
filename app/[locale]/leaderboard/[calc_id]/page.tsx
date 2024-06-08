@@ -38,6 +38,9 @@ export type LeaderboardRow = {
   platform: string;
   calc_name: string;
   sets: SetInfo[];
+  cone_tid?: number;
+  cone_rank?: number;
+  cone_level?: number;
 };
 
 function fetcher(params: any) {
@@ -57,6 +60,7 @@ export default function Leaderboard({
 }: {
   params: { calc_id: number };
 }) {
+  
   const cids = params.calc_id.toString().match(/.{1,6}/g);
   var team_id = "";
   const aidOrdered: string[] = [];
@@ -123,7 +127,7 @@ export default function Leaderboard({
                     <NoPrefetchLink href={generateURL(calc[0], cone[0])}>
                       <ConeDisplay
                         name={cone[1].name}
-                        icon={`/icon/${cone[1].tid}.png`}
+                        tid={cone[1].tid}
                         imposition={cone[1].rank}
                         width={35}
                         height={35}
@@ -163,6 +167,17 @@ export default function Leaderboard({
     { value: "critDmg", label: "CriticalDamage" },
   ];
 
+
+  const coneCol: ColumnDef<LeaderboardRow>[] = calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped ? [] 
+  : 
+  [{
+    header: () => {
+      return (<Translate str={'Lightcone'} />)
+    },
+    accessorKey: "Lightcone",
+    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank!} tid={row.original.cone_tid} />
+      : <></>
+  },]
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(
     () => [
       {
@@ -207,15 +222,18 @@ export default function Leaderboard({
         ),
         accessorKey: "avatar_id",
         cell: ({ row }) => (
-          <Image
-            alt={/*t*/ row.original.avatar_id?.toString()}
-            src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`}
-            width={25}
-            height={25}
-            className="h-auto min-w-5"
-          />
+          <div>
+            <Image
+              alt={/*t*/ row.original.avatar_id?.toString()}
+              src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`}
+              width={25}
+              height={25}
+              className="h-auto min-w-5"
+            />
+          </div>
         ),
       },
+      ...coneCol,
       {
         header: () => {
           return <Translate str={"Relics"} />;
@@ -249,9 +267,9 @@ export default function Leaderboard({
           // console.log(key)
           if (key)
             return (
-              <div className="flex justify-start w-300 whitespace-nowrap gap-3 text-sm">
+              <div className="flex justify-start whitespace-nowrap gap-1 text-sm">
                 <StatIcon stat={key} />
-                <span className="mt-2">
+                <span className="pt-1">
                   {StatFormat[key](row.original.stats[key])}
                 </span>
               </div>

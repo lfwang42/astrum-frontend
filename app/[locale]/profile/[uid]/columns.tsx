@@ -65,7 +65,7 @@ export const columns: ColumnDef<BuildRow>[] = [
       return (<Translate str={'Lightcone'} />)
     },
     accessorKey: "Lightcone",
-    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank} icon={`/icon/${row.original.cone_tid}.png`} />
+    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank} tid={row.original.cone_tid} />
       : <></>
   },
   {
