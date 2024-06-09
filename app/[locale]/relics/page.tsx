@@ -10,7 +10,7 @@ export default function Relics() {
   const t = useTranslations();
 
   const p: Params = {
-    pageSize: 20,
+    size: 10
   }
   
   useEffect(() => {

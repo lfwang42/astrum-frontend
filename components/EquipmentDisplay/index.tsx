@@ -34,7 +34,7 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
                   <Link key={`${keyIndex}-${cone.name}`} href={`/leaderboard/${cone.calc_id}`} className="hover:bg-slate-600">
                     <ConeDisplay
                       name={cone.name.toString()}
-                      icon={`/icon/${cone.tid}.png`}
+                      tid={cone.tid}
                       imposition={cone.rank}
                       height={40}
                       width={40}

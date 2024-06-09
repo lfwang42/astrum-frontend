@@ -41,6 +41,7 @@ export type LeaderboardRow = {
   cone_tid?: number;
   cone_rank?: number;
   cone_level?: number;
+  eidolon?: number;
 };
 
 function fetcher(params: any) {
@@ -60,7 +61,7 @@ export default function Leaderboard({
 }: {
   params: { calc_id: number };
 }) {
-  
+  const capped = calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped
   const cids = params.calc_id.toString().match(/.{1,6}/g);
   var team_id = "";
   const aidOrdered: string[] = [];
@@ -154,8 +155,9 @@ export default function Leaderboard({
       },
     }
   );
+
   const sortOptions = [
-    { value: "score", label: "Score" },
+    // { value: "score", label: "Score" },
     { value: "Speed", label: "Speed" },
     { value: "Attack", label: "Attack" },
     { value: "Defence", label: "Defence" },
@@ -168,21 +170,26 @@ export default function Leaderboard({
   ];
 
 
-  const coneCol: ColumnDef<LeaderboardRow>[] = calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped ? [] 
+  const uncappedCols: ColumnDef<LeaderboardRow>[] = capped ? [] 
   : 
   [{
     header: () => {
       return (<Translate str={'Lightcone'} />)
     },
     accessorKey: "Lightcone",
+    enableSorting: false,
+
     cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank!} tid={row.original.cone_tid} />
       : <></>
   },]
+  
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(
     () => [
       {
         accessorKey: "rank",
         header: "#",
+        enableSorting: true,
+
       },
       // {
       //   header: "Region",
@@ -193,6 +200,8 @@ export default function Leaderboard({
           return <Translate str={"Trailblazer"} />;
         },
         accessorKey: "nickname",
+        enableSorting: false,
+
         cell: ({ row }) => (
           <React.Fragment>
             <Link href={`../profile/${row.original.uid}`}>
@@ -221,28 +230,38 @@ export default function Leaderboard({
           />
         ),
         accessorKey: "avatar_id",
+        enableSorting: false,
         cell: ({ row }) => (
-          <div>
+          <div className="relative pr-[6px] pb-[4px]">
             <Image
               alt={/*t*/ row.original.avatar_id?.toString()}
               src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${row.original.avatar_id}.png`}
               width={25}
               height={25}
-              className="h-auto min-w-5"
+              className="h-auto min-w-6"
             />
+            {!capped ? 
+                <span className="absolute right-0 bottom-0 font-medium text-gray-50 drop-shadow">
+                    {`E${row.original.eidolon}`}
+                </span>
+                : 
+                null}
           </div>
         ),
       },
-      ...coneCol,
+      ...uncappedCols,
       {
         header: () => {
           return <Translate str={"Relics"} />;
         },
         accessorKey: "set",
+        enableSorting: false,
+
         cell: ({ row }) => <SetDisplay sets={row.original.sets} />,
       },
       {
         header: "Crit Value",
+        enableSorting: false,
         cell: ({ row }) => (
           <span>
             {(row.original?.crit_value * 100).toFixed(1)}
@@ -257,6 +276,7 @@ export default function Leaderboard({
       ...[0, 1, 2, 3].map((i) => ({
         header: "-",
         id: `${i}`,
+        enableSorting: false,
         cell: ({ row }: any) => {
           const ordered = getRelativeStats(
             row?.original,
@@ -281,13 +301,14 @@ export default function Leaderboard({
       })),
       {
         accessorKey: "score",
+        enableSorting: true,
         header: calcs.isLoading
           ? "??"
-          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]
-              ?.score_name,
+          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]?.score_name,
         cell: ({ row }) => {
           return <span>{row.original.score?.toFixed(0)}</span>;
         },
+
       },
     ],
     [calcs, calcs.isLoading]

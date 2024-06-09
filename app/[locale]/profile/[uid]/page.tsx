@@ -58,6 +58,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
 
   useEffect(() => {
     if (!userData) return
+    console.log(userData)
     setProfilePic(`https://enka.network/ui/hsr/${avatars[(userData.headicon.toString() as keyof typeof avatars)].Icon}`)
     const now = new Date().getTime();
     const cooldown = now + (userData.ttl);

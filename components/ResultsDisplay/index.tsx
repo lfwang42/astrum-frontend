@@ -13,7 +13,7 @@ type ResultsProps = {
 export const ResultsDisplay: React.FC<ResultsProps> = ({ user }) => {
   return (
     <div className="flex justify-start overflow-auto px-2 gap-2 m-2">
-      {user ? (
+      {(user && user.ranks) ? (
         user.ranks.map((result) => {
           var best = result.results[0];
           for (let calcresult of result.results) {

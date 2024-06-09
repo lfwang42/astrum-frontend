@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Column,
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -126,7 +127,7 @@ export function CustomTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     manualPagination: true,
   });
-  const pageSize = 20;
+  const pageSize = params?.size || 20;
   const defaultParams: Params = {
     sortStat: defaultSort,
     order: "desc",
@@ -138,6 +139,12 @@ export function CustomTable<TData, TValue>({
     defaultParams.calc_id = params.calc_id;
   }
   const [searchParams, setParams] = useState<Params>(defaultParams);
+
+  //update searchparams when uids get loaded
+  useEffect(() => {
+    setParams({...searchParams, uids: params?.uids})
+  }, [params?.uids]);
+
   useEffect(() => {
     // console.log(getAPIURL(fetchUrl))
     if (fetchUrl == "/api/profiles" && params && !params.uids?.length) {
@@ -145,7 +152,7 @@ export function CustomTable<TData, TValue>({
     }
     setLoading(true);
     const res = axios
-      .get(getAPIURL(fetchUrl), { params: {...searchParams, ...params} }) // Use the correct URL, it can be an API Route URL, an external URL...
+      .get(getAPIURL(fetchUrl), { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
       .then((res) => res.data)
       .then((data) => {
         if (defaultSort == "count") {
@@ -160,7 +167,7 @@ export function CustomTable<TData, TValue>({
       .catch((error) => {
         console.log(error);
       });
-  }, [JSON.stringify(searchParams), fetchUrl, params?.uids]);
+  }, [JSON.stringify(searchParams), fetchUrl]);
 
   useEffect(() => {
     const arr = [];
@@ -170,6 +177,7 @@ export function CustomTable<TData, TValue>({
     setRowExpand(arr);
   }, [rowSpan]);
 
+  //set params -> fetch data
   function navigateNext(newParams: Params) {
     const stringParams: any = {};
     for (const key in newParams) {
@@ -178,7 +186,22 @@ export function CustomTable<TData, TValue>({
     const paramString = new URLSearchParams(stringParams).toString();
     // console.log(paramString)
     // router.push(`?${paramString}`, {scroll: false})
+    console.log(stringParams)
     setParams(stringParams);
+  }
+
+  const handleSort = (column: Column<any>) => {
+    const sortable = column.columnDef.enableSorting != undefined ? column.columnDef.enableSorting : false
+
+    console.log(column.id + " " + sortable)
+    console.log(searchParams.order)
+    console.log(searchParams.sortStat)
+    if (sortable) {
+      if (column.id == searchParams.sortStat) {
+        console.log({...defaultParams, sortStat: searchParams.sortStat, order: searchParams.order == 'desc' ? 'asc' : 'desc'})
+        navigateNext({...defaultParams, sortStat: searchParams.sortStat, order: searchParams.order == 'desc' ? 'asc' : 'desc'})
+      }
+    }
   }
   const expandRow = (row: any, rowIndex: number) => {
     if (row?.score) {
@@ -257,7 +280,7 @@ export function CustomTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="pl-3 pr-1 py-2 text-gray-200">
+                    <TableHead key={header.id} onClick={(event) => handleSort(header.column)}className="pl-3 pr-1 py-2 text-gray-200">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
