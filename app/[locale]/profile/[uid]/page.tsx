@@ -8,11 +8,12 @@ import { CustomTable } from '../../../../components/CustomTable/index';
 import { getAPIURL, getRegion } from '../../../../lib/utils';
 import { Timer } from '@/components/Timer'
 import { IoMdRefresh } from "react-icons/io";
-import { UpdatedDate } from '@/components/UpdatedDate'
-import { useRouter } from 'next/navigation'
 import { User } from '@/app/types'
 import { ResultsDisplay } from '@/components/ResultsDisplay'
 import { ProfilesContext } from '@/contexts/PinnedProfiles/ProfilesContext'
+import { TranslateDate } from '@/components/TranslateDate'
+import { Translate } from '@/components/Translate'
+import { useNow } from 'next-intl'
 
 export default function Profile({ params }: { params: { uid: number }}) {
   const [refreshTime, setRefreshTime] = useState<number>();
@@ -27,7 +28,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
   const [error, setError] = useState<any>(false)
   const fetchProfile = (uid: string, refresh: boolean) => {
     const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
-    const res = axios.get(url)
+    axios.get(url)
     .then((res) => res.data)
     .then((data) => setUserData(data))
     .catch((error) => {
@@ -57,7 +58,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
   // }, [uid]) 
 
   useEffect(() => {
-    if (!userData) return
+    if (!userData || error) return
     console.log(userData)
     setProfilePic(`https://enka.network/ui/hsr/${avatars[(userData.headicon.toString() as keyof typeof avatars)].Icon}`)
     const now = new Date().getTime();
@@ -119,11 +120,11 @@ export default function Profile({ params }: { params: { uid: number }}) {
       {refreshTime && getTimestamp() > 0 ? (
         <Timer
           until={refreshTime}
-          label={"Refresh Cooldown: "}
+          label={""}
           onFinish={enableRefreshButton}
         />
       ) : (
-        <UpdatedDate lastUpdate={userData ? userData.updated_at : ""}/>
+        <span><Translate str="Refreshed" />: <TranslateDate str={userData ? userData.updated_at : ""} relative updateNow/></span>
       )}
        
     </div>
@@ -177,15 +178,19 @@ export default function Profile({ params }: { params: { uid: number }}) {
           </div>
         </div>
         <ResultsDisplay user={userData}/>
-        <CustomTable 
-        tableParams={uid}
-        fetchUrl={fetchURL}
-        columns={columns} 
-        defaultSort={'Speed'} 
-        sortOptions={sortOptions}
-        params={p}
-        pagination
-        />
+        {/* for now force table to load after user data has loaded, but change this later*/}
+        {userData ? 
+          <CustomTable 
+          tableParams={uid}
+          fetchUrl={fetchURL}
+          columns={columns} 
+          defaultSort={'Speed'} 
+          sortOptions={sortOptions}
+          params={p}
+          pagination
+          />
+        :
+        null}
       </div>
   )
 }

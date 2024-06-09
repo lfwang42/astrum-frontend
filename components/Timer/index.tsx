@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Translate } from "../Translate";
 
 type TimerProps = {
   until: number;
@@ -50,8 +51,9 @@ export const Timer: React.FC<TimerProps> = ({
 
   return (
     <span className="text-slate-200">
-      {label && <span>{label}</span>}{" "}
-      <span className="value">{getFormattedText(timestamp)}</span>
+      {/* {label && <span>{label}</span>}{" "} */}
+      <Translate str="RefreshTimer" />
+      <span className="value"> {getFormattedText(timestamp)}</span>
     </span>
   );
 };
