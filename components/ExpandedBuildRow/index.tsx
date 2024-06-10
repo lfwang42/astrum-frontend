@@ -64,7 +64,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
     });
     return res;
   }
-
+  // console.log(row.eidolon != undefined ? row.eidolon : 'undefined eidolon')
   const displayAscension = (asc: Ascensions) => {
     const skillclass = "flex items-center";
     const iconSize = 30;
@@ -101,8 +101,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
     );
   };
   const displaySkills = (skill_levels: SkillLevels) => {
-    const s: string =
-      skills[skill_levels.basic.id as keyof typeof skills].IconPath;
+    // console.log(skill_levels)
     const skillclass = "flex gap-1 items-center";
     const iconSize = 30;
     return (
@@ -119,7 +118,7 @@ export const ExpandedBuildRow: React.FC<ExpandedBuildRowProps> = ({
           />
           <span
             className={`font-medium bg-slate-900  rounded-xl py-[2px] px-2 ${
-              skill_levels.basic.level > 10 ? "text-cyan-400" : "text-gray-100"
+              skill_levels.basic.level > 6 ? "text-cyan-400" : "text-gray-100"
             }`}
           >
             {skill_levels.basic.level}

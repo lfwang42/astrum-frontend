@@ -92,7 +92,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       page: +(+pageNumber + 1),
       value: nextValue,
       order: params.order,
-      comp: "lt",
+      comp: params.order == 'desc' ? "lt" : 'gt',
       from: lastItem["hash"],
     };
     nextFunction({ ...params, ...query });
@@ -110,7 +110,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       // sortStat: params.sortStat,
       value: nextValue,
       order: params.order,
-      comp: "gt",
+      comp: params.order == 'desc' ? "gt" : 'lt',
       from: firstItem["hash"],
     };
     // setCurrentPage(currentPage - 1)

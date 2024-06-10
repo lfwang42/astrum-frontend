@@ -27,6 +27,7 @@ import { getAPIURL, percents } from "@/lib/utils";
 import { AvatarCategory } from "@/app/types";
 import { ExpandedProfileRow } from "../ExpandedProfileRow";
 import { Translate } from "../Translate";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 
 interface tableParams {
   table: string;
@@ -83,20 +84,26 @@ export function CustomTable<TData, TValue>({
   const t = useTranslations();
 
   const collections: Record<string, string> = {
-    '/api/profiles': "profiles",
-    '/api/relics': "relics",
-    '/api/builds': "builds",
-    '/api/leaderboard': "leaderboard",
-  }
-  const tableName = fetchUrl.startsWith('/api/builds') ? 'builds' :  collections[fetchUrl]
-  
+    "/api/profiles": "profiles",
+    "/api/relics": "relics",
+    "/api/builds": "builds",
+    "/api/leaderboard": "leaderboard",
+  };
+  const tableName = fetchUrl.startsWith("/api/builds")
+    ? "builds"
+    : collections[fetchUrl];
+
   const fetchTableSize = async () => {
-    if (fetchUrl == '/api/categories' || (fetchUrl == '/api/profiles' && !tableParams)) return
-    console.log('fetching tablesizxe')
+    if (
+      fetchUrl == "/api/categories" ||
+      (fetchUrl == "/api/profiles" && !tableParams)
+    )
+      return;
+    console.log("fetching tablesizxe");
     setTableSizeLoading(true);
-    const p: any = {table: tableName}
+    const p: any = { table: tableName };
     // console.log(tableParams)
-    if (tableParams) p.query = tableParams
+    if (tableParams) p.query = tableParams;
     const res = await axios.get(getAPIURL("/api/tablesize"), {
       params: p,
     });
@@ -142,13 +149,13 @@ export function CustomTable<TData, TValue>({
 
   //update searchparams when uids get loaded
   useEffect(() => {
-    setParams({...searchParams, uids: params?.uids})
+    setParams({ ...searchParams, uids: params?.uids });
   }, [params?.uids]);
 
   useEffect(() => {
     // console.log(getAPIURL(fetchUrl))
     if (fetchUrl == "/api/profiles" && params && !params.uids?.length) {
-      return
+      return;
     }
     setLoading(true);
     const res = axios
@@ -186,23 +193,34 @@ export function CustomTable<TData, TValue>({
     const paramString = new URLSearchParams(stringParams).toString();
     // console.log(paramString)
     // router.push(`?${paramString}`, {scroll: false})
-    console.log(stringParams)
+    console.log(stringParams);
     setParams(stringParams);
   }
 
   const handleSort = (column: Column<any>) => {
-    const sortable = column.columnDef.enableSorting != undefined ? column.columnDef.enableSorting : false
+    const sortable =
+      column.columnDef.enableSorting != undefined
+        ? column.columnDef.enableSorting
+        : false;
 
-    console.log(column.id + " " + sortable)
-    console.log(searchParams.order)
-    console.log(searchParams.sortStat)
+    console.log(column.id + " " + sortable);
+    console.log(searchParams.order);
+    console.log(searchParams.sortStat);
     if (sortable) {
       if (column.id == searchParams.sortStat) {
-        console.log({...defaultParams, sortStat: searchParams.sortStat, order: searchParams.order == 'desc' ? 'asc' : 'desc'})
-        navigateNext({...defaultParams, sortStat: searchParams.sortStat, order: searchParams.order == 'desc' ? 'asc' : 'desc'})
+        console.log({
+          ...defaultParams,
+          sortStat: searchParams.sortStat,
+          order: searchParams.order == "desc" ? "asc" : "desc",
+        });
+        navigateNext({
+          ...defaultParams,
+          sortStat: searchParams.sortStat,
+          order: searchParams.order == "desc" ? "asc" : "desc",
+        });
       }
     }
-  }
+  };
   const expandRow = (row: any, rowIndex: number) => {
     if (row?.score) {
       if (rowSpan == 1) {
@@ -234,7 +252,7 @@ export function CustomTable<TData, TValue>({
         );
       }
     }
-    if (tableName == 'builds') {
+    if (tableName == "builds") {
       return (
         <>
           {rowExpand.length && rowExpand[rowIndex].expand ? (
@@ -242,6 +260,15 @@ export function CustomTable<TData, TValue>({
           ) : null}
         </>
       );
+    }
+  };
+
+  const sortHeader = (col: Column<any, unknown>) => {
+    if (!col.columnDef.enableSorting) return null;
+    if (col.id == searchParams.sortStat) {
+      return <div className="text-orange-300">
+        {searchParams.order == 'desc' ? <SlArrowDown /> : <SlArrowUp />}
+      </div>
     }
   };
 
@@ -264,7 +291,9 @@ export function CustomTable<TData, TValue>({
             {sortOptions?.map((option) => {
               return (
                 <option key={option.value} value={option.value}>
-                  {`${t(option.label)}${percents[option.label] ? percents[option.label] : ""}`}
+                  {`${t(option.label)}${
+                    percents[option.label] ? percents[option.label] : ""
+                  }`}
                 </option>
               );
             })}
@@ -275,18 +304,26 @@ export function CustomTable<TData, TValue>({
       )}
       <div className="border border-gray-200 w-[80%] min-w-[800px]">
         <Table>
-          <TableHeader >
+          <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} onClick={(event) => handleSort(header.column)}className="pl-3 pr-1 py-2 text-gray-200">
+                    <TableHead
+                      key={header.id}
+                      onClick={(event) => handleSort(header.column)}
+                      className={`pl-3 pr-1 py-2
+                      ${header.column.id == searchParams.sortStat ? 'text-orange-300' : "text-gray-200"}
+                      ${header.column.columnDef.enableSorting ? "cursor-pointer" : "cursor-default"}`}
+                    >
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
+                        : <div className="flex flex-row items-center gap-1">{flexRender(
                             header.column.columnDef.header,
                             header.getContext()
                           )}
+                          {sortHeader(header.column)}</div>}
+
                     </TableHead>
                   );
                 })}

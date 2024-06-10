@@ -9,6 +9,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Translate } from '@/components/Translate';
 export type RelicRow = {
+  index: number
   region: string//maybe do region serverside lol idk @TODO
   uid: number
   rank: number
@@ -58,7 +59,7 @@ interface Props {
 export const columns: ColumnDef<RelicRow>[] = [
   {
     header: "#",
-    cell: ({ row } ) => (<div>{row.index+1}</div>)
+    cell: ({ row } ) => (<div>{row.original.index}</div>)
   },
   // {
   //   header: "Region",

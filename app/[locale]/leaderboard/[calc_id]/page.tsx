@@ -25,6 +25,7 @@ import avatar from "../../../assets/icon/AvatarIconGray.png";
 import calcdetails from "../../../calcdetails.json";
 import Link from "next/link";
 import NoPrefetchLink from "@/components/NoFetchLink";
+import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 export type LeaderboardRow = {
   avatar_id: number;
   region: string;
@@ -61,7 +62,8 @@ export default function Leaderboard({
 }: {
   params: { calc_id: number };
 }) {
-  const capped = calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped
+  const capped =
+    calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped;
   const cids = params.calc_id.toString().match(/.{1,6}/g);
   var team_id = "";
   const aidOrdered: string[] = [];
@@ -75,8 +77,8 @@ export default function Leaderboard({
   }
 
   useEffect(() => {
-    document.title = "Leaderboards"
-  }, [])
+    document.title = "Leaderboards";
+  }, []);
   const generateURL = (avatar_id: string, calc: string) => {
     var url = "/leaderboard/";
     for (let aid of aidOrdered) {
@@ -144,8 +146,7 @@ export default function Leaderboard({
     );
   };
   const searchParams = useSearchParams();
-  const p = getParamsFromUrl(searchParams);
-  p.calc_id = params.calc_id;
+
   const calcs = useSWR(
     [getAPIURL("/api/categories"), { params: { avatar_id: team_id } }],
     fetcher,
@@ -169,27 +170,35 @@ export default function Leaderboard({
     { value: "critDmg", label: "CriticalDamage" },
   ];
 
+  const uncappedCols: ColumnDef<LeaderboardRow>[] = capped
+    ? []
+    : [
+        {
+          header: () => {
+            return <Translate str={"Lightcone"} />;
+          },
+          accessorKey: "Lightcone",
+          enableSorting: false,
 
-  const uncappedCols: ColumnDef<LeaderboardRow>[] = capped ? [] 
-  : 
-  [{
-    header: () => {
-      return (<Translate str={'Lightcone'} />)
-    },
-    accessorKey: "Lightcone",
-    enableSorting: false,
+          cell: ({ row }) =>
+            row.original.cone_tid ? (
+              <ConeDisplay
+                name={"lightcone"}
+                imposition={row.original.cone_rank!}
+                tid={row.original.cone_tid}
+              />
+            ) : (
+              <></>
+            ),
+        },
+      ];
 
-    cell: ({ row } ) => row.original.cone_tid? <ConeDisplay name={"lightcone"} imposition={row.original.cone_rank!} tid={row.original.cone_tid} />
-      : <></>
-  },]
-  
   const columns = useMemo<ColumnDef<LeaderboardRow>[]>(
     () => [
       {
         accessorKey: "rank",
         header: "#",
         enableSorting: true,
-
       },
       // {
       //   header: "Region",
@@ -214,7 +223,9 @@ export default function Leaderboard({
                 {row.original.nickname}
               </span>
             </Link>
-            <span className="text-sm text-gray-500">{getRegion(row.original.uid)}</span>
+            <span className="text-sm text-gray-500">
+              {getRegion(row.original.uid)}
+            </span>
           </React.Fragment>
         ),
       },
@@ -226,7 +237,6 @@ export default function Leaderboard({
             src={avatar}
             width={22}
             height={22}
-
           />
         ),
         accessorKey: "avatar_id",
@@ -240,12 +250,11 @@ export default function Leaderboard({
               height={25}
               className="h-auto min-w-6"
             />
-            {!capped ? 
-                <span className="absolute right-0 bottom-0 font-medium text-gray-50 drop-shadow">
-                    {`E${row.original.eidolon}`}
-                </span>
-                : 
-                null}
+            {!capped ? (
+              <span className="absolute right-0 bottom-0 font-medium text-gray-50 drop-shadow">
+                {`E${row.original.eidolon}`}
+              </span>
+            ) : null}
           </div>
         ),
       },
@@ -287,7 +296,7 @@ export default function Leaderboard({
           // console.log(key)
           if (key)
             return (
-              <div className="flex justify-start whitespace-nowrap gap-1 text-sm">
+              <div className="flex justify-start min-w-12 whitespace-nowrap gap-1 text-sm">
                 <StatIcon stat={key} />
                 <span className="pt-1">
                   {StatFormat[key](row.original.stats[key])}
@@ -302,17 +311,28 @@ export default function Leaderboard({
       {
         accessorKey: "score",
         enableSorting: true,
-        header: calcs.isLoading
-          ? "??"
-          : calcdetails[params.calc_id.toString() as keyof typeof calcdetails]?.score_name,
+        header: () => {
+          return (
+            <span>
+              {calcs.isLoading
+                ? "??"
+                : calcdetails[
+                    params.calc_id.toString() as keyof typeof calcdetails
+                  ]?.score_name}
+            </span>
+          );
+        },
         cell: ({ row }) => {
           return <span>{row.original.score?.toFixed(0)}</span>;
         },
-
       },
     ],
     [calcs, calcs.isLoading]
   );
+
+  const p = getParamsFromUrl(searchParams);
+  p.calc_id = params.calc_id;
+  p.size = 10;
 
   return (
     <div className="min-h-screen flex flex-col container items-center overflow-auto mx-auto py-1">
