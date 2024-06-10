@@ -206,7 +206,7 @@ export default function Leaderboard({
       // },
       {
         header: () => {
-          return <Translate str={"Trailblazer"} />;
+          return <span className="min-w-[130px]"><Translate str={"Trailblazer"} /></span>;
         },
         accessorKey: "nickname",
         enableSorting: false,
@@ -283,7 +283,9 @@ export default function Leaderboard({
         ),
       },
       ...[0, 1, 2, 3].map((i) => ({
-        header: "-",
+        header: () => {
+          return <span className="min-w-12">-</span>;
+        },
         id: `${i}`,
         enableSorting: false,
         cell: ({ row }: any) => {

@@ -203,9 +203,9 @@ export function CustomTable<TData, TValue>({
         ? column.columnDef.enableSorting
         : false;
 
-    console.log(column.id + " " + sortable);
-    console.log(searchParams.order);
-    console.log(searchParams.sortStat);
+    // console.log(column.id + " " + sortable);
+    // console.log(searchParams.order);
+    // console.log(searchParams.sortStat);
     if (sortable) {
       if (column.id == searchParams.sortStat) {
         console.log({
@@ -266,9 +266,12 @@ export function CustomTable<TData, TValue>({
   const sortHeader = (col: Column<any, unknown>) => {
     if (!col.columnDef.enableSorting) return null;
     if (col.id == searchParams.sortStat) {
-      return <div className="text-orange-300">
+      return <div className="text-orange-300 w-3">
         {searchParams.order == 'desc' ? <SlArrowDown /> : <SlArrowUp />}
       </div>
+    }
+    else {
+      return null
     }
   };
 
