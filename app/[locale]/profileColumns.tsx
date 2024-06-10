@@ -118,7 +118,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "updated_at",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return (<span className="whitespace-nowrap"><TranslateDate str={row.original.updated_at} relative/></span>)
+      return (<span className="whitespace-nowrap"><TranslateDate str={row.original.updated_at} relative dateProps={{}}/></span>)
     }
   },
 ]
