@@ -17,22 +17,32 @@ export type ProfileRow = {
   level: number,
   signature: string,
   abyssStars: number,
+  maxStars: number,
 }
 
 
-const starColors: Record<number, string> = {//this doesnt work for moc lolz
-  12: 'text-yellow-500',
-  11: "text-purple-700",
-  10: 'text-sky-700',
-  9: 'text-green-600',
-}
 
+function abyssStars(stars: number, maxStars: number) {
+  if (maxStars == 36) {//moc
+    if (stars == 36) return 'text-yellow-500'
+    else if (stars >= 33) return "text-purple-700"
+    else if (stars >= 30) return 'text-sky-600'
+    else return 'text-green-600'
+  }
+  else {// pf max 12
+    if (stars == 12) return 'text-yellow-500'
+    else if (stars >= 11) return "text-purple-700"
+    else if (stars >= 10) return 'text-sky-600'
+    else return 'text-green-600'
+  }
+}
 function levelColors(level: number): string {
   if (level == 70) return 'text-yellow-500'
   else if (level >= 65) return "text-purple-700"
   else if (level >= 60) return 'text-sky-600'
   else return 'text-green-600'
 }
+
 
 
 
@@ -105,7 +115,15 @@ export const columns: ColumnDef<ProfileRow>[] = [
       return <span className="flex flex-row gap-[1px] items-center">
         {row.original.abyssStars ? (<>
           <GiPolarStar className="fill-orange-300"/>
-          <span className={`${starColors[row.original.abyssStars] ? starColors[row.original.abyssStars] : 'text-gray-200'}`}>{row.original.abyssStars}</span>
+          <span>
+            <span className={`${row.original.abyssStars ? 
+              abyssStars(row.original.abyssStars, row.original.maxStars ? row.original.maxStars : 0) 
+              : 
+              'text-gray-200'}`}>
+                {row.original.abyssStars}
+              </span>
+              /{row.original.maxStars ? row.original.maxStars : '?'}
+              </span>
           </>)
          : '?'}
         </span>
