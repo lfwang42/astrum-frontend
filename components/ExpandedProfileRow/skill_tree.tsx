@@ -42,10 +42,10 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
   asc,
 }) => {
   const combatSkillIconClassName = "flex items-center";
-  const combatSkillContainerClassName = "relative items-center p-5";
+  const combatSkillContainerClassName = "relative items-center p-3";
   const largerIconSize = 40;
   const smallerIconSize = 25;
-
+  const skillLevelClassName = 'border-0 border-yellow-600 bg-slate-600 rounded-full h-6 w-6 text-center absolute right-0 bottom-0'
   const displayStatBonuses = (statBonuses: Point[]) => {
     const statBonusDivs = [];
     for (let i = 0; i < statBonuses.length; ++i) {
@@ -105,7 +105,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
   };
 
   return (
-    <div className="flex-col m-1  ml-0">
+    <div className="flex flex-col justify-center gap-3 m-1  ml-0">
       <div className="flex">
         <div className={combatSkillContainerClassName}>
           <Image
@@ -115,7 +115,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className="absolute -m-2 left-14">{basic.level}</span>
+          <span className={skillLevelClassName}>{basic.level}</span>
         </div>
         <div className="flex items-center">
           {displayStatBonuses(statBonuses)}
@@ -130,7 +130,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className="absolute -m-2 left-14">{skill.level}</span>
+          <span className={skillLevelClassName}>{skill.level}</span>
         </div>
         <div className="flex items-center">
           <Image
@@ -152,7 +152,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className="absolute -m-2 left-14">{ult.level}</span>
+          <span className={skillLevelClassName}>{ult.level}</span>
         </div>
         <div className="flex items-center">
           <Image
@@ -174,7 +174,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className="absolute -m-2 left-14">{talent.level}</span>
+          <span className={skillLevelClassName}>{talent.level}</span>
         </div>
         <div className="flex items-center">
           <Image

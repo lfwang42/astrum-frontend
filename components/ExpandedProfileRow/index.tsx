@@ -178,13 +178,23 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
 
   return (
     <TableRow key={row.avatar_id + "expanded"} data-state={"selected"}>
-      <td colSpan={150}>
-        <div className="flex flex-col">
-          <div className="flex flex-row bg-slate-800 max-h-[410px]">
+      <td colSpan={150} className="bg-slate-800">
+        <div className="flex flex-col h-[90%] m-2 border-2 border-sky-500 bg-gradient-to-b from-cyan-700 to-sky-800 rounded-md">
+          <div className="flex flex-row max-h-[410px]">
             <div
               className="relative bg-no-repeat bg-contain w-80"
+              // style={{
+              //   backgroundImage: `
+              //   linear-gradient(to bottom, transparent, #1E293B),
+              //   url(${
+              //     SPRITE_URL +
+              //     "SpriteOutput/AvatarDrawCard/" +
+              //     row.avatar_id +
+              //     ".png"
+              //   })`,
+              // }}
               style={{
-                backgroundImage: `linear-gradient(to bottom, transparent, #1E293B),
+                backgroundImage: `
                 url(${
                   SPRITE_URL +
                   "SpriteOutput/AvatarDrawCard/" +
@@ -216,7 +226,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             <Stats stats={row.stats} />
             <div className="flex flex-col m-3">
               <div className="relative flex-col h-[92%]">
-                <Image src={cone_url} width={200} height={400} alt="lightcone" className="w-auto h-[100%]"/>
+                <Image src={cone_url} width={200} height={400} alt="lightcone" className="w-auto h-[90%]"/>
                 <Image src={starPics[equipment[row.avatar.equipment.tid.toString() as keyof typeof equipment].Rarity]} width={50} height={10} alt="lc stars" unoptimized className="w-auto h-auto absolute bottom-0 left-0"/>
               </div>
               <div className="flex flex-row gap-2 align-middle my-1 min-h-7 h-7">
