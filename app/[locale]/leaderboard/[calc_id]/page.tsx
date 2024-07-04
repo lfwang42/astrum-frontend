@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
-import { useEffect, useMemo } from "react";
-import { AvatarCategory } from "../../../types";
+import { useEffect, useMemo, useState } from "react";
+import { AvatarCategory, LeaderboardCone } from "../../../types";
 import { ConeDisplay } from "@/components/ConeDisplay";
 import {
   StatFormat,
@@ -64,88 +64,16 @@ export default function Leaderboard({
 }) {
   const capped =
     calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped;
-  const cids = params.calc_id.toString().match(/.{1,6}/g);
-  var team_id = "";
-  const aidOrdered: string[] = [];
-  const a_ids: Record<string, string> = {};
-  for (let cid of cids!) {
-    const aid: string = cid.slice(0, 4);
-    const calc: string = cid.slice(-2);
-    aidOrdered.push(aid);
-    a_ids[aid] = calc;
-    team_id = team_id + aid;
-  }
+  const team_id = params.calc_id.toString().slice(0, -2);
+  //store current calculation info
+  const [calculation, setCalculation] = useState<Record<string, LeaderboardCone>>()
+  console.log(team_id);
 
   useEffect(() => {
     document.title = "Leaderboards";
   }, []);
-  const generateURL = (avatar_id: string, calc: string) => {
-    var url = "/leaderboard/";
-    for (let aid of aidOrdered) {
-      url += aid;
-      if (aid == avatar_id) {
-        url += calc;
-      } else {
-        url += a_ids[aid];
-      }
-    }
-    // console.log(url)
-    return url;
-  };
-  const checkCategory = (category: AvatarCategory) => {
-    for (let avatar_id in a_ids) {
-      if (!category.calculations[avatar_id][a_ids[avatar_id]]) {
-        return false;
-      }
-    }
-    return true;
-  };
 
-  const displayCones = (category: AvatarCategory) => {
-    return (
-      <div className="flex-wrap flex gap-2">
-        {Object.entries(category.calculations).map((calc) => {
-          return (
-            <div
-              key={`${calc[0]}-lightcones`}
-              className="flex flex-row gap-1 min-h-20 items-center"
-            >
-              <Image
-                width={25}
-                height={25}
-                className="w-auto h-8 m-1"
-                src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${calc[0]}.png`}
-                alt="icon"
-                unoptimized
-              />
-              {Object.entries(calc[1]).map((cone) => {
-                const combo_id = calc[0] + cone[0];
-                return (
-                  <div
-                    key={`${combo_id}-cone`}
-                    className={`flex justify-center p-1 min-h-12 min-w-12  hover:bg-slate-600 ${
-                      a_ids[calc[0]] === cone[0] ? "bg-slate-600" : ""
-                    } `}
-                  >
-                    <NoPrefetchLink href={generateURL(calc[0], cone[0])}>
-                      <ConeDisplay
-                        name={cone[1].name}
-                        tid={cone[1].tid}
-                        imposition={cone[1].rank}
-                        width={35}
-                        height={35}
-                      />
-                    </NoPrefetchLink>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-  const searchParams = useSearchParams();
+
 
   const calcs = useSWR(
     [getAPIURL("/api/categories"), { params: { avatar_id: team_id } }],
@@ -156,6 +84,91 @@ export default function Leaderboard({
       },
     }
   );
+
+  useEffect(() => {
+    if (!calcs.isLoading && calcs.data) {
+      for (let category of calcs.data) {
+        for (let calc_id in category.calculations) {
+          if (category.calculations[calc_id] == params.calc_id) {
+            setCalculation(category.caltulations[calc_id])
+            return
+          }
+        }
+      }
+    }
+  }, [calcs.isLoading])
+
+  const generateURL = (avatar_id: string, calc: string) => {
+    var url = "/leaderboard/";
+    console.log(calcs.data);
+    // for (let aid of aidOrdered) {
+    //   url += aid;
+    //   if (aid == avatar_id) {
+    //     url += calc;
+    //   } else {
+    //     url += a_ids[aid];
+    //   }
+    // }
+    // console.log(url)
+    return url;
+  };
+
+  const displayCalculation = (
+    calc_id: string,
+    calculation: Record<string, LeaderboardCone>
+  ) => {
+    return (
+      <div
+        key={`${calc_id}-lightcones`}
+        className="flex flex-row gap-1 min-h-20 items-center hover:bg-slate-600"
+      >
+      <NoPrefetchLink href={`/leaderboard/${calc_id}`} className="flex flex-row gap-1 min-h-20 items-center">
+
+        {Object.entries(calculation).map((avatar_cone_pair) => {
+          const cone = avatar_cone_pair[1]
+          return (
+
+            <div
+              key={`${calc_id + avatar_cone_pair[0]}-cone`}
+              className={`flex justify-center p-1 min-h-12 min-w-12 `}
+            >
+
+
+              <Image
+                width={25}
+                height={25}
+                className="w-auto h-8 m-1"
+                src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${avatar_cone_pair[0]}.png`}
+                alt="icon"
+                unoptimized
+              />
+
+                <ConeDisplay
+                  name={cone.name}
+                  tid={cone.tid}
+                  imposition={cone.rank}
+                  width={35}
+                  height={35}
+                />
+
+            </div>
+
+          );
+        })}
+      </NoPrefetchLink>
+      </div>
+    );
+  };
+  const displayCones = (category: AvatarCategory) => {
+    return (
+      <div className="flex-wrap flex gap-2">
+        {Object.keys(category.calculations).map((calc_id) => {
+          return (displayCalculation(calc_id, category.calculations[calc_id]))
+        })}
+      </div>
+    );
+  };
+  const searchParams = useSearchParams();
 
   const sortOptions = [
     // { value: "score", label: "Score" },
@@ -206,7 +219,11 @@ export default function Leaderboard({
       // },
       {
         header: () => {
-          return <span className="min-w-[130px]"><Translate str={"Trailblazer"} /></span>;
+          return (
+            <span className="min-w-[130px]">
+              <Translate str={"Trailblazer"} />
+            </span>
+          );
         },
         accessorKey: "nickname",
         enableSorting: false,
@@ -361,7 +378,7 @@ export default function Leaderboard({
           <></>
         ) : (
           calcs.data.map((category: AvatarCategory) => {
-            if (checkCategory(category)) {
+            if (true) {
               return (
                 <div
                   key={`category-${category.name}-team`}

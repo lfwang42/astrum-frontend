@@ -8,15 +8,9 @@ import { RelicCanvas } from "../RelicCanvas";
 import { SimResultDisplay } from "../SimResult";
 import skills from "../../honker_skills.json";
 import Image from "next/image";
+import { Relic } from "@/app/types";
 const SPRITE_URL = `https://enka.network/ui/hsr/`;
-interface Relic {
-  type: number;
-  tid: number;
-  stats: Record<string, number>;
-  set_id: number;
-  main_stat_value: number;
-  main_stat_name: string;
-}
+
 
 type ExpandedBuildRowProps = {
   row: any;

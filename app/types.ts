@@ -42,20 +42,31 @@ export type EquipInfo = {
   icon: string;
 };
 
+
+export interface Relic {
+  type: number;
+  tid: number;
+  stats: Record<string, number>;
+  set_id: number;
+  main_stat_value: number;
+  main_stat_name: string;
+} 
+
 export type AvatarCategory = {
-  avatar_ids?: number[];
-  default_calc_id: number;
-  name: string;
-  avatar_id: number;
-  score_name: string;
-  element: string;
-  char_name: string;
-  add_date: string;
-  char_icon: string;
-  desc: string;
-  calculations: Record<string, Record<string, LeaderboardCone>>;
-  count: number;
-  team: Teammate[];
+  add_date: string,
+  avatar_id: number,
+  avatar_ids?: number[]
+  char_name: string,
+  calculations: Record<string, Record<string, LeaderboardCone>>,
+  count: number,
+  desc: string,
+  default_calc_id: number,
+  element: string,
+  name: string,
+  score_name: string,
+  lightcones: Record<number, LeaderboardCone[]>,
+  uncapped: boolean,
+  team: Teammate[]
 };
 
 export interface SkillTreePoint {

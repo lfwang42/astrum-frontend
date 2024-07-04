@@ -1,7 +1,6 @@
 "use client";
 import { useFormatter, useNow } from "next-intl";
 
-
 type TProps = {
   str: string;
   relative?: boolean;
@@ -20,5 +19,5 @@ export const TranslateDate: React.FC<TProps> = ({ str, relative, updateNow, date
   const format = useFormatter();
   if (!str.length) return <span>...</span>
   if (relative)   return <span>{format.relativeTime(dateTime, {now: updateNow ? usenow : now, ...dateProps, unit: unit})}</span>;
-  else return <span className="whitespace-nowrap">{format.dateTime(dateTime)}</span>
+  else return <span className="whitespace-nowrap">{format.dateTime(dateTime, {timeZone: 'EST'} )}</span>
 };

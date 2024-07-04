@@ -105,7 +105,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
   };
 
   return (
-    <div className="flex-col pl-5 pb-5">
+    <div className="flex-col m-1  ml-0">
       <div className="flex">
         <div className={combatSkillContainerClassName}>
           <Image

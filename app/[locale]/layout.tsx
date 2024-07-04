@@ -10,7 +10,7 @@ import { ProfilesContextProvider } from "@/contexts/PinnedProfiles/ProfilesConte
 import { ProfileTabs } from "@/components/ProfileTabs";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title: "Astrum",
+  title: "Belobog Leaderboards",
   description: "Created by AkoDako",
 };
 

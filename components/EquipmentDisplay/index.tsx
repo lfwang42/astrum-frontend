@@ -4,7 +4,7 @@ import { ConeDisplay } from "../ConeDisplay";
 import Image from "next/image";
 import Link from "next/link";
 type ConeProps = {
-  cones: Record<string, Record<string, LeaderboardCone>>;
+  cones: Record<string, LeaderboardCone[]>;
   keyIndex: number;
 };
 
@@ -12,10 +12,10 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
   if (cones) {
     return (
       <div className="flex justify-start whitespace-nowrap gap-1">
-        {Object.entries(cones).map((aid) => {
+        {Object.keys(cones).map((avatar_id) => {
           return (
             <div
-              key={`${aid[0]}-conedisplay`}
+              key={`${avatar_id}-conedisplay`}
               className="flex flex-row items-center"
             >
               {/* if its a team laderabord display the avatar picture*/ }
@@ -24,16 +24,18 @@ export const EquipmentDisplay: React.FC<ConeProps> = ({ cones, keyIndex }) => {
                   width={40}
                   height={40}
                   className="w-[40px] h-auto m-[6px]"
-                  src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${aid[0]}.png`}
+                  src={`https://enka.network/ui/hsr/SpriteOutput/AvatarRoundIcon/${avatar_id}.png`}
                   alt="icon"
                   unoptimized
                 />
               ) : null}
-              {Object.values(aid[1]).map((cone) => {
+              {Object.values(cones[avatar_id]).map((cone) => {
+                // console.log(cone)
                 return (
-                  <Link key={`${keyIndex}-${cone.name}`} href={`/leaderboard/${cone.calc_id}`} className="hover:bg-slate-600">
+                  <Link key={`${keyIndex}-${cone.tid}`} href={`/leaderboard/${cone.calc_id}`} className="hover:bg-slate-600">
                     <ConeDisplay
-                      name={cone.name.toString()}
+                      // name={cone.name.toString()}
+                      name={'lightcone'}
                       tid={cone.tid}
                       imposition={cone.rank}
                       height={40}

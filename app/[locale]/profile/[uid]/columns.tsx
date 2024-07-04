@@ -15,6 +15,7 @@ import { SkillLevels } from "@/components/ExpandedBuildRow";
 
 export type BuildRow = {
   avatar_id: number;
+  id: number;
   eidolon: number
   promotion: number
   type: String

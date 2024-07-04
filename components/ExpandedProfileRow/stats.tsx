@@ -66,11 +66,11 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
           <div key={key} className="flex justify-between items-center text-center min-w-52">
             <div className="flex justify-start flex-row items-center">
               <StatIcon stat={key} />
-              <Translate str={key} />
+              <span  className="whitespace-nowrap"><Translate str={key} /></span>
             </div>
             <span className="pl-2">
             {StatFormat[key](stats[key as keyof typeof stats])}
-          </span>
+            </span>
           </div>
         );
       })}

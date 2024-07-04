@@ -17,7 +17,7 @@ export const Eidolons: React.FC<EidolonsProps> = ({
   const eidolonIds =
     characters[avatarId.toString() as keyof typeof characters].RankIDList;
   for (let i = 0; i < 6; ++i) {
-    console.log(eidolonLevel);
+    // console.log(eidolonLevel);
     eidolonDivs.push(
       // Adding unique key here surpresses warning
       <div key={i} className="flex items-center justify-center">

@@ -31,7 +31,7 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     },
     accessorKey: "Lightcone",
     cell: ({ row } ) => (
-      <EquipmentDisplay cones={row.original.calculations} keyIndex={row.index}/>
+      <EquipmentDisplay cones={row.original.lightcones} keyIndex={row.index}/>
     )
   },
   {
