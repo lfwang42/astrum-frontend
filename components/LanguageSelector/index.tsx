@@ -50,7 +50,7 @@ export const LanguageSelector: React.FC<LanguageProps> = ({ locale }) => {
   const languageList = locales.map((lang) => (
     <div
 
-      className={`p-3 cursor-pointer hover:bg-sky-700 ${lang == locale ? 'bg-sky-700' : 'bg-sky-800'}`}
+      className={`p-3 cursor-pointer ${lang == locale ? 'bg-sky-700' : 'bg-sky-800'} hover:bg-sky-700 `}
       key={lang}
       onClick={() => {
         onSelect(lang)
@@ -71,7 +71,7 @@ export const LanguageSelector: React.FC<LanguageProps> = ({ locale }) => {
       >
         <CiGlobe size={25}/><span className="hover:text-orange-300"> {locale.toUpperCase()}</span>
       </a>
-      {isOpen && <div className="absolute bg-sky-800 top-[50px]">{languageList}</div>}
+      {isOpen && <div className="absolute bg-sky-800 top-[50px] z-10">{languageList}</div>}
     </div>
   );
 };

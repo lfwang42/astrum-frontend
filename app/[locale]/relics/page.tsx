@@ -1,7 +1,5 @@
 'use client'
 import { columns } from './columns';
-import { useSearchParams } from 'next/navigation'
-import { getAPIURL } from "@/lib/utils";
 import { CustomTable, Params } from '@/components/CustomTable';
 import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
