@@ -84,7 +84,7 @@
 
 @layer components {
   .table-icon {
-    @apply w-[25px] h-[25px] relative;
+    @apply w-[25px] h-[25px];
   }
   /* HTML: <div class="triangle"></div> */
 }
