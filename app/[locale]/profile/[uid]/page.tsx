@@ -74,7 +74,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
     console.log(userData)
     const nickname = userData?.nickname || "???";
     addTab(params.uid.toString(), nickname);
-    document.title = `${nickname}'s Profile - Astrum`;
+    document.title = `${nickname}'s Profile - Belobog`;
   };
 
 

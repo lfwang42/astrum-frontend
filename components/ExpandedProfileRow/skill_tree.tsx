@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import skills from "../../honker_skills.json";
 const SPRITE_URL = `https://enka.network/ui/hsr/`;
@@ -42,10 +43,10 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
   asc,
 }) => {
   const combatSkillIconClassName = "flex items-center";
-  const combatSkillContainerClassName = "relative items-center p-3";
+  const combatSkillContainerClassName = "relative items-center p-2";
   const largerIconSize = 40;
   const smallerIconSize = 25;
-  const skillLevelClassName = 'border-0 border-yellow-600 bg-slate-600 rounded-full h-6 w-6 text-center absolute right-0 bottom-0'
+  const skillLevelClassName = 'bg-slate-800 text-xs rounded-full h-5 w-5 text-center absolute right-0 bottom-0 p-[1px] bg-opacity-90'
   const displayStatBonuses = (statBonuses: Point[]) => {
     const statBonusDivs = [];
     for (let i = 0; i < statBonuses.length; ++i) {
@@ -105,7 +106,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-center gap-3 m-1  ml-0">
+    <div className="flex flex-col justify-center gap-3 m-1 w-[17%] min-w-[17%]  ml-0">
       <div className="flex">
         <div className={combatSkillContainerClassName}>
           <Image

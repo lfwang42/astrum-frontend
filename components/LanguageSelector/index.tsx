@@ -1,60 +1,25 @@
-import React, {  useCallback,  useEffect,  useRef,  useState} from "react";
-import {usePathname, useRouter} from 'next-intl/client';
+import { locales } from "@/config";
+import { usePathname, useRouter } from "@/navigation";
+import React, {  ChangeEvent, useCallback,  useEffect,  useRef,  useState} from "react";
 import { CiGlobe } from "react-icons/ci";
 import {useClickAway} from 'react-use';
 
-const langs = [{
-    name: 'English',
-    locale: 'en'
-  },
-  {
-    name: '日本語',
-    locale: 'ja' 
-  },
-  {
-    name: '中文简体',
-    locale: 'zh-cn' 
-  },
-  {
-    name: '中文繁體',
-    locale: 'zh-tw' 
-  },
-  {
-    name: 'Français',
-    locale:  'fr', 
-  },
-  {
-    name: 'Español',
-    locale:  'es',
-  },
-  {
-    name: 'Bahasa Indonesia',
-    locale:   'id',  
-  },
-  {
-    name: 'Deutsch',
-    locale: 'de',  
-  },
-  {
-    name: '한국어',
-    locale:   'ko',
-  },
-  {
-    name: 'Tiếng Việt',
-    locale:     'vi',
-  },
-  {
-    name: 'ภาษาไทย',
-    locale:    'th', 
-  },
-  {
-    name: 'Русский',
-    locale:  'ru',
-  },
-  {
-    name: 'Português',
-    locale:   'pt',
-  }]
+
+const langNames: Record<string, string> = {
+  en: 'English',
+  ja: '日本語',
+  'zh-cn': '中文简体',
+  'zh-tw': '中文繁體',
+  fr: 'Français',
+  es: 'Español',
+  id: 'Bahasa Indonesia',
+  de: 'Deutsch',
+  ko: '한국어',
+  vi: 'Tiếng Việt',
+  th: 'ภาษาไทย',
+  ru: 'Русский',
+  pt: 'Português'
+}
 
 type LanguageProps = {
     locale: string
@@ -75,21 +40,24 @@ export const LanguageSelector: React.FC<LanguageProps> = ({ locale }) => {
   }, []);
 
 
-  function onSelect(l: string) {
-    // router.push({ pathname, query }, asPath, { locale: nextLocale })
-    router.replace(pathname, {locale: l});
+  function onSelect(lang: string) {
+    // const nextLocale = event.target.value;
+    // @ts-expect-error -- TypeScript will validate that only known `params`
+    // are used in combination with a given `pathname`. Since the two will
+    // always match for the current route, we can skip runtime checks.
+    router.replace(pathname, {locale: lang});
   }
-  const languageList = langs.map((lang) => (
+  const languageList = locales.map((lang) => (
     <div
 
-      className={`p-3 cursor-pointer hover:bg-sky-700 ${lang.locale == locale ? 'bg-sky-700' : 'bg-sky-800'}`}
-      key={lang.locale}
+      className={`p-3 cursor-pointer hover:bg-sky-700 ${lang == locale ? 'bg-sky-700' : 'bg-sky-800'}`}
+      key={lang}
       onClick={() => {
-        onSelect(lang.locale)
+        onSelect(lang)
         setIsOpen(false);
       }}
     >
-      {lang.name}
+      {langNames[lang]}
     </div>
   ));
 

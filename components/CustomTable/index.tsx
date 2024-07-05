@@ -99,7 +99,7 @@ export function CustomTable<TData, TValue>({
       (fetchUrl == "/api/profiles" && !tableParams)
     )
       return;
-    console.log("fetching tablesizxe");
+    // console.log("fetching tablesizxe");
     setTableSizeLoading(true);
     const p: any = { table: tableName };
     // console.log(tableParams)

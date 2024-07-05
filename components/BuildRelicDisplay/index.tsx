@@ -22,12 +22,12 @@ type BuildRelicsProps = {
           return (
             <div
               key={relic.tid.toString()}
-              className="flex justify-center items-center bg-slate-800 border-slate-400 border-2 p-[2px] min-w-[155px] w-[15%]"
+              className="flex bg-slate-800 justify-center items-center border-slate-400 border-2 p-[2px] min-w-[155px] w-[15%]"
             >
               <div className="justify-center">
                 <RelicCanvas backgroundImage={img_url} />
                 {/* <Image src={relic.icon} alt="" height={50} width={50}  /> */}
-                <div className=" flex justify-start items-center text-sm">
+                <div className="flex justify-center items-center text-sm">
                   <StatIcon stat={relic.main_stat_name}/>
                   <span>
                     {" "}
@@ -42,7 +42,7 @@ type BuildRelicsProps = {
                   return (
                     <div
                       key={relic.tid + stat}
-                      className=" flex justify-start items-center text-[13px] gap-0"
+                      className="flex justify-start items-center text-[13px] gap-0"
                     >
                       <StatIcon stat={stat} size={6} />
                       <span> {StatFormat[stat](relic.stats[stat])}</span>

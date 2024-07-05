@@ -80,7 +80,7 @@ type StatProps = {
 export const StatIcon: React.FC<StatProps> = ({ stat, size = 8 }) => {
   return (
     <Image
-      className={`w-${size} h-auto`}
+      className={`w-${size} h-${size} min-w-${size}`}
       width={20}
       height={20}
       src={statIcons[stat]}

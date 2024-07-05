@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import icon from "./icon.png";
-import { usePathname, useRouter } from "next-intl/client";
 import { ChangeEvent } from "react";
 import { FiMenu } from "react-icons/fi";
 import { LanguageSelector } from "../LanguageSelector";
@@ -11,6 +10,9 @@ import { FaDiscord } from "react-icons/fa";
 import { Translate } from "../Translate";
 import { IoIosPodium } from "react-icons/io";
 import { SiKofi } from "react-icons/si";
+import { usePathname, useRouter } from "@/navigation";
+import { locales } from "@/config";
+
 
 interface NavProps {
   locale: string;
@@ -37,10 +39,11 @@ export const Navbar: React.FC<NavProps> = ({ locale }) => {
     return width > size;
   };
   const wide = useWindowWide(1280);
+
   function onSelect(event: ChangeEvent<HTMLSelectElement>) {
-    const nextLocale = event.target.value;
+    // const nextLocale = event.target.value as any;
     // router.push({ pathname, query }, asPath, { locale: nextLocale })
-    router.replace(pathname, { locale: nextLocale });
+    router.replace(pathname, { locale: event.target.value as any  });
   }
   const discordURL: string = process.env.NEXT_PUBLIC_DISCORD_LINK!;
 

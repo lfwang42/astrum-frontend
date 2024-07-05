@@ -58,15 +58,13 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
   // });
 
   return (
-    <div className="flex flex-col">
-      {/* <div className="flex-col pl-5 pt-5 pb-5">{statsKeysDivs}</div>
-      <div className="flex-col pl-5 pt-5 pb-5">{statsValuesDivs}</div> */}
+    <div className="flex flex-col mt-2 gap-[1px] w-[20%] max-w-[20%]">
       {Object.keys(stats).map((key) => {
         return (
-          <div key={key} className="flex justify-between items-center text-center min-w-52">
+          <div key={key} className="flex justify-between items-center min-w-[200px]">
             <div className="flex justify-start flex-row items-center">
               <StatIcon stat={key} />
-              <span  className="whitespace-nowrap"><Translate str={key} /></span>
+              <span  className="whitespace-normal"><Translate str={key} /></span>
             </div>
             <span className="pl-2">
             {StatFormat[key](stats[key as keyof typeof stats])}

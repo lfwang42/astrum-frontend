@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
-
+import {getMessages} from 'next-intl/server';
 import "../globals.css";
 import Navbar from "../../components/Navbar/index";
 import Footer from "@/components/Footer";
@@ -25,13 +25,14 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  let messages;
-  try {
-    messages = (await import(`../../messages/${locale}.json`)).default;
-  } catch (error) {
-    console.log("error");
-    notFound();
-  }
+  // let messages;
+  // try {
+  //   messages = (await import(`../../messages/${locale}.json`)).default;
+  // } catch (error) {
+  //   console.log("error");
+  //   notFound();
+  // }
+  const messages = await getMessages();
   return (
     <html lang={locale} className={inter.className}>
       <head>
@@ -48,13 +49,13 @@ export default async function RootLayout({
         ></script>
       </head>
       <body className="min-h-screen min-w-screen w-full items-center bg-slate-800 text-slate-50 mb-5">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-        <ProfilesContextProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ProfilesContextProvider>
             <Navbar locale={locale} />
             <ProfileTabs />
             {children}
             <Footer />
-        </ProfilesContextProvider>
+          </ProfilesContextProvider>
         </NextIntlClientProvider>
       </body>
     </html>
