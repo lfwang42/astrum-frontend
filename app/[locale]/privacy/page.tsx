@@ -1,8 +1,13 @@
-'use client'
 import { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
+
+export async function generateMetadata() {
+  return {
+    title: 'Privacy Policy'
+  };
 }
+// export const metadata: Metadata = {
+//   title: 'Privacy Policy',
+// }
 export default function Privacy() {
     return (
       <div className="min-h-screen container mx-auto py-10">
