@@ -58,7 +58,7 @@ export const Stats: React.FC<StatsProps> = ({ stats }) => {
   // });
 
   return (
-    <div className="flex flex-col mt-2 gap-[1px] w-[20%] max-w-[20%]">
+    <div className="flex flex-col mt-2 gap-[1px] w-[22%] max-w-[22%]">
       {Object.keys(stats).map((key) => {
         return (
           <div key={key} className="flex justify-between items-center min-w-[200px]">

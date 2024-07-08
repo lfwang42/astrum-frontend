@@ -106,8 +106,8 @@ export const columns: ColumnDef<ProfileRow>[] = [
   {
     header: () => {
       return (<div className="flex flex-row items-center">
-        <Image src='/Abyss.png' width={20} height={20} className="w-auto h-6 " alt="moc icon"/>
-        <Image src='/PF.svg' width={18} height={18} className="w-auto h-5" alt="moc icon"/></div>)
+        <Image src='/Abyss.png' width={20} height={20} className="w-6 h-6 " alt="moc icon"/>
+        <Image src='/PF.svg' width={18} height={18} className="w-5 h-5" alt="pf icon"/></div>)
     },
     accessorKey: "abyssStars",
     cell: ({row}) => {

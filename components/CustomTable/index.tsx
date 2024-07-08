@@ -305,7 +305,7 @@ export function CustomTable<TData, TValue>({
       ) : (
         <div className="mb-2"></div>
       )}
-      <div className="border border-gray-200 w-[80%]">
+      <div className="border border-gray-200 w-[85%]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
