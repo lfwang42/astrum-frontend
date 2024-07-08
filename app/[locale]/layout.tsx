@@ -44,11 +44,8 @@ export default async function RootLayout({
           type="image/<generated>"
           sizes="<generated>"
         />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
-          crossOrigin="anonymous"
-        ></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6217820332998691"
+     crossOrigin="anonymous"></script>
       </head>
       <body className="min-h-screen min-w-screen w-full items-center bg-slate-800 text-slate-50 mb-5">
         <NextIntlClientProvider messages={messages}>
