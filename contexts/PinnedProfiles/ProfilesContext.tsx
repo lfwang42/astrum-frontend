@@ -29,7 +29,7 @@ const ProfilesContextProvider: React.FC<{ children: any }> = ({
   const [profiles, setProfiles] = useState<UIDPair[]>([]);
   const [isClient, setIsClient] = useState(false)
 
-  const limit = 5;
+  const limit = 10;
 
   useEffect(() => {
     setIsClient(true)
