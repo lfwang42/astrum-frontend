@@ -31,15 +31,15 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
   const rarityStyle: Record<number, {stars: string, color: string}> = {
     3: {
       stars: "/misc/Rarity3.png",
-      color: 'border-sky-300'
+      color: 'decoration-sky-300'
     } ,
     4: {
       stars: "/misc/Rarity4.png",
-      color: 'border-purple-500'
+      color: 'decoration-purple-500'
     }, 
     5: {
       stars: "/misc/Rarity5.png",
-      color: 'border-orange-400'
+      color: 'decoration-orange-400'
     } 
   };
 
@@ -219,7 +219,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             getCardColors(row.avatar_id)
           }`}
         >
-          <div className="flex flex-row max-h-[420px] gap-1">
+          <div className="flex flex-row max-h-[430px] gap-1">
             <div
               className="relative 
               bg-no-repeat bg-contain 
@@ -283,9 +283,9 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             />
             <Stats stats={row.stats} />
             <div className="flex flex-col my-1 w-[25%] mx-2">
-              <div className="relative flex-col h-[92%]">
+              <div className="flex flex-col h-[91%] max-h-[91%]">
                 <Translate
-                  className={`text-lg border-b-2 
+                  className={`text-base underline decoration-solid underline-offset-3 decoration-2
                     ${rarityStyle[
                       equipment[
                         row.avatar.equipment.tid.toString() as keyof typeof equipment
@@ -293,29 +293,31 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
                     ].color} [text-shadow:_0_2px_0_rgb(0_0_0_/_40%)]`}
                   str={row.avatar.equipment.tid}
                 />
-                <Image
-                  src={cone_url}
-                  width={200}
-                  height={400}
-                  alt="lightcone"
-                  className="w-auto h-[92%]"
-                />
-                <Image
-                  src={
-                    rarityStyle[
-                      equipment[
-                        row.avatar.equipment.tid.toString() as keyof typeof equipment
-                      ].Rarity
-                    ].stars
-                  }
-                  width={50}
-                  height={10}
-                  alt="lc stars"
-                  unoptimized
-                  className="w-auto h-auto absolute bottom-0 left-[-10px]"
-                />
+                <div className="relative h-[91%] max-h-[91%]">
+                  <Image
+                    src={cone_url}
+                    width={200}
+                    height={400}
+                    alt="lightcone"
+                    className="h-[100%] w-auto max-h-[100%]"
+                  />
+                  <Image
+                    src={
+                      rarityStyle[
+                        equipment[
+                          row.avatar.equipment.tid.toString() as keyof typeof equipment
+                        ].Rarity
+                      ].stars
+                    }
+                    width={50}
+                    height={10}
+                    alt="lc stars"
+                    unoptimized
+                    className="w-auto h-auto absolute bottom-0 left-[-10px]"
+                  />
+                </div>
               </div>
-              <div className="flex flex-row gap-2 align-middle min-h-7 h-7">
+              <div className="flex flex-row gap-2 align-middle min-h-7 h-7 my-1">
                 <span className="rounded-full w-7 h-7 text-center align-middle bg-gray-700 text-orange-300 p-1">
                   {romans[row.avatar.equipment.rank]}
                 </span>

@@ -21,9 +21,9 @@ export default function ImageCanvas({ backgroundImage, className }: Props) {
     const context = canvas.getContext("2d");
     
     const gradientMask = context!.createLinearGradient(
-      canvasWidth - 500,
+      canvasWidth - 400,
       0,
-      canvasWidth - 2,
+      canvasWidth,
       0,
     );
     gradientMask.addColorStop(0, "black");
@@ -48,8 +48,8 @@ export default function ImageCanvas({ backgroundImage, className }: Props) {
       const newWidth = imageWidth * scale;
       const newHeight = imageHeight * scale;
   
-      let x = canvasWidth  / 2 - newWidth / 2 - 120;
-      let y = canvasHeight  / 2 - newHeight / 2 - 80;
+      let x = canvasWidth  / 2 - newWidth / 2 - 125;
+      let y = canvasHeight  / 2 - newHeight / 2 - 65;
       context!.globalCompositeOperation = "source-in";
       context!.drawImage(img, x, y, newWidth, newHeight);
     };
