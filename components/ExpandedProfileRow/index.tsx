@@ -31,7 +31,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
   const rarityStyle: Record<number, {stars: string, color: string}> = {
     3: {
       stars: "/misc/Rarity3.png",
-      color: 'decoration-sky-300'
+      color: 'decoration-sky-400'
     } ,
     4: {
       stars: "/misc/Rarity4.png",
@@ -285,7 +285,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             <div className="flex flex-col my-1 w-[25%] mx-2">
               <div className="flex flex-col h-[91%] max-h-[91%]">
                 <Translate
-                  className={`text-base underline decoration-solid underline-offset-3 decoration-2
+                  className={`font-size-[17px] leading-[26px] underline decoration-solid underline-offset-3 decoration-2
                     ${rarityStyle[
                       equipment[
                         row.avatar.equipment.tid.toString() as keyof typeof equipment
