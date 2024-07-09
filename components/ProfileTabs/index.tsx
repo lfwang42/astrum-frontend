@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { ProfilesContext } from "@/contexts/PinnedProfiles/ProfilesContext";
-import Link from "next/link";
+import NoPrefetchLink from "../NoFetchLink";
 
 export const ProfileTabs: React.FC = () => {
   const { profiles, removeTab } = useContext(ProfilesContext);
@@ -14,11 +14,11 @@ export const ProfileTabs: React.FC = () => {
             key={`tab-${uid}-${nickname}`}
             className="bg-sky-900 p-2 hover:bg-sky-800 text-gray-100 shadow cursor-pointer"
           >
-            <Link
+            <NoPrefetchLink
               href={`/profile/${uid}`}
             >
               {nickname ?? uid}
-            </Link>
+            </NoPrefetchLink>
             {(
               <span
                 className="ml-1 hover:text-orange-400"
