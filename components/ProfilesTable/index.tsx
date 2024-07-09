@@ -19,6 +19,7 @@ export const ProfileTable: React.FC<ProfileProps> = () => {
       if (ret.length) ret += '|' 
       ret += uid.toString()
     })
+    console.log('uids: ' + ret)
     return ret
   },
     [profiles.length]

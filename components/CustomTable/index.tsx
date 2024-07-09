@@ -149,12 +149,15 @@ export function CustomTable<TData, TValue>({
 
   //update searchparams when uids get loaded
   useEffect(() => {
+    console.log("table uids: ")
+    console.log(params?.uids)
     setParams({ ...searchParams, uids: params?.uids });
   }, [params?.uids]);
 
   useEffect(() => {
-    // console.log(getAPIURL(fetchUrl))
-    if (fetchUrl == "/api/profiles" && params && !params.uids?.length) {
+    console.log("searchparams: ")
+    console.log(searchParams)
+    if (fetchUrl == "/api/profiles" && (!params || (!searchParams.uids) || searchParams.uids?.length == 0 || !tableParams)) {
       return;
     }
     setLoading(true);
@@ -174,7 +177,10 @@ export function CustomTable<TData, TValue>({
       .catch((error) => {
         console.log(error);
       });
-  }, [JSON.stringify(searchParams), fetchUrl]);
+  }, [
+    // JSON.stringify(searchParams), 
+    searchParams,
+    fetchUrl]);
 
   useEffect(() => {
     const arr = [];
@@ -305,7 +311,7 @@ export function CustomTable<TData, TValue>({
       ) : (
         <div className="mb-2"></div>
       )}
-      <div className="border border-gray-200 w-[85%]">
+      <div className="border border-gray-200 w-[88%]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -77,7 +77,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "signature",
     cell: ({ row } ) => {
       return (
-        <span className="w-32 min-w-32 whitespace-nowrap">{row.original.signature}</span>
+        <span className="text-xs align-middle inline-block w-52 min-w-40 max-w-52 truncate overflow-ellipsis">{row.original.signature}</span>
     )}
   },
   {
