@@ -1,4 +1,5 @@
-import Link from 'next/link'
+
+import { Link } from '@/navigation'
 import { ComponentProps } from 'react'
 
 export default function NoPrefetchLink(props: ComponentProps<typeof Link>) {
