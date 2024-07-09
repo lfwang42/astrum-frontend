@@ -170,7 +170,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
                 </div>
               </div>
               
-              <div className='flex whitespace-normal break-words'>{userData.signature}</div>
+              <div className='flex whitespace-normal break-all max-w-[100%]'>{userData.signature}</div>
             </div>: 
             <div className="h-10 w-1/4">
             {'Loading...'}
