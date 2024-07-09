@@ -1,12 +1,12 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
 import React from 'react';
-import Link from 'next/link';
 import { Translate } from '@/components/Translate';
 import { TranslateDate } from "@/components/TranslateDate";
 import { getRegion } from "@/lib/utils";
 import { GiPolarStar } from "react-icons/gi";
 import Image from "next/image";
+import NoPrefetchLink from "@/components/NoFetchLink";
 
 export type ProfileRow = {
   region: string//maybe do region serverside lol idk @TODO
@@ -43,9 +43,6 @@ function levelColors(level: number): string {
   else return 'text-green-600'
 }
 
-
-
-
 export const columns: ColumnDef<ProfileRow>[] = [
   {
     header: "#",
@@ -58,7 +55,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     accessorKey: "nickname",
     cell: ({ row }) => (
       <React.Fragment>
-        <Link href={`../profile/${row.original.uid}`}>
+        <NoPrefetchLink href={`../profile/${row.original.uid}`}>
           <span
             onClick={(e) => {
               e.stopPropagation();
@@ -68,8 +65,8 @@ export const columns: ColumnDef<ProfileRow>[] = [
             {row.original.nickname}
           </span>
 
-        </Link>
-        <span className="text-sm text-gray-500">{getRegion(row.original.uid)}</span>
+        </NoPrefetchLink>
+        <span className="text-sm text-gray-400">{getRegion(row.original.uid)}</span>
       </React.Fragment>
     ),
   },
@@ -135,7 +132,6 @@ export const columns: ColumnDef<ProfileRow>[] = [
     },
     accessorKey: "updated_at",
     cell: ({row}) => {
-      // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
       return (<span className="whitespace-nowrap"><TranslateDate str={row.original.updated_at} relative dateProps={{}}/></span>)
     }
   },
