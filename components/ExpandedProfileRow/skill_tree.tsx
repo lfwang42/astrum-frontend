@@ -116,7 +116,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className={skillLevelClassName}>{basic.level}</span>
+          <span className={skillLevelClassName + ` ${basic.level > 6 ? 'text-sky-500' : ""}`}>{basic.level}</span>
         </div>
         <div className="flex items-center">
           {displayStatBonuses(statBonuses)}
@@ -131,7 +131,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className={skillLevelClassName}>{skill.level}</span>
+          <span className={skillLevelClassName + ` ${skill.level >= 11 ? 'text-sky-500' : ""}`}>{skill.level}</span>
         </div>
         <div className="flex items-center">
           <Image
@@ -153,7 +153,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className={skillLevelClassName}>{ult.level}</span>
+          <span className={skillLevelClassName + ` ${ult.level >= 11 ? 'text-sky-500' : ""}`}>{ult.level}</span>
         </div>
         <div className="flex items-center">
           <Image
@@ -175,7 +175,7 @@ export const SkillTree: React.FC<SkillTreeProps> = ({
             width={largerIconSize}
             height={largerIconSize}
           />
-          <span className={skillLevelClassName}>{talent.level}</span>
+          <span className={skillLevelClassName + ` ${talent.level >= 11 ? 'text-sky-500' : ""}`}>{talent.level}</span>
         </div>
         <div className="flex items-center">
           <Image

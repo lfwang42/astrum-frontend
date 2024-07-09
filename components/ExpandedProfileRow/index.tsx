@@ -285,7 +285,7 @@ export const ExpandedProfileRow: React.FC<ExpandedProfileRowProps> = ({
             <div className="flex flex-col my-1 w-[25%] mx-2">
               <div className="flex flex-col h-[91%] max-h-[91%]">
                 <Translate
-                  className={`font-size-[17px] leading-[26px] underline decoration-solid underline-offset-3 decoration-2
+                  className={`text-[17px] leading-[26px] underline decoration-solid underline-offset-3 decoration-2
                     ${rarityStyle[
                       equipment[
                         row.avatar.equipment.tid.toString() as keyof typeof equipment
