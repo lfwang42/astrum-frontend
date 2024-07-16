@@ -19,7 +19,7 @@ export const ProfileTable: React.FC<ProfileProps> = () => {
       if (ret.length) ret += '|' 
       ret += uid.toString()
     })
-    console.log('uids: ' + ret)
+    // console.log('uids: ' + ret)
     return ret
   },
     [profiles.length]
@@ -35,7 +35,7 @@ export const ProfileTable: React.FC<ProfileProps> = () => {
       fetchUrl={"/api/profiles"}
       columns={columns}
       params={params}
-      defaultSort="achievementCount"
+      defaultSort="achievement_count"
       tableParams={uidsQuery}
       pagination
     />

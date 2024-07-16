@@ -149,14 +149,14 @@ export function CustomTable<TData, TValue>({
 
   //update searchparams when uids get loaded
   useEffect(() => {
-    console.log("table uids: ")
-    console.log(params?.uids)
+    // console.log("table uids: ")
+    // console.log(params?.uids)
     setParams({ ...searchParams, uids: params?.uids });
   }, [params?.uids]);
 
   useEffect(() => {
-    console.log("searchparams: ")
-    console.log(searchParams)
+    // console.log("searchparams: ")
+    // console.log(searchParams)
     if (fetchUrl == "/api/profiles" && (!params || (!searchParams.uids) || searchParams.uids?.length == 0 || !tableParams)) {
       return;
     }
@@ -178,8 +178,8 @@ export function CustomTable<TData, TValue>({
         console.log(error);
       });
   }, [
-    // JSON.stringify(searchParams), 
-    searchParams,
+    JSON.stringify(searchParams), 
+    // searchParams,
     fetchUrl]);
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export function CustomTable<TData, TValue>({
     const paramString = new URLSearchParams(stringParams).toString();
     // console.log(paramString)
     // router.push(`?${paramString}`, {scroll: false})
-    console.log(stringParams);
+    // console.log(stringParams);
     setParams(stringParams);
   }
 
@@ -214,15 +214,22 @@ export function CustomTable<TData, TValue>({
     // console.log(searchParams.sortStat);
     if (sortable) {
       if (column.id == searchParams.sortStat) {
-        console.log({
-          ...defaultParams,
+        // console.log({
+        //   ...searchParams,
+        //   sortStat: searchParams.sortStat,
+        //   order: searchParams.order == "desc" ? "asc" : "desc",
+        // });
+        navigateNext({
+          ...searchParams,
           sortStat: searchParams.sortStat,
           order: searchParams.order == "desc" ? "asc" : "desc",
         });
+      }
+      else {
         navigateNext({
-          ...defaultParams,
-          sortStat: searchParams.sortStat,
-          order: searchParams.order == "desc" ? "asc" : "desc",
+          ...searchParams,
+          sortStat: column.id,
+          order: "desc",
         });
       }
     }

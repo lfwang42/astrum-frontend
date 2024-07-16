@@ -11,19 +11,19 @@ import NoPrefetchLink from "@/components/NoFetchLink";
 export type ProfileRow = {
   region: string//maybe do region serverside lol idk @TODO
   uid: number
-  achievementCount: number
+  achievement_count: number
   nickname: string
   updated_at: string,
   level: number,
   signature: string,
-  abyssStars: number,
-  maxStars: number,
+  abyss_stars: number,
+  max_stars: number,
 }
 
 
 
-function abyssStars(stars: number, maxStars: number) {
-  if (maxStars == 36) {//moc
+function abyssStars(stars: number, max_stars: number) {
+  if (max_stars == 36) {//moc
     if (stars == 36) return 'text-yellow-500'
     else if (stars >= 33) return "text-purple-700"
     else if (stars >= 30) return 'text-sky-600'
@@ -84,6 +84,7 @@ export const columns: ColumnDef<ProfileRow>[] = [
     header: () => {
       return (<span className="whitespace-nowrap"><Translate str={'TLevel'} /></span>)
     },
+    enableSorting: true,
     accessorKey: "level",
     cell: ({ row } ) => {
       return (
@@ -94,38 +95,39 @@ export const columns: ColumnDef<ProfileRow>[] = [
     header: () => {
       return (<Translate str={'Achievements'} />)
     },
-    accessorKey: "achievementCount",
+    enableSorting: true,
+    accessorKey: "achievement_count",
     cell: ({row}) => {
       // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return <span>{row.original.achievementCount}</span>
+      return <span>{row.original.achievement_count}</span>
     }
   },
-  {
-    header: () => {
-      return (<div className="flex flex-row items-center">
-        <Image src='/Abyss.png' width={20} height={20} className="w-6 h-6 " alt="moc icon"/>
-        <Image src='/PF.svg' width={18} height={18} className="w-5 h-5" alt="pf icon"/></div>)
-    },
-    accessorKey: "abyssStars",
-    cell: ({row}) => {
-      // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
-      return <span className="flex flex-row gap-[1px] items-center">
-        {row.original.abyssStars ? (<>
-          <GiPolarStar className="fill-orange-300"/>
-          <span>
-            <span className={`${row.original.abyssStars ? 
-              abyssStars(row.original.abyssStars, row.original.maxStars ? row.original.maxStars : 0) 
-              : 
-              'text-gray-200'}`}>
-                {row.original.abyssStars}
-              </span>
-              /{row.original.maxStars ? row.original.maxStars : '?'}
-              </span>
-          </>)
-         : '?'}
-        </span>
-    }
-  },
+  // {
+  //   header: () => {
+  //     return (<div className="flex flex-row items-center">
+  //       <Image src='/Abyss.png' width={20} height={20} className="w-6 h-6 " alt="moc icon"/>
+  //       <Image src='/PF.svg' width={18} height={18} className="w-5 h-5" alt="pf icon"/></div>)
+  //   },
+  //   accessorKey: "abyssStars",
+  //   cell: ({row}) => {
+  //     // return <span>{row.original.main_stat_value}{" " + row.original.mainStat}</span>
+  //     return <span className="flex flex-row gap-[1px] items-center">
+  //       {row.original.abyss_stars ? (<>
+  //         <GiPolarStar className="fill-orange-300"/>
+  //         <span>
+  //           <span className={`${row.original.abyss_stars ? 
+  //             abyssStars(row.original.abyss_stars, row.original.max_stars ? row.original.max_stars : 0) 
+  //             : 
+  //             'text-gray-200'}`}>
+  //               {row.original.abyss_stars}
+  //             </span>
+  //             /{row.original.max_stars ? row.original.max_stars : '?'}
+  //             </span>
+  //         </>)
+  //        : '?'}
+  //       </span>
+  //   }
+  // },
   {
     header: () => {
       return (<Translate str={'Refreshed'} />)

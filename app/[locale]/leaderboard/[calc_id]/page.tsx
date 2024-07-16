@@ -62,18 +62,19 @@ export default function Leaderboard({
 }: {
   params: { calc_id: number };
 }) {
-  const capped =
-    calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped;
+
+
+  const cid = params.calc_id.toString()
+  const capped = calcdetails[params.calc_id.toString() as keyof typeof calcdetails].capped;
+
   const team_id = params.calc_id.toString().slice(0, -2);
   //store current calculation info
   const [calculation, setCalculation] = useState<Record<string, LeaderboardCone>>()
-  console.log(team_id);
+  // console.log(team_id);
 
   useEffect(() => {
     document.title = "Leaderboards";
   }, []);
-
-
 
   const calcs = useSWR(
     [getAPIURL("/api/categories"), { params: { avatar_id: team_id } }],
@@ -120,7 +121,7 @@ export default function Leaderboard({
     return (
       <div
         key={`${calc_id}-lightcones`}
-        className="flex flex-row gap-1 min-h-20 items-center hover:bg-slate-600"
+        className={`flex flex-row gap-1 min-h-16 items-center hover:bg-slate-600 ${calc_id == params.calc_id.toString() ? "bg-slate-600" : ""}`}
       >
       <NoPrefetchLink href={`/leaderboard/${calc_id}`} className="flex flex-row gap-1 min-h-20 items-center">
 
