@@ -9,10 +9,10 @@ import NoPrefetchLink from "@/components/NoFetchLink";
 import { TranslateDate } from "@/components/TranslateDate";
 
 export const columns: ColumnDef<AvatarCategory>[] = [
-  {
-    header: "#",
-    cell: ({ row } ) => (<span className="flex justify-center text-center">{row.index+1}</span>)
-  },
+  // {
+  //   header: "#",
+  //   cell: ({ row } ) => (<span className="flex justify-center text-center">{row.index+1}</span>)
+  // },
   {
     header: "Leaderboard",
     cell: ({ row } ) => (
@@ -46,13 +46,19 @@ export const columns: ColumnDef<AvatarCategory>[] = [
     }
   },
   {
-    header: "Entries",
+    header: () => {
+      return (<span>#</span>)
+    },
     accessorKey: "count",
+    enableSorting: true,
     cell: ({ row } ) => (<div className="">{row.original.count}</div>)
   },
   {
     accessorKey: "add_date",
-    header: "Added",
+    header: () => {
+      return (<span>Added</span>)
+    },
+    enableSorting: true,
     cell: ({row}) => {
       // var date = new Date(Date.parse(row.original.add_date)).toLocaleDateString("en-US", {day: "numeric", year: "numeric", month: "short"})
       // return <span className="text-sm whitespace-nowrap">{date}</span>

@@ -165,10 +165,15 @@ export function CustomTable<TData, TValue>({
       .get(getAPIURL(fetchUrl), { params: searchParams }) // Use the correct URL, it can be an API Route URL, an external URL...
       .then((res) => res.data)
       .then((data) => {
-        if (defaultSort == "count") {
-          data.sort((a: AvatarCategory, b: AvatarCategory) =>
-            a.count < b.count ? 1 : b.count < a.count ? -1 : 0
-          );
+        if (searchParams.sortStat == "add_date") {
+          data.sort(function(a: any,b: any){
+            const date_a = new Date(a.add_date).getTime()
+            const date_b = new Date(b.add_date).getTime()
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            if (searchParams.order == 'asc') return date_a - date_b
+            return date_b - date_a
+          });
         }
         setRows(data);
         setRowSpan(data[0].hasMultiRows ? data[0].bids.length : 1);
