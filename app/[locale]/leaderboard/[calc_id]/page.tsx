@@ -133,7 +133,7 @@ export default function Leaderboard({
               key={`${calc_id + avatar_cone_pair[0]}-cone`}
               className={`flex justify-center p-1 min-h-12 min-w-12 `}
             >
-
+ 
 
               <Image
                 width={25}
