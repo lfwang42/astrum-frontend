@@ -27,6 +27,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
 
   const [error, setError] = useState<any>(false)
   const fetchProfile = (uid: string, refresh: boolean) => {
+    setUserData(undefined)
     const url = refresh ? getAPIURL(`/api/users/${uid}/refresh`) : getAPIURL(`/api/users/${uid}`)
     axios.get(url)
     .then((res) => res.data)
@@ -190,7 +191,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
           pagination
           />
         :
-        null}
+        <span>test</span>}
       </div>
   )
 }
