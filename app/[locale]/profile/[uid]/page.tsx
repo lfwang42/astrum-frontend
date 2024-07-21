@@ -191,7 +191,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
           pagination
           />
         :
-        <span>test</span>}
+        null}
       </div>
   )
 }
