@@ -135,7 +135,7 @@ export default function Profile({ params }: { params: { uid: number }}) {
       { value: 'Attack', label: 'Attack' },
       { value: 'Defence', label: 'Defence' },
       { value: 'MaxHP', label: 'MaxHP' },
-      { value: 'BreakDamage', label: 'BreakDamageAddedRatio' },
+      { value: 'BreakDamage', label: 'BreakDamage' },
       { value: 'StatusResistance', label: 'StatusResistance' },
       { value: 'StatusProbability', label: 'StatusProbability' },
       // { value: 'SPRatio', label: 'Energy Regen Rate' },
