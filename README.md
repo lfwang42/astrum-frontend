@@ -1,1 +1,1 @@
-Astrum is a version of the build-ranking website akasha.cv for Honkai Star Rail.  
+Frontend repository for the Honkai Star Rail build ranking website belobog.app
